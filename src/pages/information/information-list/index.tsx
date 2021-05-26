@@ -1,13 +1,17 @@
 import {PlusOutlined} from '@ant-design/icons';
-import {Button, Card, List, Pagination} from 'antd';
-import React, {Component} from 'react';
+import {Button, Card, List, Pagination,Modal} from 'antd';
+import React, {Component,useState} from 'react';
 
 import {PageContainer} from '@ant-design/pro-layout';
 import {connect, Dispatch} from 'umi';
 import {StateType} from './model';
 import {InfoItem} from './data.d';
 import styles from './style.less';
+import {removeInformationItem} from '@/pages/information/information-list/service';
+import OperationModal from '@/pages/information/information-list/components/OperationModal';
 
+import {removeContent} from "@/pages/content/content-list/service";
+import {ContentItem} from "@/pages/content/content-list/data";
 // const {Paragraph} = Typography;
 
 interface InformationListProps {
@@ -17,26 +21,30 @@ interface InformationListProps {
 }
 
 interface InformationListState {
-  // visible: boolean;
-  // done: boolean;
-  // current?: Partial<Member>;
+  visible: boolean;
+  done: boolean;
+  current?: Partial<InfoItem>;
   page: number;
   per_page: number;
 }
 
 
 class InformationList extends Component<InformationListProps, InformationListState> {
-  defaultState = {
+  state = {
+    done: false,
     page: 1,
     per_page: 15,
+    visible:false,
+    current:{},
   }
 
   componentDidMount() {
     const {dispatch} = this.props;
-    let state = this.state == null ? this.defaultState : this.state;
+    // let state = this.state == null ? this.defaultState : this.state;
+    // this.setState(state)
     dispatch({
       type: 'listInformationList/fetch',
-      payload: state,
+      payload: this.state,
     });
   }
 
@@ -47,8 +55,9 @@ class InformationList extends Component<InformationListProps, InformationListSta
   onChange = (page: number, pageSize?: number) => {
     console.log("InformationList|onChange", page, pageSize)
     let state = {
+      done:this.state.done,
       page: page,
-      per_page: pageSize == undefined ? 15 : pageSize,
+      per_page: pageSize === undefined ? 15 : pageSize,
     };
     const {dispatch} = this.props;
     dispatch({
@@ -58,46 +67,95 @@ class InformationList extends Component<InformationListProps, InformationListSta
     this.setState(state)
   }
 
+   handleDone = () => {
+    this.setState({
+      done:false,
+      visible: false,
+    })
+  }
+  //
+   handleCancel = () => {
+    this.setState({
+      visible: false,
+    })
+  }
+
+  handleSubmit = (values: InfoItem) => {
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'listInformationList/submit',
+      payload: values,
+    });
+  }
+
   render() {
+
     // const [done, setDone] = useState<boolean>(false);
     // const [visible, setVisible] = useState<boolean>(false);
-    // const [current, setCurrent] = useState<Partial<BasicListItemDataType> | undefined>(undefined);
-    // const handleDone = () => {
-    //   setDone(false);
-    //   setVisible(false);
-    // }
+    // const [current, setCurrent] = useState<Partial<InfoItem> | undefined>(undefined);
+
+
+
     //
-    // const handleCancel = () => {
-    //   setVisible(false);
-    // }
-    //
-    // const handleSubmit = (values: Member) => {
-    //   const {dispatch} = this.props;
-    //   dispatch({
-    //     type: 'listInformationList/submit',
-    //     payload: values,
-    //   });
-    // }
-    //
-    // // const showModal = () => {
-    // //   setVisible(true);
-    // //   setCurrent(undefined);
-    // // };
-    //
-    // const showEditModal = (item: Member) => {
+    // const showModal = () => {
     //   setVisible(true);
     //   setCurrent(undefined);
     // };
-    //
-    // const deleteItem = (id: string) => {
+
+    const showEditModal = (item: InfoItem) => {
+      this.setState({
+        visible: true,
+        current:item
+      })
+    };
+
+    // const  deleteItem = (id: string) => {
+    //   console.log("delete id", id)
     //   const {dispatch} = this.props;
-    //   dispatch({
-    //     type: 'listInformationList/delete',
-    //     payload: {id},
-    //   });
-    // };
+    //   let state = this.state == null ? this.defaultState : this.state;
+    //   async () => {
+    //     const resp = await removeInformationItem({ id: id });
+    //     if (resp.status === 'success') {
+    //       Modal.success({
+    //         content: resp.message,
+    //       });
+    //       dispatch({
+    //         type: 'listInformationList/fetch',
+    //         payload: state,
+    //       });
+    //     }
     //
-    // const editAndDelete = (key: string, currentItem: Member) => {
+    //   }
+    //
+    // };
+
+    const deleteItem = async (currentItem: InfoItem) => {
+      console.log("InformationList|editAndDelete", currentItem)
+      const {dispatch} = this.props;
+      let state = this.state == null ? this.defaultState : this.state;
+      Modal.confirm({
+        title: '删除确认',
+        content: `是否确定删除番号：${currentItem.video_no}?`,
+        onOk: async () => {
+          const resp = await removeInformationItem({ id: currentItem.id });
+          if (resp.status === 'success') {
+            Modal.success({
+              content: resp.message,
+            });
+            dispatch({
+              type: 'listInformationList/fetch',
+              payload: state,
+            });
+          }else{
+            Modal.error({
+              content: resp.message,
+            });
+          }
+        },
+      });
+    };
+
+    // const editAndDelete = (key: string, currentItem: InfoItem) => {
     //   console.log("InformationList|editAndDelete", key, currentItem)
     //   if (key === 'edit') showEditModal(currentItem);
     //   else if (key === 'delete') {
@@ -189,10 +247,10 @@ class InformationList extends Component<InformationListProps, InformationListSta
                         className={styles.card}
                         actions={[<a key="edit" onClick={(e) => {
                           e.preventDefault();
-                          // showEditModal((item as Member));
+                          showEditModal((item as InfoItem));
                         }}>编辑</a>, <a key="delete" onClick={(e) => {
                           e.preventDefault()
-                          // editAndDelete("delete", item as Member)
+                          deleteItem( item as InfoItem)
                         }}>删除</a>]
                         }
                       >
@@ -231,14 +289,14 @@ class InformationList extends Component<InformationListProps, InformationListSta
           </div>
         </PageContainer>
 
-        {/*<OperationModal*/}
-        {/*  done={done}*/}
-        {/*  current={current}*/}
-        {/*  visible={visible}*/}
-        {/*  onDone={handleDone}*/}
-        {/*  onCancel={handleCancel}*/}
-        {/*  onSubmit={handleSubmit}*/}
-        {/*/>*/}
+        <OperationModal
+          done={this.state.done}
+          current={this.state.current}
+          visible={this.state.visible}
+          onDone={this.handleDone}
+          onCancel={this.handleCancel}
+          onSubmit={this.handleSubmit}
+        />
       </div>
 
     );
