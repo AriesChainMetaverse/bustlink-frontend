@@ -1,18 +1,12 @@
 export interface InfoItem {
   id: string;
   video_no: string;
-  alias: string[];
   title: string;
-  root: string;
-  caption: string;
-  poster: string;
-  poster_path: string;
-  thumb: string;
-  thumb_path: string;
-  sharpness: string;
-  language: string;
-  intro: string;
-  last_update: number;
+  producer: string;
+  publisher: string;
+  role: string;
+  tags: string;
+
 }
 
 export interface InfoListItemDataType {

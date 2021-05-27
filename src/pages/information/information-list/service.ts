@@ -23,3 +23,19 @@ export async function removeInformationItem(params: InfoItemDataType) {
     },
   });
 }
+
+export async function updateInformationItem(params: InfoItemDataType) {
+  console.log("params is ",params)
+  if (!Array.isArray( params.role)) {
+    params.role =  params.role.split(",")
+  }
+  if (!Array.isArray( params.tags)) {
+    params.tags =  params.tags.split(",")
+  }
+  return request(`/api/v0/information/`, {
+    method: 'PUT',
+    data: {
+      ...params,
+    },
+  });
+}

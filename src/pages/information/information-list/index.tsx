@@ -10,8 +10,7 @@ import styles from './style.less';
 import {removeInformationItem} from '@/pages/information/information-list/service';
 import OperationModal from '@/pages/information/information-list/components/OperationModal';
 
-import {removeContent} from "@/pages/content/content-list/service";
-import {ContentItem} from "@/pages/content/content-list/data";
+
 // const {Paragraph} = Typography;
 
 interface InformationListProps {
@@ -54,9 +53,9 @@ class InformationList extends Component<InformationListProps, InformationListSta
 
   onChange = (page: number, pageSize?: number) => {
     console.log("InformationList|onChange", page, pageSize)
-    let state = {
-      done:this.state.done,
-      page: page,
+    const state = {
+      done :this.state.done,
+      page : page,
       per_page: pageSize === undefined ? 15 : pageSize,
     };
     const {dispatch} = this.props;
@@ -80,11 +79,18 @@ class InformationList extends Component<InformationListProps, InformationListSta
     })
   }
 
-  handleSubmit = (values: InfoItem) => {
+   handleSubmit = async (values: InfoItem) => {
     const {dispatch} = this.props;
-    dispatch({
+    await dispatch({
       type: 'listInformationList/submit',
       payload: values,
+    });
+    this.setState({
+      visible: false,
+    })
+    dispatch({
+      type: 'listInformationList/fetch',
+      payload: this.state,
     });
   }
 
@@ -107,6 +113,8 @@ class InformationList extends Component<InformationListProps, InformationListSta
         visible: true,
         current:item
       })
+      console.log("InformationList|showEditModal",this.state.current)
+
     };
 
     // const  deleteItem = (id: string) => {
@@ -247,7 +255,7 @@ class InformationList extends Component<InformationListProps, InformationListSta
                         className={styles.card}
                         actions={[<a key="edit" onClick={(e) => {
                           e.preventDefault();
-                          showEditModal((item as InfoItem));
+                          showEditModal(item as InfoItem);
                         }}>编辑</a>, <a key="delete" onClick={(e) => {
                           e.preventDefault()
                           deleteItem( item as InfoItem)

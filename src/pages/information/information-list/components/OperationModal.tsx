@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import moment from 'moment';
-import {Button, DatePicker, Form, Input, Modal, Result, Select} from 'antd';
+import {Button,  Form, Input, Modal, Result} from 'antd';
 import {InfoItem} from '../data.d';
 import styles from '../style.less';
 
@@ -59,7 +59,7 @@ const OperationModal: FC<OperationModalProps> = (props) => {
         <Result
           status="success"
           title="操作成功"
-          subTitle="一系列的信息描述，很短同样也可以带标点。"
+          subTitle="Information编辑成功，请进行其他操作！"
           extra={
             <Button type="primary" onClick={onDone}>
               知道了
@@ -71,42 +71,53 @@ const OperationModal: FC<OperationModalProps> = (props) => {
     }
     return (
       <Form {...formLayout} form={form} onFinish={handleFinish}>
+        <Form.Item name='id' hidden={true}>
+          <Input placeholder='请输入' disabled={true} />
+        </Form.Item>
+        <Form.Item
+          name="video_no"
+          label="番号"
+          rules={[{required: true, message: '请输入番号'}]}
+        >
+          <Input placeholder="请输入" disabled={true}/>
+        </Form.Item>
+
         <Form.Item
           name="title"
-          label="任务名称"
-          rules={[{required: true, message: '请输入任务名称'}]}
+          label="视频简介"
+          rules={[{required: true, message: '请视频简介'}]}
         >
-          <Input placeholder="请输入"/>
+          <TextArea rows={2} placeholder='请输入' />
         </Form.Item>
         <Form.Item
-          name="createdAt"
-          label="开始时间"
-          rules={[{required: true, message: '请选择开始时间'}]}
+          name="role"
+          label="演员"
+          rules={[{required: true, message: '请输入演员'}]}
         >
-          <DatePicker
-            showTime
-            placeholder="请选择"
-            format="YYYY-MM-DD HH:mm:ss"
-            style={{width: '100%'}}
-          />
+          <Input placeholder="请输入演员"/>
         </Form.Item>
         <Form.Item
-          name="owner"
-          label="任务负责人"
-          rules={[{required: true, message: '请选择任务负责人'}]}
+          name="tags"
+          label="标签"
+          rules={[{required: true, message: '请输入标签'}]}
         >
-          <Select placeholder="请选择">
-            <Select.Option value="付晓晓">付晓晓</Select.Option>
-            <Select.Option value="周毛毛">周毛毛</Select.Option>
-          </Select>
+          <Input placeholder="请输入标签，逗号隔开"/>
         </Form.Item>
         <Form.Item
-          name="subDescription"
-          label="产品描述"
-          rules={[{message: '请输入至少五个字符的产品描述！', min: 5}]}
+          name="producer"
+          label="制作公司"
+          rules={[{required: true, message: '请输入制作公司'}]}
         >
-          <TextArea rows={4} placeholder="请输入至少五个字符"/>
+          <Input placeholder="请输入制作公司"/>
         </Form.Item>
+        <Form.Item
+          name="publisher"
+          label="发行方"
+          rules={[{required: true, message: '请输入发行方'}]}
+        >
+          <Input placeholder="请输入发行方"/>
+        </Form.Item>
+
       </Form>
     );
   };
@@ -114,7 +125,7 @@ const OperationModal: FC<OperationModalProps> = (props) => {
   return (
     <Modal
       forceRender={true}
-      title={done ? null : `任务${current ? '编辑' : '添加'}`}
+      title={done ? null : `Information${current ? '编辑' : '添加'}`}
       className={styles.standardListForm}
       width={640}
       bodyStyle={done ? {padding: '72px 0'} : {padding: '28px 0 0'}}
