@@ -117,7 +117,13 @@ const OperationModal: FC<OperationModalProps> = (props) => {
         >
           <Input placeholder="请输入发行方"/>
         </Form.Item>
-
+        <Form.Item
+          name="upload"
+          label="上传"
+          // rules={[{required: true, message: '请输入发行方'}]}
+        >
+          <Button>上传</Button>
+        </Form.Item>
       </Form>
     );
   };
