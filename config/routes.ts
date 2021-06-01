@@ -368,6 +368,34 @@
                 ],
               },
               {
+                path: './instruct',
+                icon: 'table',
+                authority: ['admin', 'user'],//权限控制
+                name: 'instruct',
+                routes: [
+                  {
+                    name: 'instruct-list',
+                    icon: 'smile',
+                    path: '../instruct/instruct-list',
+                    component: './instruct/instruct-list',
+                  },
+                ],
+              },
+              {
+                path: './top',
+                icon: 'table',
+                authority: ['admin', 'user'],//权限控制
+                name: 'top',
+                routes: [
+                  {
+                    name: 'top-list',
+                    icon: 'smile',
+                    path: '../top/top-list',
+                    component: './top/top-list',
+                  },
+                ],
+              },
+              {
                 component: '404',
               },
 
