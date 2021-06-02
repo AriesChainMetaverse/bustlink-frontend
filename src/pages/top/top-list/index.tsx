@@ -101,14 +101,14 @@ const TableList: React.FC<{}> = () => {
       valueType: 'textarea',
     },
     {
-      title: '服务调用次数',
+      title: '番号',
       dataIndex: 'callNo',
       sorter: true,
       hideInForm: true,
       renderText: (val: string) => `${val} 万`,
     },
     {
-      title: '状态',
+      title: '类型',
       dataIndex: 'status',
       hideInForm: true,
       valueEnum: {
