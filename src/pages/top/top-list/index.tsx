@@ -7,7 +7,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import { queryRule, updateRule, addRule, removeRule } from './service';
+import { updateRule, addRule, removeRule, queryTopList} from './service';
 
 /**
  * 添加节点
@@ -80,9 +80,9 @@ const TableList: React.FC<{}> = () => {
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '规则名称',
-      dataIndex: 'name',
-      tip: '规则名称是唯一的 key',
+      title: '视频番号',
+      dataIndex: 'video_no',
+      tip: '视频番号是唯一的',
       formItemProps: {
         rules: [
           {
@@ -96,8 +96,8 @@ const TableList: React.FC<{}> = () => {
       },
     },
     {
-      title: '描述',
-      dataIndex: 'desc',
+      title: '标题',
+      dataIndex: 'edges',
       valueType: 'textarea',
     },
     {
@@ -159,7 +159,7 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="查询表格"
+        headerTitle="查询视频"
         actionRef={actionRef}
         rowKey="key"
         search={{
@@ -170,7 +170,7 @@ const TableList: React.FC<{}> = () => {
             <PlusOutlined /> 新建
           </Button>,
         ]}
-        request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => queryTopList({ ...params, sorter, filter })}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => setSelectedRows(selectedRows),

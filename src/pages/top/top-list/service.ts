@@ -1,9 +1,16 @@
 import request from 'umi-request';
 import { TableListParams } from './data.d';
 
-export async function queryRule(params?: TableListParams) {
-  return request('/api/rule', {
-    params,
+
+export async function queryTopList(params?: TableListParams) {
+
+  //配合接口的分页变量名
+  params.page = params.current;
+  params.per_page = params.pageSize;
+  
+  return request('/api/v0/admintoplist', {
+    method:"GET", params
+
   });
 }
 

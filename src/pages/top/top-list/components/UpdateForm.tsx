@@ -43,6 +43,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     type: '1',
     time: '',
     frequency: 'month',
+    video_no: props.values.video_no,
   });
 
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -124,7 +125,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     return (
       <>
         <FormItem
-          name="name"
+          name="video_no"
           label="规则名称"
           rules={[{ required: true, message: '请输入规则名称！' }]}
         >
@@ -201,7 +202,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           template: formVals.template,
           type: formVals.type,
           frequency: formVals.frequency,
-          name: formVals.name,
+          video_no: formVals.video_no,
           desc: formVals.desc,
         }}
       >
