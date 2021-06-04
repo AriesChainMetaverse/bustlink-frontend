@@ -7,7 +7,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import { updateRule, addRule, removeRule, queryTopList} from './service';
+import {updateRule, addRule, removeRule, queryTopList, updateTopList} from './service';
 
 /**
  * 添加节点
@@ -34,10 +34,13 @@ const handleAdd = async (fields: TableListItem) => {
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
-    await updateRule({
-      name: fields.name,
-      desc: fields.desc,
-      key: fields.key,
+    await updateTopList({
+      information_id:fields.id,
+      title: fields.title,
+      intro: fields.intro,
+      lower_banner: fields.lower_banner,
+      top_right: fields.top_right,
+      category: fields.category,
     });
     hide();
 
@@ -71,6 +74,10 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   }
 };
 
+function cateroryTrans (catetoryList){
+  return catetoryList.toString()
+}
+
 const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
@@ -91,50 +98,75 @@ const TableList: React.FC<{}> = () => {
           },
         ],
       },
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>;
-      },
+      // render: (dom, entity) => {
+      //   return <a onClick={() => setRow(entity)}>{dom}</a>;
+      // },
     },
     {
       title: '标题',
-      dataIndex: 'edges',
+      dataIndex: 'title',
       valueType: 'textarea',
     },
     {
-      title: '番号',
-      dataIndex: 'callNo',
-      sorter: true,
+      title: '介绍',
+      dataIndex: 'intro',
+      sorter: false,
       hideInForm: true,
-      renderText: (val: string) => `${val} 万`,
+      valueType: 'textarea',
     },
     {
-      title: '类型',
-      dataIndex: 'status',
+      title: '分类',
+      dataIndex: 'category',
+      sorter: false,
+      hideInForm: true,
+      valueType: 'textarea',
+      render: (text,record,index) => cateroryTrans(text),
+    },
+    {
+      title: '下角标',
+      dataIndex: 'lower_banner',
       hideInForm: true,
       valueEnum: {
-        0: { text: '关闭', status: 'Default' },
-        1: { text: '运行中', status: 'Processing' },
-        2: { text: '已上线', status: 'Success' },
-        3: { text: '异常', status: 'Error' },
+        'free': { text: '免费', status: 'free' },
+        'discount': { text: '折扣', status: 'discount' },
+        'event': { text: '限免', status: 'event' },
+        'premium': { text: '精品', status: 'premium' },
+        'collection': { text: '收藏', status: 'collection' },
+        'liked': { text: '喜欢', status: 'liked' },
+        'none': { text: '无', status: 'none' },
       },
     },
     {
-      title: '上次调度时间',
-      dataIndex: 'updatedAt',
-      sorter: true,
-      valueType: 'dateTime',
+      title: '右上角标',
+      dataIndex: 'top_right',
       hideInForm: true,
-      renderFormItem: (item, { defaultRender, ...rest }, form) => {
-        const status = form.getFieldValue('status');
-        if (`${status}` === '0') {
-          return false;
-        }
-        if (`${status}` === '3') {
-          return <Input {...rest} placeholder="请输入异常原因！" />;
-        }
-        return defaultRender(item);
+      valueEnum: {
+        'free': { text: '免费', status: 'free' },
+        'discount': { text: '折扣', status: 'discount' },
+        'event': { text: '限免', status: 'event' },
+        'premium': { text: '精品', status: 'premium' },
+        'collection': { text: '收藏', status: 'collection' },
+        'liked': { text: '喜欢', status: 'liked' },
+        'none': { text: '无', status: 'none' },
       },
     },
+    // {
+    //   title: '上次调度时间',
+    //   dataIndex: 'updatedAt',
+    //   sorter: true,
+    //   valueType: 'dateTime',
+    //   hideInForm: true,
+    //   renderFormItem: (item, { defaultRender, ...rest }, form) => {
+    //     const status = form.getFieldValue('status');
+    //     if (`${status}` === '0') {
+    //       return false;
+    //     }
+    //     if (`${status}` === '3') {
+    //       return <Input {...rest} placeholder="请输入异常原因！" />;
+    //     }
+    //     return defaultRender(item);
+    //   },
+    // },
     {
       title: '操作',
       dataIndex: 'option',
@@ -149,8 +181,6 @@ const TableList: React.FC<{}> = () => {
           >
             配置
           </a>
-          <Divider type="vertical" />
-          <a href="">订阅警报</a>
         </>
       ),
     },
@@ -166,9 +196,9 @@ const TableList: React.FC<{}> = () => {
           labelWidth: 120,
         }}
         toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> 新建
-          </Button>,
+          // <Button type="primary" onClick={() => handleModalVisible(true)}>
+          //   <PlusOutlined /> 新建
+          // </Button>,
         ]}
         request={(params, sorter, filter) => queryTopList({ ...params, sorter, filter })}
         columns={columns}

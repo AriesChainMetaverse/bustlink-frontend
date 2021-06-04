@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps } from 'antd';
+import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps ,Checkbox,Row,Col} from 'antd';
 
 import { TableListItem } from '../data.d';
 
@@ -35,15 +35,14 @@ const formLayout = {
 
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const [formVals, setFormVals] = useState<FormValueType>({
-    name: props.values.name,
-    desc: props.values.desc,
-    key: props.values.key,
-    target: '0',
-    template: '0',
-    type: '1',
-    time: '',
-    frequency: 'month',
+
     video_no: props.values.video_no,
+    id: props.values.id,
+    intro: props.values.intro,
+    lower_banner: props.values.lower_banner,
+    title: props.values.title,
+    top_right:props.values.top_right,
+    category:props.values.category,
   });
 
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -66,7 +65,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
 
     setFormVals({ ...formVals, ...fieldsValue });
 
-    if (currentStep < 2) {
+    if (currentStep < 1) {
       forward();
     } else {
       handleUpdate({ ...formVals, ...fieldsValue });
@@ -77,64 +76,147 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     if (currentStep === 1) {
       return (
         <>
-          <FormItem name="target" label="监控对象">
+          <FormItem name="category" label="分类">
+            <Checkbox.Group>
+                <Row>
+                  <Col span={8}>
+                    <Checkbox
+                      value="newest"
+                      style={{
+                        lineHeight: '32px',
+                      }}
+                    >
+                      最新上架
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox
+                      value="hottest"
+                      style={{
+                        lineHeight: '32px',
+                      }}
+
+                    >
+                      人气最高
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox
+                      value="star"
+                      style={{
+                        lineHeight: '32px',
+                      }}
+                    >
+                      明星
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox
+                      value="producer"
+                      style={{
+                        lineHeight: '32px',
+                      }}
+                    >
+                      制作公司
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox
+                      value="exclusive"
+                      style={{
+                        lineHeight: '32px',
+                      }}
+                    >
+                      独家内容
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox
+                      value="normal"
+                      style={{
+                        lineHeight: '32px',
+                      }}
+                    >
+                      正常
+                    </Checkbox>
+                  </Col>
+                </Row>
+            </Checkbox.Group>
+          </FormItem>
+          <FormItem name="lower_banner" label="底标">
             <Select style={{ width: '100%' }}>
-              <Option value="0">表一</Option>
-              <Option value="1">表二</Option>
+              <Option value="free">免费</Option>
+              <Option value="discount">折扣</Option>
+              <Option value="event">限免</Option>
+              <Option value="premium">精品</Option>
+              <Option value="collection">收藏</Option>
+              <Option value="liked">喜欢</Option>
+              <Option value="none">无</Option>
             </Select>
           </FormItem>
-          <FormItem name="template" label="规则模板">
+          <FormItem name="top_right" label="右上角标">
             <Select style={{ width: '100%' }}>
-              <Option value="0">规则模板一</Option>
-              <Option value="1">规则模板二</Option>
+              <Option value="free">免费</Option>
+              <Option value="discount">折扣</Option>
+              <Option value="event">限免</Option>
+              <Option value="premium">精品</Option>
+              <Option value="collection">收藏</Option>
+              <Option value="liked">喜欢</Option>
+              <Option value="none">无</Option>
             </Select>
           </FormItem>
-          <FormItem name="type" label="规则类型">
-            <RadioGroup>
-              <Radio value="0">强</Radio>
-              <Radio value="1">弱</Radio>
-            </RadioGroup>
-          </FormItem>
+
         </>
       );
     }
-    if (currentStep === 2) {
-      return (
-        <>
-          <FormItem
-            name="time"
-            label="开始时间"
-            rules={[{ required: true, message: '请选择开始时间！' }]}
-          >
-            <DatePicker
-              style={{ width: '100%' }}
-              showTime
-              format="YYYY-MM-DD HH:mm:ss"
-              placeholder="选择开始时间"
-            />
-          </FormItem>
-          <FormItem name="frequency" label="调度周期">
-            <Select style={{ width: '100%' }}>
-              <Option value="month">月</Option>
-              <Option value="week">周</Option>
-            </Select>
-          </FormItem>
-        </>
-      );
-    }
+    // if (currentStep === 2) {
+    //   return (
+    //     <>
+    //       <FormItem
+    //         name="time"
+    //         label="开始时间"
+    //         rules={[{ required: true, message: '请选择开始时间！' }]}
+    //       >
+    //         <DatePicker
+    //           style={{ width: '100%' }}
+    //           showTime
+    //           format="YYYY-MM-DD HH:mm:ss"
+    //           placeholder="选择开始时间"
+    //         />
+    //       </FormItem>
+    //       <FormItem name="frequency" label="调度周期">
+    //         <Select style={{ width: '100%' }}>
+    //           <Option value="month">月</Option>
+    //           <Option value="week">周</Option>
+    //         </Select>
+    //       </FormItem>
+    //     </>
+    //   );
+    // }
     return (
       <>
         <FormItem
+          name="id"
+          label="视频ID"
+        >
+          <Input placeholder="请输入" disabled={true}/>
+        </FormItem>
+        <FormItem
           name="video_no"
-          label="规则名称"
-          rules={[{ required: true, message: '请输入规则名称！' }]}
+          label="番号"
+        >
+          <Input placeholder="请输入" disabled={true}/>
+        </FormItem>
+        <FormItem
+          name="title"
+          label="标题"
         >
           <Input placeholder="请输入" />
         </FormItem>
         <FormItem
-          name="desc"
-          label="规则描述"
-          rules={[{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }]}
+          name="intro"
+          label="视频简介"
+          rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
         >
           <TextArea rows={4} placeholder="请输入至少五个字符" />
         </FormItem>
@@ -151,24 +233,24 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           </Button>
           <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
           <Button type="primary" onClick={() => handleNext()}>
-            下一步
-          </Button>
-        </>
-      );
-    }
-    if (currentStep === 2) {
-      return (
-        <>
-          <Button style={{ float: 'left' }} onClick={backward}>
-            上一步
-          </Button>
-          <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
-          <Button type="primary" onClick={() => handleNext()}>
             完成
           </Button>
         </>
       );
     }
+    // if (currentStep === 2) {
+    //   return (
+    //     <>
+    //       <Button style={{ float: 'left' }} onClick={backward}>
+    //         上一步
+    //       </Button>
+    //       <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
+    //       <Button type="primary" onClick={() => handleNext()}>
+    //         完成
+    //       </Button>
+    //     </>
+    //   );
+    // }
     return (
       <>
         <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
@@ -184,26 +266,27 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       width={640}
       bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
-      title="规则配置"
+      title="视频资源配置"
       visible={updateModalVisible}
       footer={renderFooter()}
       onCancel={() => handleUpdateModalVisible()}
     >
       <Steps style={{ marginBottom: 28 }} size="small" current={currentStep}>
         <Step title="基本信息" />
-        <Step title="配置规则属性" />
-        <Step title="设定调度周期" />
+        <Step title="配置分类" />
       </Steps>
       <Form
         {...formLayout}
         form={form}
         initialValues={{
-          target: formVals.target,
-          template: formVals.template,
-          type: formVals.type,
-          frequency: formVals.frequency,
           video_no: formVals.video_no,
-          desc: formVals.desc,
+          id: formVals.id,
+          intro: formVals.intro,
+          lower_banner: formVals.lower_banner,
+          title:formVals.title,
+          top_right:formVals.top_right,
+          category:formVals.category,
+
         }}
       >
         {renderContent()}

@@ -1,6 +1,6 @@
 import {PlusOutlined} from '@ant-design/icons';
 import {Button, Card, List, Pagination,Modal} from 'antd';
-import React, {Component,useState} from 'react';
+import React, {Component} from 'react';
 
 import {PageContainer} from '@ant-design/pro-layout';
 import {connect, Dispatch} from 'umi';
