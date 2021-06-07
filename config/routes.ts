@@ -396,6 +396,20 @@
                 ],
               },
               {
+                path: './announce',
+                icon: 'table',
+                authority: ['admin', 'user'],//权限控制
+                name: 'announce',
+                routes: [
+                  {
+                    name: 'announce-list',
+                    icon: 'smile',
+                    path: '../announce/announce-list',
+                    component: './announce/announce-list',
+                  },
+                ],
+              },
+              {
                 component: '404',
               },
 
