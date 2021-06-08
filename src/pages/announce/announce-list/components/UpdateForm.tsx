@@ -4,11 +4,10 @@ import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps ,Checkbox,
 import { TableListItem } from '../data.d';
 
 export interface FormValueType extends Partial<TableListItem> {
-  target?: string;
-  template?: string;
-  type?: string;
-  time?: string;
-  frequency?: string;
+  id?: string;
+  announce_no?: string;
+  content_english?: string;
+  content_japanese?: string;
 }
 
 export interface UpdateFormProps {
@@ -36,16 +35,14 @@ const formLayout = {
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const [formVals, setFormVals] = useState<FormValueType>({
 
-    video_no: props.values.video_no,
+    announce_no: props.values.announce_no,
     id: props.values.id,
-    intro: props.values.intro,
-    lower_banner: props.values.lower_banner,
-    title: props.values.title,
-    top_right:props.values.top_right,
-    category:props.values.category,
+    content_english: props.values.content_english,
+    content_japanese: props.values.content_japanese,
+
   });
 
-  const [currentStep, setCurrentStep] = useState<number>(0);
+  // const [currentStep, setCurrentStep] = useState<number>(0);
 
   const [form] = Form.useForm();
 
@@ -56,119 +53,98 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     values,
   } = props;
 
-  const forward = () => setCurrentStep(currentStep + 1);
-
-  const backward = () => setCurrentStep(currentStep - 1);
+  // const forward = () => setCurrentStep(currentStep + 1);
+  //
+  // const backward = () => setCurrentStep(currentStep - 1);
 
   const handleNext = async () => {
     const fieldsValue = await form.validateFields();
 
-    setFormVals({ ...formVals, ...fieldsValue });
-
-    if (currentStep < 1) {
-      forward();
-    } else {
+    // setFormVals({ ...formVals, ...fieldsValue });
+    //
+    // if (currentStep < 1) {
+    //   forward();
+    // } else {
       handleUpdate({ ...formVals, ...fieldsValue });
-    }
+    // }
   };
 
   const renderContent = () => {
-    if (currentStep === 1) {
-      return (
-        <>
-          <FormItem name="category" label="分类">
-            <Checkbox.Group>
-                <Row>
-                  <Col span={8}>
-                    <Checkbox
-                      value="newest"
-                      style={{
-                        lineHeight: '32px',
-                      }}
-                    >
-                      最新上架
-                    </Checkbox>
-                  </Col>
-                  <Col span={8}>
-                    <Checkbox
-                      value="hottest"
-                      style={{
-                        lineHeight: '32px',
-                      }}
-
-                    >
-                      人气最高
-                    </Checkbox>
-                  </Col>
-                  <Col span={8}>
-                    <Checkbox
-                      value="star"
-                      style={{
-                        lineHeight: '32px',
-                      }}
-                    >
-                      明星
-                    </Checkbox>
-                  </Col>
-                  <Col span={8}>
-                    <Checkbox
-                      value="producer"
-                      style={{
-                        lineHeight: '32px',
-                      }}
-                    >
-                      制作公司
-                    </Checkbox>
-                  </Col>
-                  <Col span={8}>
-                    <Checkbox
-                      value="exclusive"
-                      style={{
-                        lineHeight: '32px',
-                      }}
-                    >
-                      独家内容
-                    </Checkbox>
-                  </Col>
-                  <Col span={8}>
-                    <Checkbox
-                      value="normal"
-                      style={{
-                        lineHeight: '32px',
-                      }}
-                    >
-                      正常
-                    </Checkbox>
-                  </Col>
-                </Row>
-            </Checkbox.Group>
-          </FormItem>
-          <FormItem name="lower_banner" label="底标">
-            <Select style={{ width: '100%' }}>
-              <Option value="free">免费</Option>
-              <Option value="discount">折扣</Option>
-              <Option value="event">限免</Option>
-              <Option value="premium">精品</Option>
-              <Option value="collection">收藏</Option>
-              <Option value="liked">喜欢</Option>
-              <Option value="none">无</Option>
-            </Select>
-          </FormItem>
-          <FormItem name="top_right" label="右上角标">
-            <Select style={{ width: '100%' }}>
-              <Option value="free">免费</Option>
-              <Option value="discount">折扣</Option>
-              <Option value="event">限免</Option>
-              <Option value="premium">精品</Option>
-              <Option value="collection">收藏</Option>
-              <Option value="liked">喜欢</Option>
-              <Option value="none">无</Option>
-            </Select>
-          </FormItem>
-
-        </>
-      );
-    }
+    // if (currentStep === 1) {
+    //   return (
+    //     <>
+    //       <FormItem name="category" label="分类">
+    //         <Checkbox.Group>
+    //             <Row>
+    //               <Col span={8}>
+    //                 <Checkbox
+    //                   value="newest"
+    //                   style={{
+    //                     lineHeight: '32px',
+    //                   }}
+    //                 >
+    //                   最新上架
+    //                 </Checkbox>
+    //               </Col>
+    //               <Col span={8}>
+    //                 <Checkbox
+    //                   value="hottest"
+    //                   style={{
+    //                     lineHeight: '32px',
+    //                   }}
+    //
+    //                 >
+    //                   人气最高
+    //                 </Checkbox>
+    //               </Col>
+    //               <Col span={8}>
+    //                 <Checkbox
+    //                   value="star"
+    //                   style={{
+    //                     lineHeight: '32px',
+    //                   }}
+    //                 >
+    //                   明星
+    //                 </Checkbox>
+    //               </Col>
+    //               <Col span={8}>
+    //                 <Checkbox
+    //                   value="producer"
+    //                   style={{
+    //                     lineHeight: '32px',
+    //                   }}
+    //                 >
+    //                   制作公司
+    //                 </Checkbox>
+    //               </Col>
+    //               <Col span={8}>
+    //                 <Checkbox
+    //                   value="exclusive"
+    //                   style={{
+    //                     lineHeight: '32px',
+    //                   }}
+    //                 >
+    //                   独家内容
+    //                 </Checkbox>
+    //               </Col>
+    //               <Col span={8}>
+    //                 <Checkbox
+    //                   value="normal"
+    //                   style={{
+    //                     lineHeight: '32px',
+    //                   }}
+    //                 >
+    //                   正常
+    //                 </Checkbox>
+    //               </Col>
+    //             </Row>
+    //         </Checkbox.Group>
+    //       </FormItem>
+    //
+    //
+    //     </>
+    //   );
+    // }
     // if (currentStep === 2) {
     //   return (
     //     <>
@@ -197,25 +173,26 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       <>
         <FormItem
           name="id"
-          label="视频ID"
+          label="ID"
         >
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
         <FormItem
-          name="video_no"
-          label="番号"
+          name="announce_no"
+          label="公告NO"
         >
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
         <FormItem
-          name="title"
-          label="标题"
+          name="content_english"
+          label="英文公告"
+          rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
         >
-          <Input placeholder="请输入" />
+          <TextArea rows={4} placeholder="请输入至少五个字符" />
         </FormItem>
         <FormItem
-          name="intro"
-          label="视频简介"
+          name="content_japanese"
+          label="日文公告"
           rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
         >
           <TextArea rows={4} placeholder="请输入至少五个字符" />
@@ -225,19 +202,16 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   };
 
   const renderFooter = () => {
-    if (currentStep === 1) {
+    // if (currentStep === 1) {
       return (
         <>
-          <Button style={{ float: 'left' }} onClick={backward}>
-            上一步
-          </Button>
           <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
           <Button type="primary" onClick={() => handleNext()}>
             完成
           </Button>
         </>
       );
-    }
+    // }
     // if (currentStep === 2) {
     //   return (
     //     <>
@@ -251,14 +225,14 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     //     </>
     //   );
     // }
-    return (
-      <>
-        <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
-        <Button type="primary" onClick={() => handleNext()}>
-          下一步
-        </Button>
-      </>
-    );
+    // return (
+    //   <>
+    //     <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
+    //     <Button type="primary" onClick={() => handleNext()}>
+    //       下一步
+    //     </Button>
+    //   </>
+    // );
   };
 
   return (
@@ -266,26 +240,23 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       width={640}
       bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
-      title="视频资源配置"
+      title="公告内容配置"
       visible={updateModalVisible}
       footer={renderFooter()}
       onCancel={() => handleUpdateModalVisible()}
     >
-      <Steps style={{ marginBottom: 28 }} size="small" current={currentStep}>
-        <Step title="基本信息" />
-        <Step title="配置分类" />
+      <Steps style={{ marginBottom: 28 }} size="small" >
+        <Step title="公告内容" />
       </Steps>
       <Form
         {...formLayout}
         form={form}
         initialValues={{
-          video_no: formVals.video_no,
+          announce_no: formVals.announce_no,
           id: formVals.id,
-          intro: formVals.intro,
-          lower_banner: formVals.lower_banner,
-          title:formVals.title,
-          top_right:formVals.top_right,
-          category:formVals.category,
+          content_english: formVals.content_english,
+          content_japanese: formVals.content_japanese,
+
 
         }}
       >

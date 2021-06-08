@@ -22,6 +22,7 @@ export interface TableListData {
 }
 
 export interface TableListParams {
+  id?: string;
   status?: string;
   name?: string;
   desc?: string;

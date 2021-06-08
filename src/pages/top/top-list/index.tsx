@@ -191,7 +191,7 @@ const TableList: React.FC<{}> = () => {
       <ProTable<TableListItem>
         headerTitle="查询视频"
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         search={{
           labelWidth: 120,
         }}
@@ -211,22 +211,11 @@ const TableList: React.FC<{}> = () => {
           extra={
             <div>
               已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
-              <span>
-                服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万
-              </span>
+
             </div>
           }
         >
-          <Button
-            onClick={async () => {
-              await handleRemove(selectedRowsState);
-              setSelectedRows([]);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            批量删除
-          </Button>
-          <Button type="primary">批量审批</Button>
+
         </FooterToolbar>
       )}
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
@@ -240,7 +229,7 @@ const TableList: React.FC<{}> = () => {
               }
             }
           }}
-          rowKey="key"
+          rowKey="id"
           type="form"
           columns={columns}
         />

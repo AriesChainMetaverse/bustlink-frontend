@@ -7,16 +7,16 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import {updateRule, addRule, removeRule, queryTopList, updateTopList} from './service';
+import {updateAnnounce, addAnnounce, removeAnnounce, queryAnnounceList} from './service';
 
 /**
- * 添加节点
+ * 添加公告
  * @param fields
  */
 const handleAdd = async (fields: TableListItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addRule({ ...fields });
+    await addAnnounce({ ...fields });
     hide();
     message.success('添加成功');
     return true;
@@ -34,13 +34,12 @@ const handleAdd = async (fields: TableListItem) => {
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
-    await updateTopList({
-      information_id:fields.id,
-      title: fields.title,
-      intro: fields.intro,
-      lower_banner: fields.lower_banner,
-      top_right: fields.top_right,
-      category: fields.category,
+    await updateAnnounce({
+      id:fields.id,
+      announce_no: fields.announce_no,
+      content_english: fields.content_english,
+      content_japanese: fields.content_japanese,
+
     });
     hide();
 
@@ -61,8 +60,8 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
+    await removeAnnounce({
+      ids: selectedRows.map((row) => row.id),
     });
     hide();
     message.success('删除成功，即将刷新');
@@ -87,86 +86,46 @@ const TableList: React.FC<{}> = () => {
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '视频番号',
-      dataIndex: 'video_no',
-      tip: '视频番号是唯一的',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '规则名称为必填项',
-          },
-        ],
-      },
+      title: '通知NO',
+      dataIndex: 'announce_no',
+      tip: '通知NO是唯一的',
+      hideInForm: true,
+
       // render: (dom, entity) => {
       //   return <a onClick={() => setRow(entity)}>{dom}</a>;
       // },
     },
     {
-      title: '标题',
-      dataIndex: 'title',
-      valueType: 'textarea',
-    },
-    {
-      title: '介绍',
-      dataIndex: 'intro',
+      title: '英文',
+      dataIndex: 'content_english',
       sorter: false,
-      hideInForm: true,
+      hideInForm: false,
       valueType: 'textarea',
-    },
-    {
-      title: '分类',
-      dataIndex: 'category',
-      sorter: false,
-      hideInForm: true,
-      valueType: 'textarea',
-      render: (text,record,index) => cateroryTrans(text),
-    },
-    {
-      title: '下角标',
-      dataIndex: 'lower_banner',
-      hideInForm: true,
-      valueEnum: {
-        'free': { text: '免费', status: 'free' },
-        'discount': { text: '折扣', status: 'discount' },
-        'event': { text: '限免', status: 'event' },
-        'premium': { text: '精品', status: 'premium' },
-        'collection': { text: '收藏', status: 'collection' },
-        'liked': { text: '喜欢', status: 'liked' },
-        'none': { text: '无', status: 'none' },
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '英文通知内容必填项',
+          },
+        ],
       },
     },
     {
-      title: '右上角标',
-      dataIndex: 'top_right',
-      hideInForm: true,
-      valueEnum: {
-        'free': { text: '免费', status: 'free' },
-        'discount': { text: '折扣', status: 'discount' },
-        'event': { text: '限免', status: 'event' },
-        'premium': { text: '精品', status: 'premium' },
-        'collection': { text: '收藏', status: 'collection' },
-        'liked': { text: '喜欢', status: 'liked' },
-        'none': { text: '无', status: 'none' },
+      title: '日文',
+      dataIndex: 'content_japanese',
+      sorter: false,
+      hideInForm: false,
+      valueType: 'textarea',
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '日文通知内容必填项',
+          },
+        ],
       },
     },
-    // {
-    //   title: '上次调度时间',
-    //   dataIndex: 'updatedAt',
-    //   sorter: true,
-    //   valueType: 'dateTime',
-    //   hideInForm: true,
-    //   renderFormItem: (item, { defaultRender, ...rest }, form) => {
-    //     const status = form.getFieldValue('status');
-    //     if (`${status}` === '0') {
-    //       return false;
-    //     }
-    //     if (`${status}` === '3') {
-    //       return <Input {...rest} placeholder="请输入异常原因！" />;
-    //     }
-    //     return defaultRender(item);
-    //   },
-    // },
+
     {
       title: '操作',
       dataIndex: 'option',
@@ -189,18 +148,18 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="查询视频"
+        headerTitle="公告列表"
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         search={{
           labelWidth: 120,
         }}
         toolBarRender={() => [
-          // <Button type="primary" onClick={() => handleModalVisible(true)}>
-          //   <PlusOutlined /> 新建
-          // </Button>,
+          <Button type="primary" onClick={() => handleModalVisible(true)}>
+            <PlusOutlined /> 新建
+          </Button>,
         ]}
-        request={(params, sorter, filter) => queryTopList({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => queryAnnounceList({ ...params, sorter, filter })}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => setSelectedRows(selectedRows),
@@ -212,7 +171,7 @@ const TableList: React.FC<{}> = () => {
             <div>
               已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
               <span>
-                服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万
+                {/*服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万*/}
               </span>
             </div>
           }
@@ -226,7 +185,6 @@ const TableList: React.FC<{}> = () => {
           >
             批量删除
           </Button>
-          <Button type="primary">批量审批</Button>
         </FooterToolbar>
       )}
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
@@ -240,7 +198,7 @@ const TableList: React.FC<{}> = () => {
               }
             }
           }}
-          rowKey="key"
+          rowKey="id"
           type="form"
           columns={columns}
         />

@@ -2,55 +2,23 @@ import request from 'umi-request';
 import { TableListParams } from './data.d';
 
 
-export async function queryTopList(params?: TableListParams) {
+export async function queryAnnounceList(params?: TableListParams) {
 
   //配合接口的分页变量名
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/admintoplist', {
+  const response = await request('/api/v0/adminannounce', {
     method:"GET", params
 
   });
 
-  //整理接口返回值符合Protable格式
-  let newData =[];
-  for(let i = 0; i < response.data.length; i++) {
-    let obj = {};
-    if(response.data[i].edges !== "" && response.data[i].edges !== undefined && JSON.stringify(response.data[i].edges) !== "{}"){
-      console.log(response.data[i].edges.admin_tops)
-      obj.id = response.data[i].id
-      obj.video_no = response.data[i].video_no
-      obj.title = response.data[i].edges.admin_tops[0].title
-      obj.intro = response.data[i].edges.admin_tops[0].intro
-      obj.lower_banner = response.data[i].edges.admin_tops[0].lower_banner
-      obj.top_right = response.data[i].edges.admin_tops[0].top_right
-
-      let newCategory = [];
-      response.data[i].edges.admin_tops.forEach(e => {
-        newCategory.push(e.category)
-      })
-      obj.category = newCategory
-
-    }else{
-      obj.id = response.data[i].id
-      obj.video_no = response.data[i].video_no
-      obj.title = ""
-      obj.intro = ""
-      obj.lower_banner = "none"
-      obj.top_right = "none"
-      obj.category = []
-    }
-    newData.push(obj)
-  }
-  response.data = newData
-  console.log(response)
   return response;
 }
 
-export async function removeRule(params: { key: number[] }) {
-  return request('/api/rule', {
-    method: 'POST',
+export async function removeAnnounce(params: { ids: number[] }) {
+  return request('/api/v0/adminannounce', {
+    method: 'DELETE',
     data: {
       ...params,
       method: 'delete',
@@ -58,8 +26,8 @@ export async function removeRule(params: { key: number[] }) {
   });
 }
 
-export async function addRule(params: TableListParams) {
-  return request('/api/rule', {
+export async function addAnnounce(params: TableListParams) {
+  return request('/api/v0/adminannounce', {
     method: 'POST',
     data: {
       ...params,
@@ -68,8 +36,8 @@ export async function addRule(params: TableListParams) {
   });
 }
 
-export async function updateTopList(params: TableListParams) {
-  return request(`/api/v0/admintoplist/${params.information_id}`, {
+export async function updateAnnounce(params: TableListParams) {
+  return request(`/api/v0/adminannounce/${params.id}`, {
     method: 'PUT',
     data: {
       ...params,
