@@ -86,9 +86,9 @@ const TableList: React.FC<{}> = () => {
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '通知NO',
+      title: '公告编号',
       dataIndex: 'announce_no',
-      tip: '通知NO是唯一的',
+      tip: '公告编号是唯一的',
       hideInForm: true,
 
       // render: (dom, entity) => {

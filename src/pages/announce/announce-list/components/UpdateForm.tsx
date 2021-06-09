@@ -179,7 +179,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         </FormItem>
         <FormItem
           name="announce_no"
-          label="公告NO"
+          label="公告编号"
         >
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>

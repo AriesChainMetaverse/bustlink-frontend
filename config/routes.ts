@@ -103,64 +103,64 @@
                   },
                 ],
               },
-              {
-                path: './list',
-                icon: 'table',
-                name: 'list',
-                routes: [
-                  {
-                    path: '../list/search',
-                    name: 'search-list',
-                    component: './list/search',
-                    routes: [
-                      {
-                        path: '/admin/list/search',
-                        redirect: '/list/search/articles',
-                      },
-                      {
-                        name: 'articles',
-                        icon: 'smile',
-                        path: '/admin/list/search/articles',
-                        component: './list/search/articles',
-                      },
-                      {
-                        name: 'projects',
-                        icon: 'smile',
-                        path: '/admin/list/search/projects',
-                        component: './list/search/projects',
-                      },
-                      {
-                        name: 'applications',
-                        icon: 'smile',
-                        path: '/admin/list/search/applications',
-                        component: './list/search/applications',
-                      },
-                    ],
-                  },
-                  {
-                    path: '/',
-                    redirect: '/list/table-list',
-                  },
-                  {
-                    name: 'table-list',
-                    icon: 'smile',
-                    path: '../list/table-list',
-                    component: './list/table-list',
-                  },
-                  {
-                    name: 'basic-list',
-                    icon: 'smile',
-                    path: '../list/basic-list',
-                    component: './list/basic-list',
-                  },
-                  {
-                    name: 'card-list',
-                    icon: 'smile',
-                    path: '../list/card-list',
-                    component: './list/card-list',
-                  },
-                ],
-              },
+              // {
+              //   path: './list',
+              //   icon: 'table',
+              //   name: 'list',
+              //   routes: [
+              //     {
+              //       path: '../list/search',
+              //       name: 'search-list',
+              //       component: './list/search',
+              //       routes: [
+              //         {
+              //           path: '/admin/list/search',
+              //           redirect: '/list/search/articles',
+              //         },
+              //         {
+              //           name: 'articles',
+              //           icon: 'smile',
+              //           path: '/admin/list/search/articles',
+              //           component: './list/search/articles',
+              //         },
+              //         {
+              //           name: 'projects',
+              //           icon: 'smile',
+              //           path: '/admin/list/search/projects',
+              //           component: './list/search/projects',
+              //         },
+              //         {
+              //           name: 'applications',
+              //           icon: 'smile',
+              //           path: '/admin/list/search/applications',
+              //           component: './list/search/applications',
+              //         },
+              //       ],
+              //     },
+              //     {
+              //       path: '/',
+              //       redirect: '/list/table-list',
+              //     },
+              //     {
+              //       name: 'table-list',
+              //       icon: 'smile',
+              //       path: '../list/table-list',
+              //       component: './list/table-list',
+              //     },
+              //     {
+              //       name: 'basic-list',
+              //       icon: 'smile',
+              //       path: '../list/basic-list',
+              //       component: './list/basic-list',
+              //     },
+              //     {
+              //       name: 'card-list',
+              //       icon: 'smile',
+              //       path: '../list/card-list',
+              //       component: './list/card-list',
+              //     },
+              //   ],
+              // },
               {
                 path: './profile',
                 name: 'profile',
@@ -207,35 +207,35 @@
                   },
                 ],
               },
-              {
-                name: 'exception',
-                icon: 'warning',
-                path: './exception',
-                routes: [
-                  {
-                    path: '/',
-                    redirect: '/exception/403',
-                  },
-                  {
-                    name: '403',
-                    icon: 'smile',
-                    path: '../exception/403',
-                    component: './exception/403',
-                  },
-                  {
-                    name: '404',
-                    icon: 'smile',
-                    path: '../exception/404',
-                    component: './exception/404',
-                  },
-                  {
-                    name: '500',
-                    icon: 'smile',
-                    path: '../exception/500',
-                    component: './exception/500',
-                  },
-                ],
-              },
+              // {
+              //   name: 'exception',
+              //   icon: 'warning',
+              //   path: './exception',
+              //   routes: [
+              //     {
+              //       path: '/',
+              //       redirect: '/exception/403',
+              //     },
+              //     {
+              //       name: '403',
+              //       icon: 'smile',
+              //       path: '../exception/403',
+              //       component: './exception/403',
+              //     },
+              //     {
+              //       name: '404',
+              //       icon: 'smile',
+              //       path: '../exception/404',
+              //       component: './exception/404',
+              //     },
+              //     {
+              //       name: '500',
+              //       icon: 'smile',
+              //       path: '../exception/500',
+              //       component: './exception/500',
+              //     },
+              //   ],
+              // },
               {
                 name: 'account',
                 icon: 'user',

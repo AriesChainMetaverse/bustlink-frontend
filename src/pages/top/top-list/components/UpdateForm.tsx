@@ -197,7 +197,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       <>
         <FormItem
           name="id"
-          label="视频ID"
+          label="编号"
         >
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
