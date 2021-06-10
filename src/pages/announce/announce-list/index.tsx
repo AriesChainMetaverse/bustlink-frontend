@@ -37,8 +37,10 @@ const handleUpdate = async (fields: FormValueType) => {
     await updateAnnounce({
       id:fields.id,
       announce_no: fields.announce_no,
-      content_english: fields.content_english,
-      content_japanese: fields.content_japanese,
+      title: fields.title,
+      content: fields.content,
+      kind: fields.kind,
+      link: fields.link,
 
     });
     hide();
@@ -96,8 +98,8 @@ const TableList: React.FC<{}> = () => {
       // },
     },
     {
-      title: '英文',
-      dataIndex: 'content_english',
+      title: '标题',
+      dataIndex: 'title',
       sorter: false,
       hideInForm: false,
       valueType: 'textarea',
@@ -105,14 +107,33 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '英文通知内容必填项',
+            message: '标题必填项',
           },
         ],
       },
     },
     {
-      title: '日文',
-      dataIndex: 'content_japanese',
+      title: '分类',
+      dataIndex: 'kind',
+      hideInForm: false,
+      valueEnum: {
+        'notice': { text: '系统通知', status: 'notice' },
+        'announcement': { text: '公告', status: 'announcement' },
+        'event': { text: '活动', status: 'event' },
+
+      },
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '分类必选',
+          },
+        ],
+      },
+    },
+    {
+      title: '内容',
+      dataIndex: 'content',
       sorter: false,
       hideInForm: false,
       valueType: 'textarea',
@@ -120,12 +141,26 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
+            message: '通知内容必填项',
+          },
+        ],
+      },
+    },
+    {
+      title: '链接',
+      dataIndex: 'link',
+      sorter: false,
+      hideInForm: false,
+      valueType: 'textarea',
+      formItemProps: {
+        rules: [
+          {
+            required: false,
             message: '日文通知内容必填项',
           },
         ],
       },
     },
-
     {
       title: '操作',
       dataIndex: 'option',

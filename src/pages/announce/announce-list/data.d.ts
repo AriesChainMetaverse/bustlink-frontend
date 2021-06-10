@@ -3,11 +3,11 @@ export interface TableListItem {
   id: string;
   information_id: string;
   video_no: string;
-  intro: string;
-  lower_banner: string;
+  link: string;
+  kind: string;
   title: string;
-  top_right: number;
-  category: array;
+  content: string;
+
 }
 
 export interface TableListPagination {
@@ -26,6 +26,10 @@ export interface TableListParams {
   status?: string;
   name?: string;
   desc?: string;
+  link: string;
+  kind: string;
+  title: string;
+  content: string;
   key?: number;
   pageSize?: number;
   currentPage?: number;

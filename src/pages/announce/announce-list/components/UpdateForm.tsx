@@ -6,8 +6,10 @@ import { TableListItem } from '../data.d';
 export interface FormValueType extends Partial<TableListItem> {
   id?: string;
   announce_no?: string;
-  content_english?: string;
-  content_japanese?: string;
+  title?: string;
+  content?: string;
+  kind?: string;
+  link?: string;
 }
 
 export interface UpdateFormProps {
@@ -37,8 +39,10 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
 
     announce_no: props.values.announce_no,
     id: props.values.id,
-    content_english: props.values.content_english,
-    content_japanese: props.values.content_japanese,
+    title: props.values.title,
+    content: props.values.content,
+    kind: props.values.kind,
+    link: props.values.link,
 
   });
 
@@ -70,105 +74,6 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   };
 
   const renderContent = () => {
-    // if (currentStep === 1) {
-    //   return (
-    //     <>
-    //       <FormItem name="category" label="分类">
-    //         <Checkbox.Group>
-    //             <Row>
-    //               <Col span={8}>
-    //                 <Checkbox
-    //                   value="newest"
-    //                   style={{
-    //                     lineHeight: '32px',
-    //                   }}
-    //                 >
-    //                   最新上架
-    //                 </Checkbox>
-    //               </Col>
-    //               <Col span={8}>
-    //                 <Checkbox
-    //                   value="hottest"
-    //                   style={{
-    //                     lineHeight: '32px',
-    //                   }}
-    //
-    //                 >
-    //                   人气最高
-    //                 </Checkbox>
-    //               </Col>
-    //               <Col span={8}>
-    //                 <Checkbox
-    //                   value="star"
-    //                   style={{
-    //                     lineHeight: '32px',
-    //                   }}
-    //                 >
-    //                   明星
-    //                 </Checkbox>
-    //               </Col>
-    //               <Col span={8}>
-    //                 <Checkbox
-    //                   value="producer"
-    //                   style={{
-    //                     lineHeight: '32px',
-    //                   }}
-    //                 >
-    //                   制作公司
-    //                 </Checkbox>
-    //               </Col>
-    //               <Col span={8}>
-    //                 <Checkbox
-    //                   value="exclusive"
-    //                   style={{
-    //                     lineHeight: '32px',
-    //                   }}
-    //                 >
-    //                   独家内容
-    //                 </Checkbox>
-    //               </Col>
-    //               <Col span={8}>
-    //                 <Checkbox
-    //                   value="normal"
-    //                   style={{
-    //                     lineHeight: '32px',
-    //                   }}
-    //                 >
-    //                   正常
-    //                 </Checkbox>
-    //               </Col>
-    //             </Row>
-    //         </Checkbox.Group>
-    //       </FormItem>
-    //
-    //
-    //     </>
-    //   );
-    // }
-    // if (currentStep === 2) {
-    //   return (
-    //     <>
-    //       <FormItem
-    //         name="time"
-    //         label="开始时间"
-    //         rules={[{ required: true, message: '请选择开始时间！' }]}
-    //       >
-    //         <DatePicker
-    //           style={{ width: '100%' }}
-    //           showTime
-    //           format="YYYY-MM-DD HH:mm:ss"
-    //           placeholder="选择开始时间"
-    //         />
-    //       </FormItem>
-    //       <FormItem name="frequency" label="调度周期">
-    //         <Select style={{ width: '100%' }}>
-    //           <Option value="month">月</Option>
-    //           <Option value="week">周</Option>
-    //         </Select>
-    //       </FormItem>
-    //     </>
-    //   );
-    // }
     return (
       <>
         <FormItem
@@ -184,16 +89,31 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
         <FormItem
-          name="content_english"
-          label="英文公告"
+          name="title"
+          label="标题"
+          rules={[{ required: true, message: '请输入至少两个字符的描述！', min: 2 }]}
+        >
+          <TextArea rows={4} placeholder="请输入至少两个字符" />
+        </FormItem>
+        <FormItem name="kind" label="分类">
+          <Select style={{ width: '100%' }}>
+            <Option value="notice">系统通知</Option>
+            <Option value="event">活动</Option>
+            <Option value="announcement">公告</Option>
+
+          </Select>
+        </FormItem>
+        <FormItem
+          name="content"
+          label="公告内容"
           rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
         >
           <TextArea rows={4} placeholder="请输入至少五个字符" />
         </FormItem>
         <FormItem
-          name="content_japanese"
-          label="日文公告"
-          rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
+          name="link"
+          label="链接"
+          rules={[{ required: false, message: '请输入至少五个字符的描述！', min: 5 }]}
         >
           <TextArea rows={4} placeholder="请输入至少五个字符" />
         </FormItem>
@@ -240,13 +160,13 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       width={640}
       bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
-      title="公告内容配置"
+      title="通知内容配置"
       visible={updateModalVisible}
       footer={renderFooter()}
       onCancel={() => handleUpdateModalVisible()}
     >
       <Steps style={{ marginBottom: 28 }} size="small" >
-        <Step title="公告内容" />
+        <Step title="通知内容" />
       </Steps>
       <Form
         {...formLayout}
@@ -254,8 +174,10 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         initialValues={{
           announce_no: formVals.announce_no,
           id: formVals.id,
-          content_english: formVals.content_english,
-          content_japanese: formVals.content_japanese,
+          title: formVals.title,
+          content: formVals.content,
+          kind: formVals.kind,
+          link: formVals.link,
 
 
         }}
