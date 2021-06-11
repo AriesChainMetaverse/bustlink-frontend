@@ -107,7 +107,7 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '标题必填项',
+            message: '标题必填',
           },
         ],
       },
@@ -156,7 +156,7 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: false,
-            message: '日文通知内容必填项',
+            message: '链接选填',
           },
         ],
       },
