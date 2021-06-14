@@ -1,30 +1,24 @@
-export interface TableListItem {
-  key: number;
-  disabled?: boolean;
-  href: string;
-  avatar: string;
-  name: string;
-  owner: string;
-  desc: string;
-  callNo: number;
-  status: string;
-  updatedAt: Date;
-  createdAt: Date;
-  progress: number;
+export interface InstructListItem {
+  id: number;
+  rid: string;
+  type: string;
+  state: string;
+  updated_unix: bigint;
+  created_unix: bigint;
 }
 
-export interface TableListPagination {
+export interface InstructListPagination {
   total: number;
   pageSize: number;
   current: number;
 }
 
-export interface TableListData {
-  list: TableListItem[];
-  pagination: Partial<TableListPagination>;
+export interface InstructListData {
+  list: InstructListItem[];
+  pagination: Partial<InstructListPagination>;
 }
 
-export interface TableListParams {
+export interface InstructListParams {
   status?: string;
   name?: string;
   desc?: string;
