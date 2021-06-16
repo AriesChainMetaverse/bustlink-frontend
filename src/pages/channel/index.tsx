@@ -247,6 +247,9 @@ const ChannelList: React.FC<ChannelListProps> = (props) => {
           <Button type='ghost' onClick={() => syncTransferInfo()}>
             <SyncOutlined /> 同步
           </Button>,
+          <Button type='ghost' onClick={() => syncTransferInfo()}>
+            <SyncOutlined /> Instruct同步
+          </Button>,
         ]}
         request={async () => {
           dispatch({
