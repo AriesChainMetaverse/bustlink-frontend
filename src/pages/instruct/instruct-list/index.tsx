@@ -80,9 +80,9 @@ const TableList: React.FC<{}> = () => {
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '规则名称',
-      dataIndex: 'name',
-      tip: '规则名称是唯一的 key',
+      title: '编号',
+      dataIndex: 'id',
+      tip: '编号是唯一的 key',
       formItemProps: {
         rules: [
           {
@@ -96,26 +96,19 @@ const TableList: React.FC<{}> = () => {
       },
     },
     {
-      title: '描述',
-      dataIndex: 'desc',
+      title: '视频编号',
+      dataIndex: 'video_no',
       valueType: 'textarea',
     },
+
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
-      sorter: true,
-      hideInForm: true,
-      renderText: (val: string) => `${val} 万`,
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
+      title: '动作状态',
+      dataIndex: 'action',
       hideInForm: true,
       valueEnum: {
-        0: { text: '关闭', status: 'Default' },
-        1: { text: '运行中', status: 'Processing' },
-        2: { text: '已上线', status: 'Success' },
-        3: { text: '异常', status: 'Error' },
+        'none': { text: '关闭', status: 'none' },
+        'pin': { text: 'pin', status: 'pin' },
+        'unpin': { text: 'unpin', status: 'unpin' },
       },
     },
     {

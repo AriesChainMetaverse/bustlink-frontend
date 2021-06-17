@@ -102,3 +102,10 @@ export async function channelSyncTransferInfo(params: ChannelTransferSyncRequest
     params,
   });
 }
+
+export async function channelSyncInstructInfo(params: ChannelTransferSyncRequestParams){
+  return request(`/api/v0/sync/instruct`, {
+    method: 'POST',
+    params,
+  });
+}

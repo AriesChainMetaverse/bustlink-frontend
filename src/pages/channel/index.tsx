@@ -12,7 +12,7 @@ import type { ChannelItem } from './data.d';
 import type { Dispatch } from 'umi';
 import { connect } from 'umi';
 import type { StateType } from './model';
-import { addChannel, addChannelInfos, channelSyncTransferInfo, syncTransferChannelInfo } from '@/pages/channel/service';
+import { addChannel, addChannelInfos, channelSyncTransferInfo ,channelSyncInstructInfo} from '@/pages/channel/service';
 import AddChannelForm, { ChannelFormValueType } from '@/pages/channel/components/AddChannelForm';
 
 interface ChannelListProps {
@@ -145,6 +145,15 @@ const ChannelList: React.FC<ChannelListProps> = (props) => {
     }
   }
 
+  async function syncInstructInfo() {
+    const resp = await channelSyncInstructInfo({});
+    if (resp.status === 'success') {
+      message.success(resp.message);
+    } else {
+      message.error(resp.message);
+    }
+  }
+
   const {
     dispatch,
     listAndChannelList: { itemList },
@@ -247,7 +256,7 @@ const ChannelList: React.FC<ChannelListProps> = (props) => {
           <Button type='ghost' onClick={() => syncTransferInfo()}>
             <SyncOutlined /> 同步
           </Button>,
-          <Button type='ghost' onClick={() => syncTransferInfo()}>
+          <Button type='ghost' onClick={() => syncInstructInfo()}>
             <SyncOutlined /> Instruct同步
           </Button>,
         ]}
