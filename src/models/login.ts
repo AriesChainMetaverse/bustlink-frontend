@@ -51,6 +51,9 @@ const Model: LoginModelType = {
           type: 'changeLoginStatus',
           payload: response1,
         });
+        localStorage.setItem("name",response1.data[0].name)
+        localStorage.setItem("permission",response1.data[0].permission)
+
 
         let { redirect } = params as { redirect: string };
         if (redirect) {
