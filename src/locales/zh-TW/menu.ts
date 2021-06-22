@@ -49,4 +49,30 @@ export default {
   'menu.editor.flow': '流程編輯器',
   'menu.editor.mind': '腦圖編輯器',
   'menu.editor.koni': '拓撲編輯器',
+  'menu.users': '用户',
+  'menu.users.user-list': '用户列表',
+
+  'menu.channel': '频道',
+  'menu.channel.channel-list': '频道列表',
+
+  'menu.information': '信息',
+  'menu.information.information-list': '信息列表',
+
+  'menu.content': '内容',
+  'menu.content.content-list': '内容列表',
+
+  'menu.scrape': '爬虫',
+  'menu.scrape.scrape-list': '爬虫列表',
+
+  'menu.tagMapping': '标签映射',
+  'menu.tagMapping.tagMapping-list': '标签映射列表',
+
+  'menu.instruct': '指令',
+  'menu.instruct.instruct-list': '指令列表',
+
+  'menu.top': '客户端首页',
+  'menu.top.top-list': '客户端首页信息',
+
+  'menu.announce': '通知',
+  'menu.announce.announce-list': '通知列表',
 };

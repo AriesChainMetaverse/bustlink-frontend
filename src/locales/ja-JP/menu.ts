@@ -49,4 +49,32 @@ export default {
   'menu.editor.flow': 'フローエディタ',
   'menu.editor.mind': 'マインドエディター',
   'menu.editor.koni': 'コニエディター',
+
+  'menu.users': 'ユーザー',
+  'menu.users.user-list': 'ユーザーリスト',
+
+  'menu.channel': 'チャンネル',
+  'menu.channel.channel-list': 'チャンネルリスト',
+
+  'menu.information': '詳細情報',
+  'menu.information.information-list': '詳細情報リスト',
+
+  'menu.content': '内容',
+  'menu.content.content-list': '内容リスト',
+
+  'menu.scrape': 'ネット爬虫',
+  'menu.scrape.scrape-list': 'ネット爬虫リスト',
+
+  'menu.tagMapping': 'タックマッピング',
+  'menu.tagMapping.tagMapping-list': 'タックマッピングリスト',
+
+  'menu.instruct': '命令',
+  'menu.instruct.instruct-list': '命令リスト',
+
+  'menu.top': 'トップ',
+  'menu.top.top-list': 'トップリスト',
+
+  'menu.announce': 'アナウンス',
+  'menu.announce.announce-list': 'アナウンスリスト',
+
 };
