@@ -76,7 +76,8 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     if (currentStep === 1) {
       return (
         <>
-          <FormItem name="category" label="分类">
+          <FormItem name="category" label="分类"
+                    rules={[{ required: true, message: '请设置视频资源属性'}]}>
             <Checkbox.Group>
                 <Row>
                   <Col span={8}>

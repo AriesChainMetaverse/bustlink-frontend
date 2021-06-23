@@ -106,12 +106,15 @@ const TableList: React.FC<{}> = () => {
       title: '标题',
       dataIndex: 'title',
       valueType: 'textarea',
+      hideInForm: true,
+      hideInSearch: true,
     },
     {
       title: '介绍',
       dataIndex: 'intro',
       sorter: false,
       hideInForm: true,
+      hideInSearch: true,
       valueType: 'textarea',
     },
     {
@@ -119,6 +122,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'category',
       sorter: false,
       hideInForm: true,
+      hideInSearch: true,
       valueType: 'textarea',
       render: (text,record,index) => cateroryTrans(text),
     },

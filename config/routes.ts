@@ -41,7 +41,7 @@
             path: '/',
             component: '../layouts/BasicLayout',
             // authority: ['admin', 'user'],
-            routes: [{path:'/',redirect:'./dashboard/analysis'},
+            routes: [{path:'/',redirect:'./dashboard/monitor'},
 
               {
                 path: './dashboard',
@@ -184,29 +184,29 @@
                   },
                 ],
               },
-              {
-                name: 'result',
-                icon: 'CheckCircleOutlined',
-                path: './result',
-                routes: [
-                  {
-                    path: '/',
-                    redirect: '/result/success',
-                  },
-                  {
-                    name: 'success',
-                    icon: 'smile',
-                    path: '../result/success',
-                    component: './result/success',
-                  },
-                  {
-                    name: 'fail',
-                    icon: 'smile',
-                    path: '../result/fail',
-                    component: './result/fail',
-                  },
-                ],
-              },
+              // {
+              //   name: 'result',
+              //   icon: 'CheckCircleOutlined',
+              //   path: './result',
+              //   routes: [
+              //     {
+              //       path: '/',
+              //       redirect: '/result/success',
+              //     },
+              //     {
+              //       name: 'success',
+              //       icon: 'smile',
+              //       path: '../result/success',
+              //       component: './result/success',
+              //     },
+              //     {
+              //       name: 'fail',
+              //       icon: 'smile',
+              //       path: '../result/fail',
+              //       component: './result/fail',
+              //     },
+              //   ],
+              // },
               // {
               //   name: 'exception',
               //   icon: 'warning',
