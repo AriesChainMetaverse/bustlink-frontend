@@ -74,35 +74,35 @@
                   },
                 ],
               },
-              {
-                path: './form',
-                icon: 'form',
-                name: 'form',
-                routes: [
-                  {
-                    path: '/',
-                    redirect: '/form/basic-form',
-                  },
-                  {
-                    name: 'basic-form',
-                    icon: 'smile',
-                    path: '../form/basic-form',
-                    component: './form/basic-form',
-                  },
-                  {
-                    name: 'step-form',
-                    icon: 'smile',
-                    path: '../form/step-form',
-                    component: './form/step-form',
-                  },
-                  {
-                    name: 'advanced-form',
-                    icon: 'smile',
-                    path: '../form/advanced-form',
-                    component: './form/advanced-form',
-                  },
-                ],
-              },
+              // {
+              //   path: './form',
+              //   icon: 'form',
+              //   name: 'form',
+              //   routes: [
+              //     {
+              //       path: '/',
+              //       redirect: '/form/basic-form',
+              //     },
+              //     {
+              //       name: 'basic-form',
+              //       icon: 'smile',
+              //       path: '../form/basic-form',
+              //       component: './form/basic-form',
+              //     },
+              //     {
+              //       name: 'step-form',
+              //       icon: 'smile',
+              //       path: '../form/step-form',
+              //       component: './form/step-form',
+              //     },
+              //     {
+              //       name: 'advanced-form',
+              //       icon: 'smile',
+              //       path: '../form/advanced-form',
+              //       component: './form/advanced-form',
+              //     },
+              //   ],
+              // },
               // {
               //   path: './list',
               //   icon: 'table',
@@ -161,29 +161,29 @@
               //     },
               //   ],
               // },
-              {
-                path: './profile',
-                name: 'profile',
-                icon: 'profile',
-                routes: [
-                  {
-                    path: '/',
-                    redirect: '/profile/basic',
-                  },
-                  {
-                    name: 'basic',
-                    icon: 'smile',
-                    path: '../profile/basic',
-                    component: './profile/basic',
-                  },
-                  {
-                    name: 'advanced',
-                    icon: 'smile',
-                    path: '../profile/advanced',
-                    component: './profile/advanced',
-                  },
-                ],
-              },
+              // {
+              //   path: './profile',
+              //   name: 'profile',
+              //   icon: 'profile',
+              //   routes: [
+              //     {
+              //       path: '/',
+              //       redirect: '/profile/basic',
+              //     },
+              //     {
+              //       name: 'basic',
+              //       icon: 'smile',
+              //       path: '../profile/basic',
+              //       component: './profile/basic',
+              //     },
+              //     {
+              //       name: 'advanced',
+              //       icon: 'smile',
+              //       path: '../profile/advanced',
+              //       component: './profile/advanced',
+              //     },
+              //   ],
+              // },
               // {
               //   name: 'result',
               //   icon: 'CheckCircleOutlined',
@@ -236,58 +236,58 @@
               //     },
               //   ],
               // },
-              {
-                name: 'account',
-                icon: 'user',
-                path: './account',
-                routes: [
-                  {
-                    path: '/',
-                    redirect: '/account/center',
-                  },
-                  {
-                    name: 'center',
-                    icon: 'smile',
-                    path: '../account/center',
-                    component: './account/center',
-                  },
-                  {
-                    name: 'settings',
-                    icon: 'smile',
-                    path: '../account/settings',
-                    component: './account/settings',
-                  },
-                ],
-              },
-              {
-                name: 'editor',
-                icon: 'highlight',
-                path: './editor',
-                routes: [
-                  {
-                    path: '/',
-                    redirect: '/editor/flow',
-                  },
-                  {
-                    name: 'flow',
-                    icon: 'smile',
-                    path: '../editor/flow',
-                    component: './editor/flow',
-                  },
-                  {
-                    name: 'mind',
-                    icon: 'smile',
-                    path: '../editor/mind',
-                    component: './editor/mind',
-                  },
-                  {
-                    name: 'koni',
-                    icon: 'smile',
-                    path: '../editor/koni',
-                    component: './editor/koni',
-                  },
-                ],
-              },
+              // {
+              //   name: 'account',
+              //   icon: 'user',
+              //   path: './account',
+              //   routes: [
+              //     {
+              //       path: '/',
+              //       redirect: '/account/center',
+              //     },
+              //     {
+              //       name: 'center',
+              //       icon: 'smile',
+              //       path: '../account/center',
+              //       component: './account/center',
+              //     },
+              //     {
+              //       name: 'settings',
+              //       icon: 'smile',
+              //       path: '../account/settings',
+              //       component: './account/settings',
+              //     },
+              //   ],
+              // },
+              // {
+              //   name: 'editor',
+              //   icon: 'highlight',
+              //   path: './editor',
+              //   routes: [
+              //     {
+              //       path: '/',
+              //       redirect: '/editor/flow',
+              //     },
+              //     {
+              //       name: 'flow',
+              //       icon: 'smile',
+              //       path: '../editor/flow',
+              //       component: './editor/flow',
+              //     },
+              //     {
+              //       name: 'mind',
+              //       icon: 'smile',
+              //       path: '../editor/mind',
+              //       component: './editor/mind',
+              //     },
+              //     {
+              //       name: 'koni',
+              //       icon: 'smile',
+              //       path: '../editor/koni',
+              //       component: './editor/koni',
+              //     },
+              //   ],
+              // },
               {
                 path: '/users',
                 icon: 'table',
