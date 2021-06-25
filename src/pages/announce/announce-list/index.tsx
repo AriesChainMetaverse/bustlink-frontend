@@ -8,6 +8,7 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import {updateAnnounce, addAnnounce, removeAnnounce, queryAnnounceList} from './service';
+import Editor from "for-editor";
 
 /**
  * 添加公告
@@ -136,7 +137,10 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'content',
       sorter: false,
       hideInForm: false,
-      valueType: 'textarea',
+      // valueType: 'textarea',
+      renderFormItem: (item,{value, onChange} ) => {
+        return <Editor value={value} onChange={onChange}allowClear/>
+      },
       formItemProps: {
         rules: [
           {

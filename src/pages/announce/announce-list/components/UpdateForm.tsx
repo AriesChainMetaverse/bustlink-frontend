@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps ,Checkbox,Row,Col} from 'antd';
 
+import Editor from 'for-editor';
+
 import { TableListItem } from '../data.d';
 
 export interface FormValueType extends Partial<TableListItem> {
@@ -73,6 +75,9 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     // }
   };
 
+
+
+
   const renderContent = () => {
     return (
       <>
@@ -108,7 +113,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           label="公告内容"
           rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
         >
-          <TextArea rows={4} placeholder="请输入至少五个字符" />
+          <Editor />
         </FormItem>
         <FormItem
           name="link"
@@ -157,7 +162,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
 
   return (
     <Modal
-      width={640}
+      width={1000}
       bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
       title="通知内容配置"
@@ -165,9 +170,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       footer={renderFooter()}
       onCancel={() => handleUpdateModalVisible()}
     >
-      <Steps style={{ marginBottom: 28 }} size="small" >
-        <Step title="通知内容" />
-      </Steps>
+
       <Form
         {...formLayout}
         form={form}

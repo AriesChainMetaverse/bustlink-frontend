@@ -11,6 +11,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
 
   return (
     <Modal
+      width={1000}
       destroyOnClose
       title="新建公告通知"
       visible={modalVisible}
