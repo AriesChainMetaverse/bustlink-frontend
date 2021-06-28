@@ -410,6 +410,20 @@
                 ],
               },
               {
+                path: './update',
+                icon: 'table',
+                authority: ['admin', 'user'],//权限控制
+                name: 'update',
+                routes: [
+                  {
+                    name: 'update-list',
+                    icon: 'smile',
+                    path: '../update/update-list',
+                    component: './update/update-list',
+                  },
+                ],
+              },
+              {
                 component: '404',
               },
 
