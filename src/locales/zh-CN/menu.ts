@@ -75,4 +75,7 @@ export default {
 
   'menu.announce': '通知',
   'menu.announce.announce-list': '通知列表',
+
+  'menu.update': '更新包',
+  'menu.update.update-list': '更新包列表',
 };

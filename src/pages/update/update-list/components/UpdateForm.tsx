@@ -15,6 +15,9 @@ export interface FormValueType extends Partial<TableListItem> {
   detail?: string;
   forcibly?: boolean;
   publish?: boolean;
+  rid?: string;
+  crc32?: string;
+
 }
 
 export interface UpdateFormProps {
@@ -42,6 +45,7 @@ const formLayout = {
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const [formVals, setFormVals] = useState<FormValueType>({
 
+    id: props.values.id,
     os: props.values.os,
     arch: props.values.arch,
     version: props.values.version,
@@ -51,6 +55,8 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     detail: props.values.detail,
     forcibly: props.values.forcibly,
     publish: props.values.publish,
+    rid: props.values.rid,
+    crc32: props.values.crc32,
 
   });
 
@@ -81,13 +87,13 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     // }
   };
 
-// 拦截文件上传
-  const beforeUploadHandle=(file)=>{
-    setState(({fileData})=>({
-      fileData:[...fileData,file],
-    }))
-    return false;
-  }
+// // 拦截文件上传
+//   const beforeUploadHandle=(file)=>{
+//     setState(({fileData})=>({
+//       fileData:[...fileData,file],
+//     }))
+//     return false;
+//   }
 //
 
 
@@ -162,7 +168,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           label="内容"
           rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
         >
-          <Editor />
+          <TextArea rows={4} placeholder="请输入至少五个字符" />
         </FormItem>
 
       </>
@@ -228,6 +234,8 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           detail: formVals.detail,
           publish: formVals.publish,
           forcibly: formVals.forcibly,
+          rid: formVals.rid,
+          crc32: formVals.crc32,
 
 
         }}

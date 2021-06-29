@@ -21,27 +21,22 @@ const formLayout = {
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const CreateForm: React.FC<UpdateFormProps> = (props) => {
-  // const { modalVisible, onCancel } = props;
-  // const [formVals, setFormVals] = useState<FormValueType>({
-  //
-  //   os: props.values.os,
-  //   arch: props.values.arch,
-  //   version: props.values.version,
-  //   filename: props.values.filename,
-  //   attr: props.values.attr,
-  //   title: props.values.title,
-  //   detail: props.values.detail,
-  //   exeFile: props.values.exeFile,
-  //
-  //
-  // });
+  const { modalVisible, onCancel } = props;
+  const [formVals, setFormVals] = useState<FormValueType>({
 
-  const [exefile, setExefile] = useState<string>("");
+    os: "",
+    arch: "",
+    version: "",
+    attr: "",
+    title: "",
+    detail: "",
+
+
+  });
 
   const {
     onSubmit: handleCreate,
     onCancel: handleModalVisible,
-    modalVisible,
     values,
     // fileList,
     // showUploadList: false,
@@ -53,32 +48,19 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
 
   const [form] = Form.useForm();
 
-  const beforeUploadHandle= (file) =>{
-    console.log(file)
-
-    setExefile(file)
-
-    form.setFieldsValue({"exeFile":file})
-    // let { name } = file;
-    // var fileExtension = name.substring(name.lastIndexOf('.') + 1);//截取文件后缀名
-    // this.props.form.setFieldsValue({ 'filename': name, 'filetype': fileExtension });//选择完文件后把文件名和后缀名自动填入表单
-    // this.setState(state => ({
-    //   fileList: [...state.fileList, file],
-    // }));
-    return false;
-  }
+  // const beforeUploadHandle= (file) =>{
+  //   console.log(file)
+  //   setExefile(file)
+  //   form.setFieldsValue({"exeFile":file})
+  //   return false;
+  // }
 
   const handleNext = async () => {
+    const fieldsValue = await form.validateFields();
 
-    const formData = new FormData();
-
-    formData.append('exeFile', exefile);
-    formData.append('version',form.getFieldsValue(['version']));
-
-    handleCreate();
-
+    setFormVals(form.getFieldsValue());
+    handleCreate({ ...formVals, ...fieldsValue });
   };
-
 
   const renderContent = () => {
     return (
@@ -141,15 +123,16 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         >
           <TextArea rows={4} placeholder="请输入至少五个字符的描述" />
         </FormItem>
-        <FormItem
-          name="exeFile"
-          label="包文件"
-          rules={[{ required: true, message: '请上传文件！' }]}
-        >
-          <Upload >
-            <Button icon={<CloudUploadOutlined />}>点击上传</Button>
-          </Upload>
-        </FormItem>
+        {/*<FormItem*/}
+        {/*  name="exeFile"*/}
+        {/*  label="包文件"*/}
+        {/*  rules={[{ required: true, message: '请上传文件！' }]}*/}
+        {/*>*/}
+        {/*  /!*<Upload >*!/*/}
+        {/*  /!*  <Button icon={<CloudUploadOutlined />}>点击上传</Button>*!/*/}
+        {/*  /!*</Upload>*!/*/}
+        {/*  <Input  type="file" />*/}
+        {/*</FormItem>*/}
 
       </>
     );
@@ -170,7 +153,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
     <Modal
       width={1000}
       destroyOnClose
-      title="新建包文件"
+      title="新建更新包文件"
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={null}

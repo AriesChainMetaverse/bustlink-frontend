@@ -1,5 +1,5 @@
 import {CloudUploadOutlined, ExclamationCircleOutlined, PlusOutlined} from '@ant-design/icons';
-import {Button, Divider, message, Input, Drawer, Modal} from 'antd';
+import {Button, Divider, message, Input, Drawer, Modal,Upload} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -47,6 +47,8 @@ const handleUpdate = async (fields: FormValueType) => {
       version: fields.version,
       filename: fields.filename,
       attr: fields.attr,
+      rid: fields.rid,
+      crc32: fields.crc32,
 
     });
     hide();
@@ -92,6 +94,40 @@ const TableList: React.FC<{}> = () => {
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<TableListItem>();
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
+
+  const uploadProps ={
+    name: 'exeFile',
+    multiple: true,
+    action: '/api/v0/adminupdate/'+row?.id,
+    showUploadList:false,
+    method:"post",
+    onChange(info) {
+      console.log(info)
+      const { status } = info.file;
+      if (status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (status === 'done') {
+        message.success(`${info.file.name} 文件上传成功.`);
+        if (actionRef.current) {
+          actionRef.current.reload();
+        }
+      } else if (status === 'error') {
+        message.error(`${info.file.name} 文件上传失败.`);
+      }
+    },
+    beforeUpload(file){
+      console.log(file.type)
+      // const isCSV = file.type === 'application/vnd.ms-excel';
+      // if (!isCSV) {
+      //   message.error('只能上传 csv 文件哦！');
+      // }
+      // return isCSV;
+
+    },
+  };
+
+
   const columns: ProColumns<TableListItem>[] = [
     {
       title: '版本号',
@@ -112,10 +148,21 @@ const TableList: React.FC<{}> = () => {
       },
     },
     {
+      title: 'id',
+      dataIndex: 'id',
+      // tip: '公告编号是唯一的',
+      hideInForm: true,
+      hideInSearch: true,
+
+
+    },
+
+    {
       title: '包名',
       dataIndex: 'filename',
       // tip: '公告编号是唯一的',
       hideInForm: true,
+      hideInSearch: true,
 
 
     },
@@ -124,6 +171,8 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'title',
       sorter: false,
       hideInForm: false,
+      hideInSearch: true,
+
       valueType: 'text',
       formItemProps: {
         rules: [
@@ -139,6 +188,8 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'detail',
       sorter: false,
       hideInForm: false,
+      hideInSearch: true,
+
       valueType: 'textarea',
       formItemProps: {
         rules: [
@@ -153,6 +204,8 @@ const TableList: React.FC<{}> = () => {
       title: '系统',
       dataIndex: 'os',
       hideInForm: false,
+      hideInSearch: true,
+
       valueEnum: {
         'android': { text: 'android', status: 'android' },
         'windows': { text: 'windows', status: 'windows' },
@@ -173,6 +226,8 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'arch',
       hideInForm: false,
       hideInTable: true,
+      hideInSearch: true,
+
       valueEnum: {
         'amd64': { text: 'amd64', status: 'amd64' },
         'amd32': { text: 'amd32', status: 'amd32' },
@@ -191,6 +246,8 @@ const TableList: React.FC<{}> = () => {
       title: 'attr',
       dataIndex: 'attr',
       hideInForm: false,
+      hideInSearch: true,
+
       valueEnum: {
         'core': { text: 'core', status: 'core' },
         'app': { text: 'app', status: 'app' },
@@ -210,12 +267,23 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'rid',
       hideInForm: true,
       hideInTable: true,
+      hideInSearch: true,
+
+    },
+    {
+      title: 'crc32',
+      dataIndex: 'crc32',
+      hideInForm: true,
+      hideInTable: true,
+      hideInSearch: true,
 
     },
     {
       title: '已发布',
       dataIndex: 'publish',
       hideInForm: true,
+      hideInSearch: true,
+
       valueEnum: {
         false: { text: '否', status: false },
         true: { text: '是', status: true },
@@ -225,12 +293,32 @@ const TableList: React.FC<{}> = () => {
       title: '强制升级',
       dataIndex: 'forcibly',
       hideInForm: true,
+      hideInSearch: true,
       valueEnum: {
         false: { text: '否', status: false },
         true: { text: '是', status: true },
       },
     },
+    {
+      title: '上传包文件',
+      dataIndex: 'exeFile',
+      hideInForm: false,
+      hideInTable: true,
+      hideInSearch: true,
 
+      render: (_, record) => (
+        <>
+          <Upload {...uploadProps}>
+            <Button
+              size={'small'}
+              icon={<CloudUploadOutlined />}
+              disabled={ !(row?.rid === undefined)}
+            >点击上传</Button>
+          </Upload>
+        </>
+      ),
+
+    },
     {
       title: '操作',
       dataIndex: 'option',

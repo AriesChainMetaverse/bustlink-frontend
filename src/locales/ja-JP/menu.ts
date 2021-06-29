@@ -76,5 +76,6 @@ export default {
 
   'menu.announce': 'アナウンス',
   'menu.announce.announce-list': 'アナウンスリスト',
-
+  'menu.update': 'パッケージアップグレード',
+  'menu.update.update-list': 'パッケージアップグレードリスト',
 };

@@ -27,15 +27,14 @@ export async function removeUpdate(params: { ids: number[] }) {
 }
 
 export async function addUpdate(params: TableListParams) {
-  params.exeFile = params.exeFile1.fileList[0];
 
   return request('/api/v0/adminupdate', {
     method: 'POST',
-    headers: {
-      "Content-Type": "multipart/form-data",
-      "Accept": "application/json",
-      "type": "formData"
-    },
+    // headers: {
+    //   "Content-Type": "multipart/form-data",
+    //   "Accept": "application/json",
+    //   "type": "formData"
+    // },
     data: {
       ...params,
       method: 'post',

@@ -6,7 +6,7 @@ export interface TableListItem {
   link: string;
   kind: string;
   title: string;
-  content: string;
+  rid: string;
 
 }
 
