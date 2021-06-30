@@ -106,7 +106,7 @@ const UserList: React.FC<{}> = () => {
     },
     {
       title: '序列号',
-      dataIndex: 'desc',
+      dataIndex: 'serial',
       valueType: 'textarea',
     },
     {

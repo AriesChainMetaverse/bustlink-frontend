@@ -105,7 +105,9 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         >
           <Select style={{ width: '100%' }}>
             <Option value="core">core</Option>
-            <Option value="app">app</Option>
+            <Option value="app">mobile</Option>
+            <Option value="box">tvbox</Option>
+
           </Select>
         </FormItem>
 
@@ -123,16 +125,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         >
           <TextArea rows={4} placeholder="请输入至少五个字符的描述" />
         </FormItem>
-        {/*<FormItem*/}
-        {/*  name="exeFile"*/}
-        {/*  label="包文件"*/}
-        {/*  rules={[{ required: true, message: '请上传文件！' }]}*/}
-        {/*>*/}
-        {/*  /!*<Upload >*!/*/}
-        {/*  /!*  <Button icon={<CloudUploadOutlined />}>点击上传</Button>*!/*/}
-        {/*  /!*</Upload>*!/*/}
-        {/*  <Input  type="file" />*/}
-        {/*</FormItem>*/}
+
 
       </>
     );

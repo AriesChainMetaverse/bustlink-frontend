@@ -42,6 +42,7 @@ const handleUpdate = async (fields: FormValueType) => {
       title: fields.title,
       detail: fields.detail,
       forcibly: fields.forcibly,
+      truncate: fields.truncate,
       publish: fields.publish,
       arch: fields.arch,
       version: fields.version,
@@ -118,11 +119,11 @@ const TableList: React.FC<{}> = () => {
     },
     beforeUpload(file){
       console.log(file.type)
-      // const isCSV = file.type === 'application/vnd.ms-excel';
-      // if (!isCSV) {
-      //   message.error('只能上传 csv 文件哦！');
-      // }
-      // return isCSV;
+      const isAPK = file.type === 'application/vnd.android.package-archive';
+      if (!isAPK) {
+        message.error('只能上传 apk 文件哦！');
+      }
+      return isAPK;
 
     },
   };
@@ -250,7 +251,8 @@ const TableList: React.FC<{}> = () => {
 
       valueEnum: {
         'core': { text: 'core', status: 'core' },
-        'app': { text: 'app', status: 'app' },
+        'app': { text: 'mobile', status: 'app' },
+        'box': { text: 'tvbox', status: 'box' },
 
       },
       formItemProps: {
@@ -292,6 +294,16 @@ const TableList: React.FC<{}> = () => {
     {
       title: '强制升级',
       dataIndex: 'forcibly',
+      hideInForm: true,
+      hideInSearch: true,
+      valueEnum: {
+        false: { text: '否', status: false },
+        true: { text: '是', status: true },
+      },
+    },
+    {
+      title: '清库',
+      dataIndex: 'truncate',
       hideInForm: true,
       hideInSearch: true,
       valueEnum: {

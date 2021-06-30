@@ -14,6 +14,7 @@ export interface FormValueType extends Partial<TableListItem> {
   title?: string;
   detail?: string;
   forcibly?: boolean;
+  truncate?: boolean;
   publish?: boolean;
   rid?: string;
   crc32?: string;
@@ -54,6 +55,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     title: props.values.title,
     detail: props.values.detail,
     forcibly: props.values.forcibly,
+    truncate: props.values.truncate,
     publish: props.values.publish,
     rid: props.values.rid,
     crc32: props.values.crc32,
@@ -163,6 +165,12 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
             <Radio value={true}>是</Radio>
           </RadioGroup>
         </FormItem>
+        <FormItem name="truncate" label="是否强制清库">
+          <RadioGroup style={{ width: '100%' }}>
+            <Radio value={false} >否</Radio>
+            <Radio value={true}>是</Radio>
+          </RadioGroup>
+        </FormItem>
         <FormItem
           name="detail"
           label="内容"
@@ -234,6 +242,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           detail: formVals.detail,
           publish: formVals.publish,
           forcibly: formVals.forcibly,
+          truncate: formVals.truncate,
           rid: formVals.rid,
           crc32: formVals.crc32,
 
