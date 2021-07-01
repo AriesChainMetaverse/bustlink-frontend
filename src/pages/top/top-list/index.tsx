@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Divider, message, Input, Drawer } from 'antd';
+import {Button, Divider, message, Input, Drawer, Image} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -87,6 +87,27 @@ const TableList: React.FC<{}> = () => {
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
   const columns: ProColumns<TableListItem>[] = [
     {
+      title: '缩略图',
+      valueType: 'image',
+      dataIndex: 'thumb_path',
+      hideInDescriptions: true,
+      search: false,
+      render: (dom, entity) => {
+        return (
+          <Image
+            width="72px"
+            src={`/api/v0/resource/${entity.video_no}/image/thumb.jpg?ts=${Math.round(
+              Date.now() / 10000,
+            )}`}
+            fallback="/admin/failed/147x200.svg"
+            // preview={{
+            //   src: 'http://localhost:9033/api/v0/resource/failed/147x200.svg',
+            // }}
+          />
+        );
+      },
+    },
+    {
       title: '视频番号',
       dataIndex: 'video_no',
       tip: '视频番号是唯一的',
@@ -122,6 +143,24 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'category',
       sorter: false,
       hideInForm: true,
+      hideInSearch: false,
+      hideInTable: true,
+      valueType: 'textarea',
+      valueEnum: {
+        'newest': { text: '最新上架', status: 'newest' },
+        'hottest': { text: '人气最高', status: 'hottest' },
+        'star': { text: '明星', status: 'star' },
+        'producer': { text: '制作公司', status: 'producer' },
+        'exclusive': { text: '独家内容', status: 'exclusive' },
+        'normal': { text: '正常', status: 'normal' },
+
+      },
+    },
+    {
+      title: '分类',
+      dataIndex: 'category',
+      sorter: false,
+      hideInForm: true,
       hideInSearch: true,
       valueType: 'textarea',
       render: (text,record,index) => cateroryTrans(text),
@@ -130,6 +169,7 @@ const TableList: React.FC<{}> = () => {
       title: '下角标',
       dataIndex: 'lower_banner',
       hideInForm: true,
+      hideInSearch: true,
       valueEnum: {
         'free': { text: '免费', status: 'free' },
         'discount': { text: '折扣', status: 'discount' },
@@ -144,6 +184,7 @@ const TableList: React.FC<{}> = () => {
       title: '右上角标',
       dataIndex: 'top_right',
       hideInForm: true,
+      hideInSearch: true,
       valueEnum: {
         'free': { text: '免费', status: 'free' },
         'discount': { text: '折扣', status: 'discount' },
