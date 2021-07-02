@@ -325,6 +325,12 @@
                     path: '../information/information-list',
                     component: './information/information-list',
                   },
+                  {
+                    name: 'admininformation-list',
+                    icon: 'smile',
+                    path: '../information/adminInformation-list',
+                    component: './information/adminInformation-list',
+                  },
                 ],
               },
               {

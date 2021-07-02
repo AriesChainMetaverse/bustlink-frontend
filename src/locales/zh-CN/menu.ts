@@ -57,6 +57,7 @@ export default {
 
   'menu.information': '信息',
   'menu.information.information-list': '信息列表',
+  'menu.information.admininformation-list': '上下架管理',
 
   'menu.content': '内容',
   'menu.content.content-list': '内容列表',

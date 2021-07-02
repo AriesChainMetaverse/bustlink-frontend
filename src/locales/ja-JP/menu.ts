@@ -58,6 +58,7 @@ export default {
 
   'menu.information': '詳細情報',
   'menu.information.information-list': '詳細情報リスト',
+  'menu.information.admininformation-list': 'オンライン管理',
 
   'menu.content': '内容',
   'menu.content.content-list': '内容リスト',
