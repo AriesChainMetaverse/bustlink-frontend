@@ -267,7 +267,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       width={640}
       bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
-      title="视频资源配置"
+      title="视频资源上下架配置"
       visible={updateModalVisible}
       footer={renderFooter()}
       onCancel={() => handleUpdateModalVisible()}

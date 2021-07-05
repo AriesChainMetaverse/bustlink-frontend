@@ -130,88 +130,24 @@ const TableList: React.FC<{}> = () => {
       hideInForm: true,
       hideInSearch: true,
     },
-    {
-      title: '介绍',
-      dataIndex: 'intro',
-      sorter: false,
-      hideInForm: true,
-      hideInSearch: true,
-      valueType: 'textarea',
-    },
-    {
-      title: '分类',
-      dataIndex: 'category',
-      sorter: false,
-      hideInForm: true,
-      hideInSearch: false,
-      hideInTable: true,
-      valueType: 'textarea',
-      valueEnum: {
-        'newest': { text: '最新上架', status: 'newest' },
-        'hottest': { text: '人气最高', status: 'hottest' },
-        'star': { text: '明星', status: 'star' },
-        'producer': { text: '制作公司', status: 'producer' },
-        'exclusive': { text: '独家内容', status: 'exclusive' },
-        'normal': { text: '正常', status: 'normal' },
 
+    {
+      title: '状态',
+      dataIndex: 'status',
+      sorter: true,
+      valueType: 'dateTime',
+      hideInForm: true,
+      renderFormItem: (item, { defaultRender, ...rest }, form) => {
+        const status = form.getFieldValue('status');
+        if (`${status}` === '0') {
+          return false;
+        }
+        if (`${status}` === '3') {
+          return <Input {...rest} placeholder="请输入异常原因！" />;
+        }
+        return defaultRender(item);
       },
     },
-    {
-      title: '分类',
-      dataIndex: 'category',
-      sorter: false,
-      hideInForm: true,
-      hideInSearch: true,
-      valueType: 'textarea',
-      render: (text,record,index) => cateroryTrans(text),
-    },
-    {
-      title: '下角标',
-      dataIndex: 'lower_banner',
-      hideInForm: true,
-      hideInSearch: true,
-      valueEnum: {
-        'free': { text: '免费', status: 'free' },
-        'discount': { text: '折扣', status: 'discount' },
-        'event': { text: '限免', status: 'event' },
-        'premium': { text: '精品', status: 'premium' },
-        'collection': { text: '收藏', status: 'collection' },
-        'liked': { text: '喜欢', status: 'liked' },
-        'none': { text: '无', status: 'none' },
-      },
-    },
-    {
-      title: '右上角标',
-      dataIndex: 'top_right',
-      hideInForm: true,
-      hideInSearch: true,
-      valueEnum: {
-        'free': { text: '免费', status: 'free' },
-        'discount': { text: '折扣', status: 'discount' },
-        'event': { text: '限免', status: 'event' },
-        'premium': { text: '精品', status: 'premium' },
-        'collection': { text: '收藏', status: 'collection' },
-        'liked': { text: '喜欢', status: 'liked' },
-        'none': { text: '无', status: 'none' },
-      },
-    },
-    // {
-    //   title: '上次调度时间',
-    //   dataIndex: 'updatedAt',
-    //   sorter: true,
-    //   valueType: 'dateTime',
-    //   hideInForm: true,
-    //   renderFormItem: (item, { defaultRender, ...rest }, form) => {
-    //     const status = form.getFieldValue('status');
-    //     if (`${status}` === '0') {
-    //       return false;
-    //     }
-    //     if (`${status}` === '3') {
-    //       return <Input {...rest} placeholder="请输入异常原因！" />;
-    //     }
-    //     return defaultRender(item);
-    //   },
-    // },
     {
       title: '操作',
       dataIndex: 'option',

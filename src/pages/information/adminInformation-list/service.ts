@@ -8,7 +8,7 @@ export async function queryTopList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/admintoplist', {
+  const response = await request('/api/v0/admininformations', {
     method:"GET", params
 
   });
@@ -69,8 +69,8 @@ export async function addRule(params: TableListParams) {
 }
 
 export async function updateTopList(params: TableListParams) {
-  return request(`/api/v0/admintoplist/${params.information_id}`, {
-    method: 'PUT',
+  return request(`/api/v0/admininformations/`, {
+    method: 'POST',
     data: {
       ...params,
     },
