@@ -7,7 +7,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import {updateRule, addRule, removeRule, queryTopList, updateTopList} from './service';
+import {updateRule, addRule, removeRule, queryInforList, updateInforList} from './service';
 
 /**
  * 添加节点
@@ -32,47 +32,71 @@ const handleAdd = async (fields: TableListItem) => {
  * @param fields
  */
 const handleUpdate = async (fields: FormValueType) => {
-  const hide = message.loading('正在配置');
+  // const hide = message.loading('正在配置');
+  // try {
+  //   await updateTopList({
+  //     information_id:fields.id,
+  //     title: fields.title,
+  //     intro: fields.intro,
+  //     lower_banner: fields.lower_banner,
+  //     top_right: fields.top_right,
+  //     category: fields.category,
+  //   });
+  //   hide();
+  //
+  //   message.success('配置成功');
+  //   return true;
+  // } catch (error) {
+  //   hide();
+  //   message.error('配置失败请重试！');
+  //   return false;
+  // }
+};
+
+/**
+ *  上架
+ * @param selectedRows
+ */
+const handleUp = async (selectedRows: TableListItem[]) => {
+  const hide = message.loading('正在上架');
+  if (!selectedRows) return true;
   try {
-    await updateTopList({
-      information_id:fields.id,
-      title: fields.title,
-      intro: fields.intro,
-      lower_banner: fields.lower_banner,
-      top_right: fields.top_right,
-      category: fields.category,
+    await updateInforList({
+      ids: selectedRows.map((row) => row.id),
+      status : 'up'
     });
     hide();
-
-    message.success('配置成功');
+    message.success('上架成功，即将刷新');
     return true;
   } catch (error) {
     hide();
-    message.error('配置失败请重试！');
+    message.error('上架失败，请重试');
     return false;
   }
 };
 
 /**
- *  删除节点
+ *  下架
  * @param selectedRows
  */
-const handleRemove = async (selectedRows: TableListItem[]) => {
-  const hide = message.loading('正在删除');
+const handleDown = async (selectedRows: TableListItem[]) => {
+  const hide = message.loading('正在下架');
   if (!selectedRows) return true;
   try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
+    await updateInforList({
+      ids: selectedRows.map((row) => row.id),
+      status : 'down'
     });
     hide();
-    message.success('删除成功，即将刷新');
+    message.success('下架成功，即将刷新');
     return true;
   } catch (error) {
     hide();
-    message.error('删除失败，请重试');
+    message.error('下架失败，请重试');
     return false;
   }
 };
+
 
 function cateroryTrans (catetoryList){
   return catetoryList.toString()
@@ -111,14 +135,14 @@ const TableList: React.FC<{}> = () => {
       title: '视频番号',
       dataIndex: 'video_no',
       tip: '视频番号是唯一的',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '规则名称为必填项',
-          },
-        ],
-      },
+      // formItemProps: {
+      //   rules: [
+      //     {
+      //       required: true,
+      //       message: '规则名称为必填项',
+      //     },
+      //   ],
+      // },
       // render: (dom, entity) => {
       //   return <a onClick={() => setRow(entity)}>{dom}</a>;
       // },
@@ -135,42 +159,36 @@ const TableList: React.FC<{}> = () => {
       title: '状态',
       dataIndex: 'status',
       sorter: true,
-      valueType: 'dateTime',
       hideInForm: true,
-      renderFormItem: (item, { defaultRender, ...rest }, form) => {
-        const status = form.getFieldValue('status');
-        if (`${status}` === '0') {
-          return false;
-        }
-        if (`${status}` === '3') {
-          return <Input {...rest} placeholder="请输入异常原因！" />;
-        }
-        return defaultRender(item);
+      valueEnum: {
+        "default": { text: '未设置', status: "default" },
+        "up": { text: '已上架', status: "up" },
+        "down": { text: '已下架', status: "down" },
       },
     },
-    {
-      title: '操作',
-      dataIndex: 'option',
-      valueType: 'option',
-      render: (_, record) => (
-        <>
-          <a
-            onClick={() => {
-              handleUpdateModalVisible(true);
-              setStepFormValues(record);
-            }}
-          >
-            配置
-          </a>
-        </>
-      ),
-    },
+    // {
+    //   title: '操作',
+    //   dataIndex: 'option',
+    //   valueType: 'option',
+    //   render: (_, record) => (
+    //     <>
+    //       <a
+    //         onClick={() => {
+    //           handleUpdateModalVisible(true);
+    //           setStepFormValues(record);
+    //         }}
+    //       >
+    //         配置
+    //       </a>
+    //     </>
+    //   ),
+    // },
   ];
 
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="查询视频"
+        headerTitle="视频列表"
         actionRef={actionRef}
         rowKey="id"
         search={{
@@ -181,7 +199,7 @@ const TableList: React.FC<{}> = () => {
           //   <PlusOutlined /> 新建
           // </Button>,
         ]}
-        request={(params, sorter, filter) => queryTopList({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => queryInforList({ ...params, sorter, filter })}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => setSelectedRows(selectedRows),
@@ -196,7 +214,24 @@ const TableList: React.FC<{}> = () => {
             </div>
           }
         >
-
+          <Button
+            onClick={async () => {
+              await handleUp(selectedRowsState);
+              setSelectedRows([]);
+              actionRef.current?.reloadAndRest?.();
+            }}
+          >
+            批量上架
+          </Button>
+          <Button
+            onClick={async () => {
+              await handleDown(selectedRowsState);
+              setSelectedRows([]);
+              actionRef.current?.reloadAndRest?.();
+            }}
+          >
+            批量下架
+          </Button>
         </FooterToolbar>
       )}
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>

@@ -2,7 +2,7 @@ import request from 'umi-request';
 import { TableListParams } from './data.d';
 
 
-export async function queryTopList(params?: TableListParams) {
+export async function queryInforList(params?: TableListParams) {
 
   //配合接口的分页变量名
   params.page = params.current;
@@ -20,31 +20,22 @@ export async function queryTopList(params?: TableListParams) {
     if(response.data[i].edges !== "" && response.data[i].edges !== undefined && JSON.stringify(response.data[i].edges) !== "{}"){
       console.log(response.data[i].edges.admin_tops)
       obj.id = response.data[i].id
-      obj.video_no = response.data[i].video_no
-      obj.title = response.data[i].edges.admin_tops[0].title
-      obj.intro = response.data[i].edges.admin_tops[0].intro
-      obj.lower_banner = response.data[i].edges.admin_tops[0].lower_banner
-      obj.top_right = response.data[i].edges.admin_tops[0].top_right
+      obj.status = response.data[i].status
+      obj.video_no = response.data[i].edges.informationsV1.video_no
+      obj.title = response.data[i].edges.informationsV1.title
 
-      let newCategory = [];
-      response.data[i].edges.admin_tops.forEach(e => {
-        newCategory.push(e.category)
-      })
-      obj.category = newCategory
 
     }else{
       obj.id = response.data[i].id
-      obj.video_no = response.data[i].video_no
+      obj.video_no = ""
       obj.title = ""
-      obj.intro = ""
-      obj.lower_banner = "none"
-      obj.top_right = "none"
-      obj.category = []
+      obj.status = response.data[i].status
+
     }
     newData.push(obj)
   }
   response.data = newData
-  console.log(response)
+  // console.log(response)
   return response;
 }
 
@@ -68,7 +59,7 @@ export async function addRule(params: TableListParams) {
   });
 }
 
-export async function updateTopList(params: TableListParams) {
+export async function updateInforList(params: { ids: string[],status: string  }) {
   return request(`/api/v0/admininformations/`, {
     method: 'POST',
     data: {
