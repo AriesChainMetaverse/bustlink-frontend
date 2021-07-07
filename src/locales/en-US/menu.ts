@@ -49,4 +49,37 @@ export default {
   'menu.editor.flow': 'Flow Editor',
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
+
+  'menu.users': 'users',
+  'menu.users.user-list': 'user-list',
+
+  'menu.channel': 'channel',
+  'menu.channel.channel-list': 'channel-list',
+
+  'menu.information': 'information',
+  'menu.information.information-list': 'information-list',
+  'menu.information.admininformation-list': 'admininformation-list',
+
+  'menu.content': 'content',
+  'menu.content.content-list': 'content-list',
+
+  'menu.scrape': 'scrape',
+  'menu.scrape.scrape-list': 'scrape-list',
+
+  'menu.tagMapping': 'tagMapping',
+  'menu.tagMapping.tagMapping-list': 'tagMapping-list',
+  'menu.tagMapping.edit': 'edit',
+
+  'menu.instruct': 'instruct',
+  'menu.instruct.instruct-list': 'instruct-list',
+
+  'menu.top': 'top',
+  'menu.top.top-list': 'top-list',
+
+  'menu.announce': 'announce',
+  'menu.announce.announce-list': 'announce-list',
+  'menu.update': 'update',
+  'menu.update.update-list': 'update-list',
+
+
 };

@@ -57,7 +57,7 @@ export default {
 
   'menu.information': '信息',
   'menu.information.information-list': '信息列表',
-
+  'menu.information.admininformation-list': '上下架管理',
   'menu.content': '内容',
   'menu.content.content-list': '内容列表',
 
@@ -66,6 +66,7 @@ export default {
 
   'menu.tagMapping': '标签映射',
   'menu.tagMapping.tagMapping-list': '标签映射列表',
+  'menu.tagMapping.edit': '配置文件上传',
 
   'menu.instruct': '指令',
   'menu.instruct.instruct-list': '指令列表',
@@ -75,4 +76,6 @@ export default {
 
   'menu.announce': '通知',
   'menu.announce.announce-list': '通知列表',
+  'menu.update': '更新包',
+  'menu.update.update-list': '更新包列表',
 };

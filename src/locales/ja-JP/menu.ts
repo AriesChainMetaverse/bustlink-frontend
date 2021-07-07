@@ -68,6 +68,7 @@ export default {
 
   'menu.tagMapping': 'タックマッピング',
   'menu.tagMapping.tagMapping-list': 'タックマッピングリスト',
+  'menu.tagMapping.edit': '設定ファイルをアップロード',
 
   'menu.instruct': '命令',
   'menu.instruct.instruct-list': '命令リスト',

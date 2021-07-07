@@ -67,6 +67,7 @@ export default {
 
   'menu.tagMapping': '标签映射',
   'menu.tagMapping.tagMapping-list': '标签映射列表',
+  'menu.tagMapping.edit': '配置文件上传',
 
   'menu.instruct': '指令',
   'menu.instruct.instruct-list': '指令列表',
