@@ -80,6 +80,7 @@ export default {
   'menu.announce.announce-list': 'announce-list',
   'menu.update': 'update',
   'menu.update.update-list': 'update-list',
-
+  'menu.node': 'node',
+  'menu.node.node-list': 'node-list',
 
 };

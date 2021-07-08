@@ -80,4 +80,8 @@ export default {
 
   'menu.update': '更新包',
   'menu.update.update-list': '更新包列表',
+
+  'menu.node': '节点管理',
+  'menu.node.node-list': '节点列表',
+
 };

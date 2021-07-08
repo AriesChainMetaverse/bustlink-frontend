@@ -430,6 +430,20 @@
                 ],
               },
               {
+                path: './node',
+                icon: 'table',
+                authority: ['admin', 'user'],//权限控制
+                name: 'node',
+                routes: [
+                  {
+                    name: 'node-list',
+                    icon: 'smile',
+                    path: '../node/node-list',
+                    component: './node/node-list',
+                  },
+                ],
+              },
+              {
                 component: '404',
               },
 

@@ -80,4 +80,6 @@ export default {
   'menu.announce.announce-list': 'アナウンスリスト',
   'menu.update': 'パッケージアップグレード',
   'menu.update.update-list': 'パッケージアップグレードリスト',
+  'menu.node': 'ノード管理',
+  'menu.node.node-list': 'ノードリスト',
 };
