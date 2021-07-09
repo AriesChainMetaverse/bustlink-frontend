@@ -36,6 +36,7 @@ const handleUpdate = async (fields: FormValueType) => {
   try {
     await updateAdminInstruct({
       id: fields.id,
+      pid: fields.pid,
       rid: fields.rid,
       type: fields.type,
       action: fields.action,
@@ -105,20 +106,33 @@ const TableList: React.FC<{}> = () => {
     //   hideInForm: true,
     // },
     {
+      title: 'PID',
+      dataIndex: 'pid',
+      valueType: 'textarea',
+      hideInForm: true,
+      hideInSearch: true,
+
+    },
+
+    {
       title: 'RID',
       dataIndex: 'rid',
       valueType: 'textarea',
       hideInForm: true,
+      hideInSearch: true,
+
     },
     {
       title: '类型',
       dataIndex: 'type',
       valueType: 'textarea',
+      hideInSearch: true,
     },
     {
       title: '动作状态',
       dataIndex: 'action',
       hideInForm: false,
+      hideInSearch: true,
       valueEnum: {
         'none': { text: 'none', status: 'none' },
         'pin': { text: 'pin', status: 'pin' },

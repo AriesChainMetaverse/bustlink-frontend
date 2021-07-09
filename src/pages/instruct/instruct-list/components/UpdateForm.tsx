@@ -43,6 +43,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     action:props.values.action,
     information_id:props.values.information_id,
     type:props.values.type,
+    pid:props.values.pid,
     rid:props.values.rid,
   });
 
@@ -292,6 +293,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           id: formVals.id,
           title:formVals.title,
           action:formVals.action,
+          pid:formVals.pid,
           rid:formVals.rid,
           type:formVals.type,
           information_id:formVals.information_id,

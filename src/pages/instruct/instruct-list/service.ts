@@ -19,6 +19,7 @@ export async function queryAdminInstructList(params?: TableListParams) {
     if(response.data[i].edges !== "" && response.data[i].edges !== undefined && JSON.stringify(response.data[i].edges) !== "{}"){
       // console.log(response.data[i].edges.information_info)
       obj.id = response.data[i].id
+      obj.pid = response.data[i].pid
       obj.rid = response.data[i].rid
       obj.information_id = response.data[i].information_id
       obj.type = response.data[i].type
@@ -29,6 +30,7 @@ export async function queryAdminInstructList(params?: TableListParams) {
 
     }else{
       obj.id = response.data[i].id
+      obj.pid = response.data[i].pid
       obj.rid = response.data[i].rid
       obj.information_id = response.data[i].information_id
       obj.type = response.data[i].type
