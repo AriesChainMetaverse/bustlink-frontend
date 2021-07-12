@@ -2,7 +2,7 @@ import request from 'umi-request';
 import { TableListParams } from './data.d';
 
 
-export async function queryAnnounceList(params?: TableListParams) {
+export async function queryNodeList(params?: TableListParams) {
 
   //配合接口的分页变量名
   params.page = params.current;
@@ -36,8 +36,8 @@ export async function addAnnounce(params: TableListParams) {
   });
 }
 
-export async function updateAnnounce(params: TableListParams) {
-  return request(`/api/v0/adminannounce/${params.id}`, {
+export async function updateNode(params: TableListParams) {
+  return request(`/api/v0/node/${params.id}`, {
     method: 'PUT',
     data: {
       ...params,
