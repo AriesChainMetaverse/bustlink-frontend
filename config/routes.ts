@@ -444,6 +444,20 @@
                 ],
               },
               {
+                path: './bootstrap',
+                icon: 'table',
+                authority: ['admin', 'user'],//权限控制
+                name: 'bootstrap',
+                routes: [
+                  {
+                    name: 'bootstrap-list',
+                    icon: 'smile',
+                    path: '../bootstrap/bootstrap-list',
+                    component: './bootstrap/bootstrap-list',
+                  },
+                ],
+              },
+              {
                 component: '404',
               },
 
