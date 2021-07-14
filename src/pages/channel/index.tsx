@@ -146,10 +146,13 @@ const ChannelList: React.FC<ChannelListProps> = (props) => {
   }
 
   async function syncInstructInfo() {
+    const hide = message.loading('正在同步Instruct');
     const resp = await channelSyncInstructInfo({});
     if (resp.status === 'success') {
+      hide();
       message.success(resp.message);
     } else {
+      hide();
       message.error(resp.message);
     }
   }

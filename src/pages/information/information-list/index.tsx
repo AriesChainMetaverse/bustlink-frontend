@@ -229,6 +229,7 @@ class InformationList extends Component<InformationListProps, InformationListSta
     ];
 
     const nullData: Partial<InfoItem> = {};
+
     return (
       <div>
         <PageContainer content={content} extraContent={extraContent} footer={footer}>
@@ -263,12 +264,19 @@ class InformationList extends Component<InformationListProps, InformationListSta
                         }
                       >
                         <Card.Meta
+
                           avatar={
                             <img
                               alt=""
                               className={styles.cardAvatar}
                               src={'http://127.0.0.1:10080/link/' + item.root + '/' + item.poster_path + "?ts=1"}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src="/admin/failed/147x200.svg"
+                                e.target.style="width:100px"
+                              }}
                             />
+
                           }
                           title={<a>{item.video_no}</a>}
                           description={

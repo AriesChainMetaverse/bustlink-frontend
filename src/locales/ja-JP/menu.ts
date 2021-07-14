@@ -82,4 +82,6 @@ export default {
   'menu.update.update-list': 'パッケージアップグレードリスト',
   'menu.node': 'ノード管理',
   'menu.node.node-list': 'ノードリスト',
+  'menu.bootstrap': 'bootstrap管理',
+  'menu.bootstrap.bootstrap-list': 'bootstrapリスト',
 };

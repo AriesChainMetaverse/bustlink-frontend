@@ -84,4 +84,6 @@ export default {
   'menu.node': '节点管理',
   'menu.node.node-list': '节点列表',
 
+  'menu.bootstrap': 'bootstrap管理',
+  'menu.bootstrap.bootstrap-list': 'bootstrap列表',
 };

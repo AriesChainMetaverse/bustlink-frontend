@@ -101,7 +101,8 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
             <Radio value={true}>是</Radio>
           </RadioGroup>
         </FormItem>
-        <FormItem name="level" label="分类">
+        <FormItem name="level" label="分类"
+                  rules={[{ required: true, message: '请设置分类' }]}>
           <Select style={{ width: '100%' }}>
             <Option value="core">core</Option>
             <Option value="speed">speed</Option>
@@ -109,16 +110,16 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           </Select>
         </FormItem>
         <FormItem
-          name="addrs"
-          label="IP地址"
-          rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
+          name="addrs" label="IP地址"
+          rules={[{ required: true, message: '请输入IP地址！', min: 10,transform:(value)=> {
+            return value.toString()
+          } }]}
         >
-          <TextArea rows={4} placeholder="请输入至少五个字符" />
+          <TextArea rows={4} placeholder="请输入IP地址！多个请用英文逗号,隔开" />
         </FormItem>
         <FormItem
-          name="service_port"
-          label="服务端口"
-          rules={[{ required: true, message: '请输入端口号！', min: 2 }]}
+          name="service_port" label="服务端口"
+          rules={[{ required: true, message: '请输入端口号！'},{ type: 'number', message: '请输入数字！',transform:(value)=> {return Number(value)}}]}
         >
           <TextArea rows={1} placeholder="请输入端口号" />
         </FormItem>

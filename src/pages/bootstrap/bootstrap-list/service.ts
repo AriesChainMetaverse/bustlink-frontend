@@ -29,9 +29,8 @@ export async function removeAnnounce(params: { ids: number[] }) {
 export async function addBootstrap(params: TableListParams) {
 
   //
-  params.addrs = params.addrs.split(";");
+  params.addrs = params.addrs.split(",");
   params.expired = Boolean(params.expired);
-  params.level = params.level;
   params.service_port = Number(params.service_port);
   params.fail_counts = 0;
 
@@ -47,9 +46,8 @@ export async function addBootstrap(params: TableListParams) {
 
 export async function updateBootstrap(params: TableListParams) {
 
-  params.addrs = params.addrs.split(";");
+  params.addrs = params.addrs.split(",");
   params.expired = Boolean(params.expired);
-  params.level = params.level;
   params.service_port = Number(params.service_port);
 
 

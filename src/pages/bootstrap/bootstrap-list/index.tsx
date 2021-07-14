@@ -33,6 +33,7 @@ const handleAdd = async (fields: TableListItem) => {
  * @param fields
  */
 const handleUpdate = async (fields: FormValueType) => {
+
   const hide = message.loading('正在配置');
   try {
     await updateBootstrap({
@@ -42,7 +43,7 @@ const handleUpdate = async (fields: FormValueType) => {
       level:  fields.level,
       service_port:  fields.service_port,
       fail_counts: fields.fail_counts,
-      addrs:  fields.addrs,
+      addrs:  fields.addrs.toString(),
 
     });
     hide();
@@ -50,6 +51,7 @@ const handleUpdate = async (fields: FormValueType) => {
     message.success('配置成功');
     return true;
   } catch (error) {
+    console.log(error)
     hide();
     message.error('配置失败请重试！');
     return false;
@@ -92,13 +94,22 @@ const TableList: React.FC<{}> = () => {
     {
       title: 'ID',
       dataIndex: 'id',
-      hideInForm: false,
+      hideInForm: true,
+      hideInSearch: true,
     },
     {
       title: '节点ID',
       dataIndex: 'pid',
       tip: '节点ID是唯一',
       hideInForm: false,
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '节点PID必填',
+          },
+        ],
+      },
     },
     {
       title: 'IP地址',
@@ -108,7 +119,14 @@ const TableList: React.FC<{}> = () => {
       hideInSearch: true,
       tip: '输入过多个ip地址，请用;间隔',
       valueType: 'textarea',
-
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: 'IP地址必填',
+          },
+        ],
+      },
       render: (text, entity) => {
         return text.toString();
       },
@@ -117,9 +135,18 @@ const TableList: React.FC<{}> = () => {
       title: '是否到期',
       dataIndex: 'expired',
       hideInForm: false,
+      hideInSearch: true,
       valueEnum: {
         false: { text: '未到期', status: false },
         true: { text: '已到期', status: true },
+      },
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '是否到期必填',
+          },
+        ],
       },
     },
     {
@@ -132,20 +159,36 @@ const TableList: React.FC<{}> = () => {
         'speed': { text: 'speed', status:'speed' },
         'normal': { text: 'normal', status:'normal' },
       },
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '等级必填',
+          },
+        ],
+      },
     },
     {
       title: '服务端口',
       dataIndex: 'service_port',
       sorter: false,
       hideInForm: false,
-      valueType: 'text',
+      valueType: 'number',
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '服务端口必填',
+          },
+        ],
+      },
     },
     {
       title: 'fail_counts',
       dataIndex: 'fail_counts',
       sorter: false,
       hideInForm: false,
-      valueType: 'text',
+      valueType: 'number',
     },
 
     {
@@ -198,15 +241,7 @@ const TableList: React.FC<{}> = () => {
             </div>
           }
         >
-          <Button
-            onClick={async () => {
-              await handleRemove(selectedRowsState);
-              setSelectedRows([]);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            批量删除
-          </Button>
+
         </FooterToolbar>
       )}
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>

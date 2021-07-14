@@ -3,10 +3,11 @@ export interface TableListItem {
   id: string;
   information_id: string;
   video_no: string;
-  link: string;
+  level: string;
   expired: string;
   service_port: string;
   addrs: string;
+  fail_counts: string;
 
 }
 
@@ -26,7 +27,7 @@ export interface TableListParams {
   status?: string;
   name?: string;
   desc?: string;
-  link: string;
+  addrs: string;
   kind: string;
   title: string;
   content: string;

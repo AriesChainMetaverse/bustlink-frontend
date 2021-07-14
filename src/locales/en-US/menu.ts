@@ -82,5 +82,6 @@ export default {
   'menu.update.update-list': 'update-list',
   'menu.node': 'node',
   'menu.node.node-list': 'node-list',
-
+  'menu.bootstrap': 'bootstrap',
+  'menu.bootstrap.bootstrap-list': 'bootstrap-ist',
 };
