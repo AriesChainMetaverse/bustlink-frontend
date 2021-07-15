@@ -458,6 +458,20 @@
                 ],
               },
               {
+                path: './property',
+                icon: 'table',
+                authority: ['admin', 'user'],//权限控制
+                name: 'property',
+                routes: [
+                  {
+                    name: 'property-list',
+                    icon: 'smile',
+                    path: '../property/property-list',
+                    component: './property/property-list',
+                  },
+                ],
+              },
+              {
                 component: '404',
               },
 

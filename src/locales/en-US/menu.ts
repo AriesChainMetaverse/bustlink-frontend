@@ -83,5 +83,8 @@ export default {
   'menu.node': 'node',
   'menu.node.node-list': 'node-list',
   'menu.bootstrap': 'bootstrap',
-  'menu.bootstrap.bootstrap-list': 'bootstrap-ist',
+  'menu.bootstrap.bootstrap-list': 'bootstrap-list',
+
+  'menu.property': 'system property',
+  'menu.property.property-list': 'property-list',
 };

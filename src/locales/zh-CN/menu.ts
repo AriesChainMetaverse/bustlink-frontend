@@ -86,4 +86,7 @@ export default {
 
   'menu.bootstrap': 'bootstrap管理',
   'menu.bootstrap.bootstrap-list': 'bootstrap列表',
+
+  'menu.property': '系统配置',
+  'menu.property.property-list': '系统配置列表',
 };

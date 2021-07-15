@@ -84,4 +84,7 @@ export default {
   'menu.node.node-list': 'ノードリスト',
   'menu.bootstrap': 'bootstrap管理',
   'menu.bootstrap.bootstrap-list': 'bootstrapリスト',
+
+  'menu.property': 'システム設定',
+  'menu.property.property-list': 'システム設定リスト',
 };
