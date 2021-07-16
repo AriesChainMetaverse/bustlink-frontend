@@ -6,6 +6,8 @@ export interface TableListItem {
   intro: string;
   lower_banner: string;
   title: string;
+  root: string;
+  poster_path: string;
   top_right: number;
   category: array;
 }

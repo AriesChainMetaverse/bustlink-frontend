@@ -2,7 +2,7 @@ import { stringify } from 'querystring';
 import type { Reducer, Effect } from 'umi';
 import { history } from 'umi';
 
-import {fakeAccountLogin, fakeUserBaseInfo} from '@/services/login';
+import {fakeAccountLogin, fakeUserBaseInfo,fakeSystemProperty} from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { message } from 'antd';
@@ -53,6 +53,13 @@ const Model: LoginModelType = {
         });
         localStorage.setItem("name",response1.data[0].name)
         localStorage.setItem("permission",response1.data[0].permission)
+
+        // 获取系统配置信息
+        const response2 = yield call(fakeSystemProperty, 'InformationImgUrl');
+        if(response2.status === "success"){
+          localStorage.setItem("InformationImgUrl",response2.data[0].value)
+        }
+
 
 
         let { redirect } = params as { redirect: string };

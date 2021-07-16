@@ -23,6 +23,8 @@ export async function queryInforList(params?: TableListParams) {
       obj.status = response.data[i].status
       obj.video_no = response.data[i].edges.informationsV1.video_no
       obj.title = response.data[i].edges.informationsV1.title
+      obj.root = response.data[i].edges.informationsV1.root
+      obj.poster_path = response.data[i].edges.informationsV1.poster_path
 
 
     }else{
@@ -30,6 +32,8 @@ export async function queryInforList(params?: TableListParams) {
       obj.video_no = ""
       obj.title = ""
       obj.status = response.data[i].status
+      obj.root = ""
+      obj.poster_path = ""
 
     }
     newData.push(obj)

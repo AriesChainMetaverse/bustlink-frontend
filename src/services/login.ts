@@ -24,3 +24,9 @@ export async function fakeUserBaseInfo(token: string) {
     headers:{'Authorization': `Bearer ${token}`},
   });
 }
+export async function fakeSystemProperty(key: string) {
+  return request(`/api/v0/adminproperty/${key}`, {
+    method: 'GET',
+  });
+}
+

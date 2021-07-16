@@ -119,14 +119,9 @@ const TableList: React.FC<{}> = () => {
       render: (dom, entity) => {
         return (
           <Image
-            width="72px"
-            src={`/api/v0/resource/${entity.video_no}/image/thumb.jpg?ts=${Math.round(
-              Date.now() / 10000,
-            )}`}
+            width="250px"
+            src={localStorage.getItem("InformationImgUrl") + entity.root + '/' + entity.poster_path + "?ts=1"}
             fallback="/admin/failed/147x200.svg"
-            // preview={{
-            //   src: 'http://localhost:9033/api/v0/resource/failed/147x200.svg',
-            // }}
           />
         );
       },
@@ -135,17 +130,20 @@ const TableList: React.FC<{}> = () => {
       title: '视频番号',
       dataIndex: 'video_no',
       tip: '视频番号是唯一的',
-      // formItemProps: {
-      //   rules: [
-      //     {
-      //       required: true,
-      //       message: '规则名称为必填项',
-      //     },
-      //   ],
-      // },
-      // render: (dom, entity) => {
-      //   return <a onClick={() => setRow(entity)}>{dom}</a>;
-      // },
+    },
+    {
+      title: 'root',
+      dataIndex: 'root',
+      hideInForm: true,
+      hideInSearch: true,
+      hideInTable: true,
+    },
+    {
+      title: 'poster_path',
+      dataIndex: 'poster_path',
+      hideInForm: true,
+      hideInSearch: true,
+      hideInTable: true,
     },
     {
       title: '标题',

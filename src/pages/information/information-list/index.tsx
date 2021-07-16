@@ -1,5 +1,5 @@
 import {PlusOutlined} from '@ant-design/icons';
-import {Button, Card, List, Pagination,Modal} from 'antd';
+import {Button, Card, List, Pagination, Modal, Image} from 'antd';
 import React, {Component} from 'react';
 
 import {PageContainer} from '@ant-design/pro-layout';
@@ -266,15 +266,21 @@ class InformationList extends Component<InformationListProps, InformationListSta
                         <Card.Meta
 
                           avatar={
-                            <img
-                              alt=""
-                              className={styles.cardAvatar}
-                              src={'http://127.0.0.1:10080/link/' + item.root + '/' + item.poster_path + "?ts=1"}
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src="/admin/failed/147x200.svg"
-                                e.target.style="width:100px"
-                              }}
+                            // <img
+                            //   alt=""
+                            //   className={styles.cardAvatar}
+                            //   // src={'http://127.0.0.1:10080/link/' + item.root + '/' + item.poster_path + "?ts=1"}
+                            //   src={localStorage.getItem("InformationImgUrl") + item.root + '/' + item.poster_path + "?ts=1"}
+                            //   onError={(e) => {
+                            //     e.target.onerror = null;
+                            //     e.target.src="/admin/failed/147x200.svg"
+                            //     e.target.style="width:100px"
+                            //   }}
+                            // />
+                            <Image
+                            width="250px"
+                            src={localStorage.getItem("InformationImgUrl") + item.root + '/' + item.poster_path + "?ts=1"}
+                            fallback="/admin/failed/147x200.svg"
                             />
 
                           }

@@ -21,6 +21,8 @@ export async function queryTopList(params?: TableListParams) {
       console.log(response.data[i].edges.admin_tops)
       obj.id = response.data[i].id
       obj.video_no = response.data[i].video_no
+      obj.root = response.data[i].root
+      obj.poster_path = response.data[i].poster_path
       obj.title = response.data[i].edges.admin_tops[0].title
       obj.intro = response.data[i].edges.admin_tops[0].intro
       obj.lower_banner = response.data[i].edges.admin_tops[0].lower_banner
@@ -35,6 +37,8 @@ export async function queryTopList(params?: TableListParams) {
     }else{
       obj.id = response.data[i].id
       obj.video_no = response.data[i].video_no
+      obj.root = response.data[i].root
+      obj.poster_path = response.data[i].poster_path
       obj.title = ""
       obj.intro = ""
       obj.lower_banner = "none"
