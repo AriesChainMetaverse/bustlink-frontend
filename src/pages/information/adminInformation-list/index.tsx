@@ -7,7 +7,8 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import {updateRule, addRule, removeRule, queryInforList, updateInforList} from './service';
+import {updateRule, addRule, removeRule, queryInforList, updateInforList,initCreateAdminInfor} from './service';
+import {channelSyncInstructInfo} from "@/pages/channel/service";
 
 /**
  * 添加节点
@@ -96,7 +97,17 @@ const handleDown = async (selectedRows: TableListItem[]) => {
     return false;
   }
 };
-
+async function initAdminInfor() {
+  const hide = message.loading('正在同步AdminInformation');
+  const resp = await initCreateAdminInfor();
+  if (resp.status === 'success') {
+    hide();
+    message.success(resp.message);
+  } else {
+    hide();
+    message.error(resp.message);
+  }
+}
 
 function cateroryTrans (catetoryList){
   return catetoryList.toString()
@@ -193,9 +204,9 @@ const TableList: React.FC<{}> = () => {
           labelWidth: 120,
         }}
         toolBarRender={() => [
-          // <Button type="primary" onClick={() => handleModalVisible(true)}>
-          //   <PlusOutlined /> 新建
-          // </Button>,
+          <Button type="primary" onClick={() => initAdminInfor()}>
+            <PlusOutlined /> AdminInfor同步
+          </Button>,
         ]}
         request={(params, sorter, filter) => queryInforList({ ...params, sorter, filter })}
         columns={columns}

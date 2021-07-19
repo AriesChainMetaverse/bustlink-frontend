@@ -71,3 +71,8 @@ export async function updateInforList(params: { ids: string[],status: string  })
     },
   });
 }
+export async function initCreateAdminInfor() {
+  return request(`/api/v0/initadmininformations/`, {
+    method: 'POST',
+  });
+}
