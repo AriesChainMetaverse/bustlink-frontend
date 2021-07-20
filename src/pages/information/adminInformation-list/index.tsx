@@ -98,7 +98,7 @@ const handleDown = async (selectedRows: TableListItem[]) => {
   }
 };
 async function initAdminInfor() {
-  const hide = message.loading('正在同步AdminInformation');
+  const hide = message.loading('正在同步AdminInformation数据');
   const resp = await initCreateAdminInfor();
   if (resp.status === 'success') {
     hide();
@@ -109,9 +109,6 @@ async function initAdminInfor() {
   }
 }
 
-function cateroryTrans (catetoryList){
-  return catetoryList.toString()
-}
 
 const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
