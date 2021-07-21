@@ -156,11 +156,13 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       dataIndex: 'index',
       hideInForm: true,
       hideInTable: true,
+      hideInSearch:true,
     },
     {
       title: '资源检测',
       dataIndex: 'check_state',
       hideInForm: true,
+      hideInSearch:true,
       // valueType: 'radioButton',
       valueEnum: {
         not_run: { text: '未检测', status: 'Default' },
@@ -176,6 +178,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       title: '媒体状态',
       dataIndex: 'media_exist',
       hideInTable: true,
+      hideInSearch:true,
       render: (_, record) => (
         <Space>
           <Tag color={record.media_exist ? 'green' : 'red'} key={'media_exist'}>
@@ -188,11 +191,13 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       title: '媒体路径',
       dataIndex: 'media_path',
       hideInTable: true,
+      hideInSearch:true,
     },
     {
       title: '海报状态',
       dataIndex: 'poster_exist',
       hideInTable: true,
+      hideInSearch:true,
       render: (_, record) => (
         <Space>
           <Tag color={record.poster_exist ? 'green' : 'red'} key={'poster_exist'}>
@@ -205,11 +210,13 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       title: '海报路径',
       dataIndex: 'poster_path',
       hideInTable: true,
+      hideInSearch:true,
     },
     {
       title: '缩略图状态',
       dataIndex: 'thumb_exist',
       hideInTable: true,
+      hideInSearch:true,
       render: (_, record) => (
         <Space>
           <Tag color={record.thumb_exist ? 'green' : 'red'} key={'thumb_exist'}>
@@ -222,11 +229,13 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       title: '缩略图路径',
       dataIndex: 'thumb_path',
       hideInTable: true,
+      hideInSearch:true,
     },
     {
       title: '信息状态',
       dataIndex: 'thumb_exist',
       hideInTable: true,
+      hideInSearch:true,
       render: (_, record) => (
         <Space>
           <Tag
@@ -242,6 +251,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       title: '信息来源',
       dataIndex: 'thumb_exist',
       hideInTable: true,
+      hideInSearch:true,
       render: (_, record) => (
         <Space>
           {
@@ -261,6 +271,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       // sorter: true,
       valueType: 'date',
       hideInForm: true,
+      hideInSearch:true,
       render: (_, record) => (
         <Space>{moment.unix(record.updated_unix).format('YYYY-MM-DD HH:mm:ss')}</Space>
       ),
@@ -272,6 +283,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       valueType: 'date',
       hideInTable: true,
       hideInForm: true,
+      hideInSearch:true,
       render: (_, record) => (
         <Space>{moment.unix(record.updated_unix).format('YYYY-MM-DD HH:mm:ss')}</Space>
       ),
@@ -280,6 +292,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       title: '强制执行',
       dataIndex: 'force',
       hideInTable: true,
+      hideInSearch:true,
       renderFormItem: (_, { defaultRender }) => {
         return defaultRender(_);
       },
@@ -295,6 +308,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       title: '上传状态',
       dataIndex: 'upload_state',
       hideInForm: true,
+      hideInSearch:true,
       valueEnum: {
         not_run: { text: '没有任务', status: 'Default' },
         waiting: { text: '等待上传', status: 'Processing' },
@@ -311,6 +325,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       valueType: 'text',
       hideInForm: true,
       hideInTable: true,
+      hideInSearch:true,
     },
     {
       title: '上传Hash',
@@ -318,6 +333,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       valueType: 'text',
       hideInForm: true,
       hideInTable: true,
+      hideInSearch:true,
     },
     {
       title: '上传',
