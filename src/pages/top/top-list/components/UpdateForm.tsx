@@ -92,6 +92,26 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
                   </Col>
                   <Col span={8}>
                     <Checkbox
+                      value="top"
+                      style={{
+                        lineHeight: '32px',
+                      }}
+                    >
+                      置顶
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox
+                      value="special"
+                      style={{
+                        lineHeight: '32px',
+                      }}
+                    >
+                      推荐
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox
                       value="hottest"
                       style={{
                         lineHeight: '32px',
