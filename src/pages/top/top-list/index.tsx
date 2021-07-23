@@ -171,6 +171,8 @@ const TableList: React.FC<{}> = () => {
         'star': { text: '明星', status: 'star' },
         'producer': { text: '制作公司', status: 'producer' },
         'exclusive': { text: '独家内容', status: 'exclusive' },
+        'top': { text: '置顶', status: 'top' },
+        'special': { text: '推荐', status: 'special' },
         'normal': { text: '正常', status: 'normal' },
 
       },
