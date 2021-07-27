@@ -1,16 +1,19 @@
-import request from '@/utils/request';
+// import request from '@/utils/request';
+import request from 'umi-request';
+import Base64  from 'base-64';
 
 export type LoginParamsType = {
-  userName: string;
+  username: string;
   password: string;
   mobile: string;
   captcha: string;
 };
 
 export async function fakeAccountLogin(params: LoginParamsType) {
-  return request('/api/v0/login', {
-    method: 'POST',
-    data: params,
+  const basicAuth = Base64.encode(params.username + ":" + params.password)
+  return request('/oauth2/token?client_id=000000&client_secret=999999&scope=all&grant_type=password', {
+    method: 'GET',
+    headers:{'Authorization': `Basic ${basicAuth}`},
   });
 }
 
@@ -19,14 +22,14 @@ export async function getFakeCaptcha(mobile: string) {
 }
 
 export async function fakeUserBaseInfo(token: string) {
-  return request('/api/v0/auth/userbaseinfo', {
+  return request('/api/v0/userbaseinfo', {
     method: 'GET',
-    headers:{'Authorization': `Bearer ${token}`},
   });
 }
 export async function fakeSystemProperty(key: string) {
   return request(`/api/v0/adminproperty/${key}`, {
     method: 'GET',
+    headers:{'Authorization': `Bearer ${localStorage.getItem("token")}`},
   });
 }
 

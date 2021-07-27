@@ -11,7 +11,7 @@ export async function queryCurrent(): Promise<any> {
   // return request('/api/currentUser');
   const token = localStorage.getItem("token")
 
-  const response = await request('/api/v0/auth/userbaseinfo', {
+  const response = await request('/api/v0/userbaseinfo', {
     method: 'GET',
     headers:{'Authorization': `Bearer ${token}`},
   });
@@ -31,7 +31,7 @@ export async function queryCurrent(): Promise<any> {
   }else{
     //整理接口返回值符合Protable格式
     let obj = {};
-    obj.name = response.data[0].name
+    obj.name = response.data[0].username
     obj.avatar = response.data[0].avatar
     // response = obj
     console.log(response)

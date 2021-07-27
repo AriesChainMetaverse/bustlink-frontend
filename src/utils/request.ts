@@ -53,4 +53,33 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
 });
 
+/**
+ * 配置request拦截器 增加头部token
+ */
+
+request.interceptors.request.use(async (url, options) => {
+
+  if(url !== '/oauth2/token?client_id=000000&client_secret=999999&scope=all&grant_type=password'){
+    if (
+      options.method === 'post' ||
+      options.method === 'put' ||
+      options.method === 'delete' ||
+      options.method === 'get'
+    ) {
+      const headers = {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization:`Bearer ${localStorage.getItem("token")}`
+      };
+      return {
+        url,
+        options: { ...options, headers },
+      };
+  }
+
+
+
+  }
+});
+
 export default request;
