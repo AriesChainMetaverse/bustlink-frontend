@@ -194,7 +194,7 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="视频列表"
+        headerTitle="全量节点PIN资源列表"
         actionRef={actionRef}
         rowKey="id"
         search={{
