@@ -89,4 +89,7 @@ export default {
 
   'menu.property': '系统配置',
   'menu.property.property-list': '系统配置列表',
+
+  'menu.remotepin': '全量节点PIN资源',
+  'menu.remotepin.remotepin-list': '全量节点PIN资源列表',
 };

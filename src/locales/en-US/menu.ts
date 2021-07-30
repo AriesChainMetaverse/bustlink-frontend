@@ -87,4 +87,7 @@ export default {
 
   'menu.property': 'system property',
   'menu.property.property-list': 'property-list',
+
+  'menu.remotepin': 'system remotepin',
+  'menu.remotepin.remotepin-list': 'remotepin-list',
 };

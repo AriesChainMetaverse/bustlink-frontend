@@ -12,6 +12,11 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
+    '/oauth2/': {
+      target: 'http://localhost:9033/',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
   },
   test: {
     '/api/': {
@@ -19,9 +24,19 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
+    '/oauth2/': {
+      target: 'http://localhost:9033/',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
   },
   pre: {
     '/api/': {
+      target: 'http://localhost:9033/',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/oauth2/': {
       target: 'http://localhost:9033/',
       changeOrigin: true,
       pathRewrite: { '^': '' },

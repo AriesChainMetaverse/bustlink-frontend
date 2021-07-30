@@ -87,4 +87,7 @@ export default {
 
   'menu.property': 'システム設定',
   'menu.property.property-list': 'システム設定リスト',
+
+  'menu.remotepin': 'リモートPIN管理',
+  'menu.remotepin.remotepin-list': 'リモートPIN管理リスト',
 };

@@ -38,21 +38,21 @@ const Model: LoginModelType = {
 
       // Login successfully
       console.log(response)
-      if (response.code === 200) {
+      if (response.access_token !== undefined) {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         message.success('🎉 🎉 🎉  登录成功！');
         // 登录成功后，将token存储到localStorage中
-        localStorage.setItem("token",response.token)
+        localStorage.setItem("token",response.access_token)
 
         // 登录成功后通过token获取用户基本信息
-        const response1 = yield call(fakeUserBaseInfo, response.token);
+        const response1 = yield call(fakeUserBaseInfo, response.access_token);
         yield put({
           type: 'changeLoginStatus',
           payload: response1,
         });
-        localStorage.setItem("name",response1.data[0].name)
-        localStorage.setItem("permission",response1.data[0].permission)
+        localStorage.setItem("name",response1.data[0].username)
+        localStorage.setItem("is_admin",response1.data[0].is_admin)
 
         // 获取系统配置信息
         const response2 = yield call(fakeSystemProperty, 'InformationImgUrl');
@@ -96,7 +96,12 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.data[0].permission);
+      if (payload.data[0].is_admin){
+        setAuthority("admin");
+      }else{
+        setAuthority("user");
+
+      }
       return {
         ...state,
         // status: payload.status,

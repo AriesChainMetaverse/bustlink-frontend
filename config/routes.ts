@@ -472,6 +472,20 @@
                 ],
               },
               {
+                path: './remotepin',
+                icon: 'table',
+                authority: ['admin', 'user'],//权限控制
+                name: 'remotepin',
+                routes: [
+                  {
+                    name: 'remotepin-list',
+                    icon: 'smile',
+                    path: '../remotepin/remotepin-list',
+                    component: './remotepin/remotepin-list',
+                  },
+                ],
+              },
+              {
                 component: '404',
               },
 
