@@ -2,13 +2,13 @@ import request from 'umi-request';
 import { TableListParams } from './data.d';
 
 
-export async function queryInforList(params?: TableListParams) {
+export async function queryAdminPinList(params?: TableListParams) {
 
   //配合接口的分页变量名
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/admininformations', {
+  const response = await request('/api/v0/adminpin', {
     method:"GET", params
 
   });
@@ -20,19 +20,24 @@ export async function queryInforList(params?: TableListParams) {
     if(response.data[i].edges !== "" && response.data[i].edges !== undefined && JSON.stringify(response.data[i].edges) !== "{}"){
       console.log(response.data[i].edges.admin_tops)
       obj.id = response.data[i].id
+      obj.rid = response.data[i].rid
       obj.status = response.data[i].status
-      obj.video_no = response.data[i].edges.informationsV1.video_no
-      obj.title = response.data[i].edges.informationsV1.title
-      obj.root = response.data[i].edges.informationsV1.root
-      obj.poster_path = response.data[i].edges.informationsV1.poster_path
+      obj.step = response.data[i].step
+      obj.relate = response.data[i].relate
+      obj.video_no = response.data[i].edges.pinInformation.video_no
+      obj.title = response.data[i].edges.pinInformation.title
 
+
+      obj.poster_path = response.data[i].edges.pinInformation.poster_path
 
     }else{
       obj.id = response.data[i].id
+      obj.rid = response.data[i].rid
       obj.video_no = ""
       obj.title = ""
       obj.status = response.data[i].status
-      obj.root = ""
+      obj.step = response.data[i].step
+      obj.relate = response.data[i].relate
       obj.poster_path = ""
 
     }
@@ -63,9 +68,9 @@ export async function addRule(params: TableListParams) {
   });
 }
 
-export async function updateInforList(params: { ids: string[],status: string  }) {
-  return request(`/api/v0/admininformations/`, {
-    method: 'POST',
+export async function updateAdminPin(params: TableListParams) {
+  return request(`/api/v0/adminpin/${params.id}`, {
+    method: 'PUT',
     data: {
       ...params,
     },

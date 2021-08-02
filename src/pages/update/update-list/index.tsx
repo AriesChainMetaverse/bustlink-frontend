@@ -95,13 +95,18 @@ const TableList: React.FC<{}> = () => {
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<TableListItem>();
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
-
+  const headers = {
+    // 'Content-Type': 'multipart/form-data',
+    // Accept: 'application/json',
+    Authorization:`Bearer ${localStorage.getItem("token")}`
+  };
   const uploadProps ={
     name: 'exeFile',
     multiple: true,
     action: '/api/v0/adminupdate/'+row?.id,
     showUploadList:false,
     method:"post",
+    headers:headers,
     onChange(info) {
       console.log(info)
       const { status } = info.file;

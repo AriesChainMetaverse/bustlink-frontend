@@ -175,6 +175,7 @@ const TableList: React.FC<{}> = () => {
         'special': { text: '推荐', status: 'special' },
         'normal': { text: '正常', status: 'normal' },
 
+
       },
     },
     {

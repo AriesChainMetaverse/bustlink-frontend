@@ -7,7 +7,15 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import {updateRule, addRule, removeRule, queryInforList, updateInforList,initCreateAdminInfor} from './service';
+import {
+  updateRule,
+  addRule,
+  removeRule,
+  queryAdminPinList,
+  updateInforList,
+  initCreateAdminInfor,
+  updateAdminPin
+} from './service';
 import {channelSyncInstructInfo} from "@/pages/channel/service";
 
 /**
@@ -33,70 +41,26 @@ const handleAdd = async (fields: TableListItem) => {
  * @param fields
  */
 const handleUpdate = async (fields: FormValueType) => {
-  // const hide = message.loading('正在配置');
-  // try {
-  //   await updateTopList({
-  //     information_id:fields.id,
-  //     title: fields.title,
-  //     intro: fields.intro,
-  //     lower_banner: fields.lower_banner,
-  //     top_right: fields.top_right,
-  //     category: fields.category,
-  //   });
-  //   hide();
-  //
-  //   message.success('配置成功');
-  //   return true;
-  // } catch (error) {
-  //   hide();
-  //   message.error('配置失败请重试！');
-  //   return false;
-  // }
-};
-
-/**
- *  上架
- * @param selectedRows
- */
-const handleUp = async (selectedRows: TableListItem[]) => {
-  const hide = message.loading('正在上架');
-  if (!selectedRows) return true;
+  const hide = message.loading('正在配置');
   try {
-    await updateInforList({
-      ids: selectedRows.map((row) => row.id),
-      status : 'up'
+    await updateAdminPin({
+      id:fields.id,
+      rid: fields.rid,
+      status: fields.status,
+      step: fields.step,
+      relate: fields.relate,
     });
     hide();
-    message.success('上架成功，即将刷新');
+
+    message.success('配置成功');
     return true;
   } catch (error) {
     hide();
-    message.error('上架失败，请重试');
+    message.error('配置失败请重试！');
     return false;
   }
 };
 
-/**
- *  下架
- * @param selectedRows
- */
-const handleDown = async (selectedRows: TableListItem[]) => {
-  const hide = message.loading('正在下架');
-  if (!selectedRows) return true;
-  try {
-    await updateInforList({
-      ids: selectedRows.map((row) => row.id),
-      status : 'down'
-    });
-    hide();
-    message.success('下架成功，即将刷新');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('下架失败，请重试');
-    return false;
-  }
-};
 async function initAdminInfor() {
   const hide = message.loading('正在同步AdminInformation数据');
   const resp = await initCreateAdminInfor();
@@ -128,7 +92,7 @@ const TableList: React.FC<{}> = () => {
         return (
           <Image
             width="250px"
-            src={localStorage.getItem("InformationImgUrl") + entity.root + '/' + entity.poster_path + "?ts=1"}
+            src={localStorage.getItem("InformationImgUrl") + entity.rid + '/' + entity.poster_path + "?ts=1"}
             fallback="/admin/failed/147x200.svg"
           />
         );
@@ -140,8 +104,8 @@ const TableList: React.FC<{}> = () => {
       tip: '视频番号是唯一的',
     },
     {
-      title: 'root',
-      dataIndex: 'root',
+      title: 'rid',
+      dataIndex: 'rid',
       hideInForm: true,
       hideInSearch: true,
       hideInTable: true,
@@ -167,28 +131,55 @@ const TableList: React.FC<{}> = () => {
       sorter: true,
       hideInForm: true,
       valueEnum: {
-        "default": { text: '未设置', status: "default" },
-        "up": { text: '已上架', status: "up" },
-        "down": { text: '已下架', status: "down" },
+        "waiting": { text: 'waiting', status: "waiting" },
+        "pinning": { text: 'pinning', status: "pinning" },
+        "failed": { text: 'failed', status: "failed" },
+        "success": { text: 'success', status: "success" },
+        "notfound": { text: 'notfound', status: "notfound" },
       },
     },
-    // {
-    //   title: '操作',
-    //   dataIndex: 'option',
-    //   valueType: 'option',
-    //   render: (_, record) => (
-    //     <>
-    //       <a
-    //         onClick={() => {
-    //           handleUpdateModalVisible(true);
-    //           setStepFormValues(record);
-    //         }}
-    //       >
-    //         配置
-    //       </a>
-    //     </>
-    //   ),
-    // },
+
+    {
+      title: 'STEP',
+      dataIndex: 'step',
+      sorter: true,
+      hideInForm: true,
+      valueEnum: {
+        "add": { text: 'add', status: "add" },
+        "remove": { text: 'remove', status: "remove" },
+        "none": { text: 'none', status: "none" },
+
+      },
+    },
+    {
+      title: 'ReLate',
+      dataIndex: 'relate',
+      sorter: true,
+      hideInForm: true,
+      valueEnum: {
+        "informationv1": { text: 'informationv1', status: "informationv1" },
+        "update": { text: 'update', status: "update" },
+        "none": { text: 'none', status: "none" },
+
+      },
+    },
+    {
+      title: '操作',
+      dataIndex: 'option',
+      valueType: 'option',
+      render: (_, record) => (
+        <>
+          <a
+            onClick={() => {
+              handleUpdateModalVisible(true);
+              setStepFormValues(record);
+            }}
+          >
+            配置
+          </a>
+        </>
+      ),
+    },
   ];
 
   return (
@@ -205,7 +196,7 @@ const TableList: React.FC<{}> = () => {
             <PlusOutlined /> AdminInfor同步
           </Button>,
         ]}
-        request={(params, sorter, filter) => queryInforList({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => queryAdminPinList({ ...params, sorter, filter })}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => setSelectedRows(selectedRows),
@@ -220,24 +211,24 @@ const TableList: React.FC<{}> = () => {
             </div>
           }
         >
-          <Button
-            onClick={async () => {
-              await handleUp(selectedRowsState);
-              setSelectedRows([]);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            批量上架
-          </Button>
-          <Button
-            onClick={async () => {
-              await handleDown(selectedRowsState);
-              setSelectedRows([]);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            批量下架
-          </Button>
+          {/*<Button*/}
+          {/*  onClick={async () => {*/}
+          {/*    await handleUp(selectedRowsState);*/}
+          {/*    setSelectedRows([]);*/}
+          {/*    actionRef.current?.reloadAndRest?.();*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  批量上架*/}
+          {/*</Button>*/}
+          {/*<Button*/}
+          {/*  onClick={async () => {*/}
+          {/*    await handleDown(selectedRowsState);*/}
+          {/*    setSelectedRows([]);*/}
+          {/*    actionRef.current?.reloadAndRest?.();*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  批量下架*/}
+          {/*</Button>*/}
         </FooterToolbar>
       )}
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
