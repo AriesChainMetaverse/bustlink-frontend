@@ -193,7 +193,7 @@ const TableList: React.FC<{}> = () => {
         }}
         toolBarRender={() => [
           <Button type="primary" onClick={() => initAdminInfor()}>
-            <PlusOutlined /> AdminInfor同步
+            <PlusOutlined /> 同步最新PIN状态
           </Button>,
         ]}
         request={(params, sorter, filter) => queryAdminPinList({ ...params, sorter, filter })}
