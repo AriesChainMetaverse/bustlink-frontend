@@ -13,7 +13,7 @@ import {
   removeRule,
   queryAdminPinList,
   updateInforList,
-  initCreateAdminInfor,
+  syncAdminPin,
   updateAdminPin
 } from './service';
 import {channelSyncInstructInfo} from "@/pages/channel/service";
@@ -62,8 +62,8 @@ const handleUpdate = async (fields: FormValueType) => {
 };
 
 async function initAdminInfor() {
-  const hide = message.loading('正在同步AdminInformation数据');
-  const resp = await initCreateAdminInfor();
+  const hide = message.loading('正在同步最新pin状态数据');
+  const resp = await syncAdminPin();
   if (resp.status === 'success') {
     hide();
     message.success(resp.message);

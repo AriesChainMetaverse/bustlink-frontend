@@ -76,8 +76,8 @@ export async function updateAdminPin(params: TableListParams) {
     },
   });
 }
-export async function initCreateAdminInfor() {
-  return request(`/api/v0/initadmininformations/`, {
-    method: 'POST',
+export async function syncAdminPin() {
+  return request(`/api/v0/syncadminpin`, {
+    method: 'GET',
   });
 }
