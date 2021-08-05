@@ -34,7 +34,7 @@ import {
   addScrape,
   updateScrape,
   uploadScrape,
-  uploadScrapes,
+  uploadScrapes,startScrape,stopScrape,
 } from '@/pages/scrape/scrape-list/service';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -86,6 +86,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
   const [page, setPage] = useState<number>(1);
   const [perPage, setPerPage] = useState<number>(15);
   const [polling, setPolling] = useState<number | undefined>(1000);
+  const [scraping, setScraping] = useState<number | undefined>();
   const [scrapeDone, setScrapeDone] = useState<boolean>(false);
   const [scrapeVisible, setScrapeVisible] = useState<boolean>(false);
   const [scrapeCurrent, setScrapeCurrent] = useState<Partial<ScrapeItem> | undefined>(undefined);
@@ -103,6 +104,14 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
 
   const uploadScrapeCall = async (values: ScrapeItem) => {
     return await uploadScrape(values);
+  };
+
+  const startScrapeCall = async () => {
+    return  startScrape();
+  };
+
+  const stopScrapeCall = async () => {
+    return  stopScrape();
   };
 
   const columns: ProColumns<ScrapeItem>[] = [
@@ -499,6 +508,27 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
           polling={polling || undefined}
           toolBarRender={() => [
             <Button
+              key="4"
+              type="primary"
+              onClick={() => {
+                if (scraping) {
+                  setScraping(undefined);
+                  stopScrapeCall()
+                  return;
+                }
+
+                setScraping(1000);
+                startScrapeCall()
+
+
+
+
+              }}
+            >
+              {scraping ? <LoadingOutlined /> : <ReloadOutlined />}
+              {scraping ? '停止爬虫' : '启动爬虫'}
+            </Button>,
+            <Button
               key="3"
               type="primary"
               onClick={() => {
@@ -534,7 +564,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
           }}
         />
 
-        <div className={styles.standardList}>
+        {/*<div className={styles.standardList}>*/}
           {/*<Card bordered={false}>*/}
           {/*  <Row>*/}
           {/*    <Col sm={8} xs={24}>*/}
@@ -548,7 +578,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
           {/*    </Col>*/}
           {/*  </Row>*/}
           {/*</Card>*/}
-        </div>
+        {/*</div>*/}
       </PageContainer>
       {selectedRowsState?.length > 0 && (
         <FooterToolbar

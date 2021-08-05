@@ -59,3 +59,17 @@ export async function addScrape(params: ScrapeItemDataType) {
     },
   });
 }
+
+export async function startScrape() {
+
+  return request(`/api/v0/startscrap`, {
+    method: 'GET',
+  });
+}
+
+export async function stopScrape() {
+
+  return request(`/api/v0/stopscrap`, {
+    method: 'GET',
+  });
+}
