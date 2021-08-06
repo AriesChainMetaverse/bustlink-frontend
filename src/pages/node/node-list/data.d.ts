@@ -29,10 +29,13 @@ export interface TableListParams {
   link: string;
   kind: string;
   title: string;
-  content: string;
+  content: number;
   key?: number;
   pageSize?: number;
   currentPage?: number;
   filter?: { [key: string]: any[] };
   sorter?: { [key: string]: any };
+  page: number;
+  per_page?: number;
+  current: number;
 }

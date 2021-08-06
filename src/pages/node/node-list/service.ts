@@ -4,16 +4,21 @@ import { TableListParams } from './data.d';
 
 export async function queryNodeList(params?: TableListParams) {
 
-  //配合接口的分页变量名
-  params.page = params.current;
-  params.per_page = params.pageSize;
+  if(params !== undefined){
+    // 配合接口的分页变量名
+    // eslint-disable-next-line no-param-reassign
+    params.page = params.current;
+    // eslint-disable-next-line no-param-reassign
+    params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/node', {
-    method:"GET", params
+    const response = await request('/api/v0/node', {
+      method:"GET", params
 
-  });
+    });
 
-  return response;
+    return response;
+  }
+  return null;
 }
 
 export async function removeAnnounce(params: { ids: number[] }) {

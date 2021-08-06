@@ -127,23 +127,23 @@ const TableList: React.FC<{}> = () => {
       },
     },
 
-    {
-      title: '操作',
-      dataIndex: 'option',
-      valueType: 'option',
-      render: (_, record) => (
-        <>
-          <a
-            onClick={() => {
-              handleUpdateModalVisible(true);
-              setStepFormValues(record);
-            }}
-          >
-            配置
-          </a>
-        </>
-      ),
-    },
+    // {
+    //   title: '操作',
+    //   dataIndex: 'option',
+    //   valueType: 'option',
+    //   render: (_, record) => (
+    //     <>
+    //       <a
+    //         onClick={() => {
+    //           handleUpdateModalVisible(true);
+    //           setStepFormValues(record);
+    //         }}
+    //       >
+    //         配置
+    //       </a>
+    //     </>
+    //   ),
+    // },
   ];
 
   return (
@@ -175,15 +175,15 @@ const TableList: React.FC<{}> = () => {
             </div>
           }
         >
-          <Button
-            onClick={async () => {
-              await handleRemove(selectedRowsState);
-              setSelectedRows([]);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            批量删除
-          </Button>
+          {/*<Button*/}
+          {/*  onClick={async () => {*/}
+          {/*    await handleRemove(selectedRowsState);*/}
+          {/*    setSelectedRows([]);*/}
+          {/*    actionRef.current?.reloadAndRest?.();*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  批量删除*/}
+          {/*</Button>*/}
         </FooterToolbar>
       )}
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
