@@ -100,7 +100,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: '节点ID',
       dataIndex: 'pid',
-      tip: '节点ID是唯一',
+      tip: '节点ID（pid）是唯一',
       hideInForm: false,
       formItemProps: {
         rules: [
@@ -173,6 +173,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'service_port',
       sorter: false,
       hideInForm: false,
+      hideInSearch: true,
       valueType: 'number',
       formItemProps: {
         rules: [
@@ -188,6 +189,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'fail_counts',
       sorter: false,
       hideInForm: false,
+      hideInSearch: true,
       valueType: 'number',
     },
 

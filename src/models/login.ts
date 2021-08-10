@@ -37,7 +37,7 @@ const Model: LoginModelType = {
       const response = yield call(fakeAccountLogin, payload);
 
       // Login successfully
-      console.log(response)
+      // console.log(response)
       if (response.access_token !== undefined) {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
