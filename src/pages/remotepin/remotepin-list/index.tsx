@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import {Button, Divider, message, Input, Drawer, Image} from 'antd';
+import {Button,  message,  Drawer, Image} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -8,15 +8,15 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import {
-  updateRule,
+
   addRule,
-  removeRule,
+
   queryAdminPinList,
-  updateInforList,
+
   syncAdminPin,
   updateAdminPin
 } from './service';
-import {channelSyncInstructInfo} from "@/pages/channel/service";
+
 
 /**
  * 添加节点
@@ -44,7 +44,7 @@ const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
     await updateAdminPin({
-      id:fields.id,
+      id: fields.id,
       rid: fields.rid,
       status: fields.status,
       step: fields.step,
@@ -211,24 +211,7 @@ const TableList: React.FC<{}> = () => {
             </div>
           }
         >
-          {/*<Button*/}
-          {/*  onClick={async () => {*/}
-          {/*    await handleUp(selectedRowsState);*/}
-          {/*    setSelectedRows([]);*/}
-          {/*    actionRef.current?.reloadAndRest?.();*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  批量上架*/}
-          {/*</Button>*/}
-          {/*<Button*/}
-          {/*  onClick={async () => {*/}
-          {/*    await handleDown(selectedRowsState);*/}
-          {/*    setSelectedRows([]);*/}
-          {/*    actionRef.current?.reloadAndRest?.();*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  批量下架*/}
-          {/*</Button>*/}
+
         </FooterToolbar>
       )}
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>

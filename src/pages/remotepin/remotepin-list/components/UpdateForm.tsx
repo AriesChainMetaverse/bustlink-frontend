@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps ,Checkbox,Row,Col} from 'antd';
+import { Form, Button,  Input, Modal,  Select} from 'antd';
 
 import { TableListItem } from '../data.d';
 
@@ -18,10 +18,9 @@ export interface UpdateFormProps {
   values: Partial<TableListItem>;
 }
 const FormItem = Form.Item;
-const { Step } = Steps;
-const { TextArea } = Input;
+
 const { Option } = Select;
-const RadioGroup = Radio.Group;
+
 
 export interface UpdateFormState {
   formVals: FormValueType;
@@ -46,7 +45,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
 
   });
 
-  const [currentStep, setCurrentStep] = useState<number>(0);
+
 
   const [form] = Form.useForm();
 
@@ -57,9 +56,6 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     values,
   } = props;
 
-  const forward = () => setCurrentStep(currentStep + 1);
-
-  const backward = () => setCurrentStep(currentStep - 1);
 
   const handleNext = async () => {
     const fieldsValue = await form.validateFields();
@@ -184,9 +180,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         <Button type="primary" onClick={() => handleNext()}>
           完成
         </Button>
-        {/*<Button type="primary" onClick={() => handleNext()}>*/}
-        {/*  下一步*/}
-        {/*</Button>*/}
+
       </>
     );
   };

@@ -4,12 +4,14 @@ export interface TableListItem {
   information_id: string;
   video_no: string;
   intro: string;
-  lower_banner: string;
   title: string;
   root: string;
   poster_path: string;
-  top_right: number;
-  category: array;
+  rid: string;
+  step: string;
+  status: string;
+  relate: string;
+  name: string;
 }
 
 export interface TableListPagination {
@@ -24,6 +26,10 @@ export interface TableListData {
 }
 
 export interface TableListParams {
+  id?: string;
+  rid?: string;
+  step?: string;
+  relate?: string;
   status?: string;
   name?: string;
   desc?: string;
