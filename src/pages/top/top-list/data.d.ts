@@ -8,6 +8,10 @@ export interface TableListItem {
   title: string;
   top_right: number;
   category: array;
+  name: string;
+  poster_path: string;
+  root: string;
+
 }
 
 export interface TableListPagination {
@@ -30,4 +34,10 @@ export interface TableListParams {
   currentPage?: number;
   filter?: { [key: string]: any[] };
   sorter?: { [key: string]: any };
+  information_id?: string;
+  title?: string;
+  intro?: string;
+  lower_banner?: string;
+  top_right?: number;
+  category?: array;
 }

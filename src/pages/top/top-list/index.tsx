@@ -1,5 +1,5 @@
-import { PlusOutlined } from '@ant-design/icons';
-import {Button, Divider, message, Input, Drawer, Image} from 'antd';
+
+import {  message,  Drawer, Image} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -35,7 +35,7 @@ const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
     await updateTopList({
-      information_id:fields.id,
+      information_id: fields.id,
       title: fields.title,
       intro: fields.intro,
       lower_banner: fields.lower_banner,
