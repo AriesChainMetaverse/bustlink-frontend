@@ -1,5 +1,5 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Divider, message, Input, Drawer } from 'antd';
+
+import {  message, Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -7,7 +7,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import {  updateAdminInstruct, addRule, removeRule,queryAdminInstructList } from './service';
+import {  updateAdminInstruct, addRule, queryAdminInstructList } from './service';
 
 /**
  * 添加节点
@@ -54,26 +54,6 @@ const handleUpdate = async (fields: FormValueType) => {
   }
 };
 
-/**
- *  删除节点
- * @param selectedRows
- */
-const handleRemove = async (selectedRows: TableListItem[]) => {
-  const hide = message.loading('正在删除');
-  if (!selectedRows) return true;
-  try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
-    });
-    hide();
-    message.success('删除成功，即将刷新');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('删除失败，请重试');
-    return false;
-  }
-};
 
 const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
@@ -170,8 +150,7 @@ const TableList: React.FC<{}> = () => {
           >
             配置
           </a>
-          {/*<Divider type="vertical" />*/}
-          {/*<a href="">订阅警报</a>*/}
+
         </>
       ),
     },
@@ -208,16 +187,7 @@ const TableList: React.FC<{}> = () => {
           //   </div>
           // }
         >
-          {/*<Button*/}
-          {/*  onClick={async () => {*/}
-          {/*    await handleRemove(selectedRowsState);*/}
-          {/*    setSelectedRows([]);*/}
-          {/*    actionRef.current?.reloadAndRest?.();*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  批量删除*/}
-          {/*</Button>*/}
-          {/*<Button type="primary">批量审批</Button>*/}
+
         </FooterToolbar>
       )}
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>

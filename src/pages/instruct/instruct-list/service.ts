@@ -3,7 +3,7 @@ import { TableListParams } from './data.d';
 
 export async function queryAdminInstructList(params?: TableListParams) {
 
-  //配合接口的分页变量名
+  // 配合接口的分页变量名
   params.page = params.current;
   params.per_page = params.pageSize;
 
@@ -12,7 +12,7 @@ export async function queryAdminInstructList(params?: TableListParams) {
 
   });
 
-  //整理接口返回值符合Protable格式
+  // 整理接口返回值符合Protable格式
   let newData =[];
   for(let i = 0; i < response.data.length; i++) {
     let obj = {};
