@@ -21,6 +21,7 @@ export interface ScrapeItem {
   created_unix: number;
   updated_unix: number;
   edges: ScrapeItemEdges;
+  poster_path: string;
 }
 
 export interface ScrapeListItemDataType {

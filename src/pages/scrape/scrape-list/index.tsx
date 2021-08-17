@@ -123,21 +123,18 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       search: false,
       render: (dom, entity) => {
         return (
-          // <Image
-          //   width="72px"
-          //   src={`/api/v0/resource/${entity.name}/image/thumb.jpg?ts=${Math.round(
-          //     Date.now() / 10000,
-          //   )}`}
-          //   fallback="/admin/failed/147x200.svg"
-          //   // preview={{
-          //   //   src: 'http://localhost:9033/api/v0/resource/failed/147x200.svg',
-          //   // }}
-          // />
-        <Image
-          width="250px"
-          src={localStorage.getItem("InformationImgUrl") + entity.upload_hash + '/' + entity.poster_path + "?ts=1"}
-          fallback="/admin/failed/147x200.svg"
-        />
+          <Image
+            width="72px"
+            src={`/api/v0/resource/${entity.name}/image/thumb.jpg?ts=${Math.round(
+              Date.now() / 10000,
+            )}`}
+            fallback={localStorage.getItem("InformationImgUrl") + entity.upload_hash + '/' + entity.poster_path + "?ts=1"}
+            // fallback="/admin/failed/147x200.svg"
+            // preview={{
+            //   src: 'http://localhost:9033/api/v0/resource/failed/147x200.svg',
+            // }}
+          />
+
         );
       },
     },
