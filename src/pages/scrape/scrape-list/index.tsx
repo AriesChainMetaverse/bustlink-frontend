@@ -2,15 +2,12 @@ import type { FC} from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Button,
-  Card,
-  Col,
   Divider,
   Drawer,
   Image,
   message,
   Modal,
   Pagination,
-  Row,
   Space,
   Tag,
 } from 'antd';
@@ -26,7 +23,6 @@ import type { Dispatch } from 'umi';
 import { connect } from 'umi';
 import type { StateType } from './model';
 import type { ScrapeItem } from './data.d';
-import styles from './style.less';
 import { findDOMNode } from 'react-dom';
 import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import ScrapeModal from '@/pages/scrape/scrape-list/components/ScrapeModal';
@@ -47,17 +43,17 @@ interface BasicListProps {
   loading: boolean;
 }
 
-const Info: FC<{
-  title: React.ReactNode;
-  value: React.ReactNode;
-  bordered?: boolean;
-}> = ({ title, value, bordered }) => (
-  <div className={styles.headerInfo}>
-    <span>{title}</span>
-    <p>{value}</p>
-    {bordered && <em />}
-  </div>
-);
+// const Info: FC<{
+//   title: React.ReactNode;
+//   value: React.ReactNode;
+//   bordered?: boolean;
+// }> = ({ title, value, bordered }) => (
+//   <div className={styles.headerInfo}>
+//     <span>{title}</span>
+//     <p>{value}</p>
+//     {bordered && <em />}
+//   </div>
+// );
 
 /**
  *  批量上传
@@ -125,11 +121,9 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
         return (
           <Image
             width="72px"
-            src={`/api/v0/resource/${entity.name}/image/thumb.jpg?ts=${Math.round(
-              Date.now() / 10000,
-            )}`}
-            fallback={localStorage.getItem("InformationImgUrl") + entity.upload_hash + '/' + entity.poster_path + "?ts=1"}
-            // fallback="/admin/failed/147x200.svg"
+            src={`/api/v0/resource/${entity.name}/image/thumb.jpg?ts=1`}
+            crossOrigin="anonymous"
+            fallback="/admin/failed/147x200.svg"
             // preview={{
             //   src: 'http://localhost:9033/api/v0/resource/failed/147x200.svg',
             // }}
@@ -566,21 +560,6 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
           }}
         />
 
-        {/*<div className={styles.standardList}>*/}
-          {/*<Card bordered={false}>*/}
-          {/*  <Row>*/}
-          {/*    <Col sm={8} xs={24}>*/}
-          {/*      <Info title="我的待办" value="8个任务" bordered />*/}
-          {/*    </Col>*/}
-          {/*    <Col sm={8} xs={24}>*/}
-          {/*      <Info title="本周任务平均处理时间" value="32分钟" bordered />*/}
-          {/*    </Col>*/}
-          {/*    <Col sm={8} xs={24}>*/}
-          {/*      <Info title="本周完成任务数" value="24个任务" />*/}
-          {/*    </Col>*/}
-          {/*  </Row>*/}
-          {/*</Card>*/}
-        {/*</div>*/}
       </PageContainer>
       {selectedRowsState?.length > 0 && (
         <FooterToolbar
@@ -601,7 +580,7 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
           >
             批量上传
           </Button>
-          {/*<Button type="primary">批量爬取</Button>*/}
+
         </FooterToolbar>
       )}
       <ScrapeModal

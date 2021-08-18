@@ -108,6 +108,7 @@ const TableList: React.FC<{}> = () => {
           width="250px"
           src={localStorage.getItem("InformationImgUrl") + entity.root + '/' + entity.poster_path + "?ts=1"}
           fallback="/admin/failed/147x200.svg"
+          crossOrigin="anonymous"
         />
         );
       },

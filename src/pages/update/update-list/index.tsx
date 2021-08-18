@@ -114,10 +114,17 @@ const TableList: React.FC<{}> = () => {
         console.log(info.file, info.fileList);
       }
       if (status === 'done') {
-        message.success(`${info.file.name} 文件上传成功.`);
-        if (actionRef.current) {
-          actionRef.current.reload();
+
+        if(info.file.response.status ==="success"){
+          message.success(`${info.file.name} 文件上传成功.`);
+          if (actionRef.current) {
+            actionRef.current.reload();
+          }
+        }else{
+          message.error(`${info.file.name} 文件上传失败.[${info.file.response.message}]`);
         }
+
+
       } else if (status === 'error') {
         message.error(`${info.file.name} 文件上传失败.`);
       }
