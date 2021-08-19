@@ -8,6 +8,16 @@ export interface TableListItem {
   title: string;
   rid: string;
 
+  detail: string;
+  forcibly: boolean;
+  truncate: boolean;
+  publish: boolean;
+  arch: string;
+  version: string;
+  filename: string;
+  attr: string;
+  crc32: string;
+
 }
 
 export interface TableListPagination {
@@ -26,13 +36,28 @@ export interface TableListParams {
   status?: string;
   name?: string;
   desc?: string;
-  link: string;
-  kind: string;
-  title: string;
-  content: string;
+  // link: string;
+  // kind: string;
+  title?: string;
+  detail?: string;
+  forcibly?: boolean;
+  truncate?: boolean;
+  publish?: boolean;
+  arch?: string;
+  version?: string;
+  filename?: string;
+  attr?: string;
+  rid?: string;
+  crc32?: string;
+  os?: string;
+  // content: string;
   key?: number;
   pageSize?: number;
+  page?: number;
+  per_page?: number;
   currentPage?: number;
+  current?: number;
   filter?: { [key: string]: any[] };
   sorter?: { [key: string]: any };
+
 }

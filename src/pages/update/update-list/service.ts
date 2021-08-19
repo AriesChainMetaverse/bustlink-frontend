@@ -4,7 +4,7 @@ import { TableListParams } from './data.d';
 
 export async function queryUpdateList(params?: TableListParams) {
 
-  //配合接口的分页变量名
+  // 配合接口的分页变量名
   params.page = params.current;
   params.per_page = params.pageSize;
 
@@ -16,7 +16,7 @@ export async function queryUpdateList(params?: TableListParams) {
   return response;
 }
 
-export async function removeUpdate(params: { ids: number[] }) {
+export async function removeUpdate(params: { ids: string[] }) {
   return request('/api/v0/adminupdate', {
     method: 'DELETE',
     data: {

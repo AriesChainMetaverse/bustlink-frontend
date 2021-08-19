@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps ,Checkbox,Row,Col} from 'antd';
+import { Form, Button,  Input, Modal, Radio, } from 'antd';
 
-import Editor from 'for-editor';
 
 import { TableListItem } from '../data.d';
 
@@ -18,6 +17,7 @@ export interface FormValueType extends Partial<TableListItem> {
   publish?: boolean;
   rid?: string;
   crc32?: string;
+  id?: string;
 
 }
 
@@ -28,9 +28,7 @@ export interface UpdateFormProps {
   values: Partial<TableListItem>;
 }
 const FormItem = Form.Item;
-const { Step } = Steps;
 const { TextArea } = Input;
-const { Option } = Select;
 const RadioGroup = Radio.Group;
 
 export interface UpdateFormState {

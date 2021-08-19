@@ -1,5 +1,5 @@
-import {CloudUploadOutlined, ExclamationCircleOutlined, PlusOutlined} from '@ant-design/icons';
-import {Button, Divider, message, Input, Drawer, Modal,Upload} from 'antd';
+import {CloudUploadOutlined,  PlusOutlined} from '@ant-design/icons';
+import {Button,  message,  Drawer, Upload} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -8,14 +8,13 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import {updateUpdate, addUpdate, removeUpdate, queryUpdateList} from './service';
-import Editor from "for-editor";
-import {uploadScrape} from "@/pages/scrape/scrape-list/service";
+
 
 /**
  * 添加公告
  * @param fields
  */
-const handleAdd = async (fields: TableListItem) => {
+const handleAdd = async (fields: FormValueType) => {
   const hide = message.loading('正在添加');
   try {
     await addUpdate({ ...fields });
@@ -50,7 +49,6 @@ const handleUpdate = async (fields: FormValueType) => {
       attr: fields.attr,
       rid: fields.rid,
       crc32: fields.crc32,
-
     });
     hide();
 
@@ -84,9 +82,10 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   }
 };
 
-function cateroryTrans (catetoryList){
-  return catetoryList.toString()
-}
+// // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// function cateroryTrans (catetoryList){
+//   return catetoryList.toString()
+// }
 
 const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
@@ -103,11 +102,11 @@ const TableList: React.FC<{}> = () => {
   const uploadProps ={
     name: 'exeFile',
     multiple: true,
-    action: '/api/v0/adminupdate/'+row?.id,
+    action: `/api/v0/adminupdate/${row?.id}`,
     showUploadList:false,
     method:"post",
     headers:headers,
-    onChange(info) {
+    onChange(info: { file: { response?: any; name?: any; status?: any; }; fileList: any; }) {
       console.log(info)
       const { status } = info.file;
       if (status !== 'uploading') {
@@ -129,7 +128,7 @@ const TableList: React.FC<{}> = () => {
         message.error(`${info.file.name} 文件上传失败.`);
       }
     },
-    beforeUpload(file){
+    beforeUpload(file: { type: string; }){
       console.log(file.type)
       const isAPK = file.type === 'application/vnd.android.package-archive';
       if (!isAPK) {
@@ -388,7 +387,6 @@ const TableList: React.FC<{}> = () => {
             <div>
               已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
               <span>
-                {/*服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万*/}
               </span>
             </div>
           }
@@ -417,20 +415,7 @@ const TableList: React.FC<{}> = () => {
         }}
         modalVisible={createModalVisible}
       >
-        {/*<ProTable<TableListItem, TableListItem>*/}
-        {/*  onSubmit={async (value) => {*/}
-        {/*    const success = await handleAdd(value);*/}
-        {/*    if (success) {*/}
-        {/*      handleModalVisible(false);*/}
-        {/*      if (actionRef.current) {*/}
-        {/*        actionRef.current.reload();*/}
-        {/*      }*/}
-        {/*    }*/}
-        {/*  }}*/}
-        {/*  rowKey="id"*/}
-        {/*  type="form"*/}
-        {/*  columns={columns}*/}
-        {/*/>*/}
+
       </CreateForm>
       {stepFormValues && Object.keys(stepFormValues).length ? (
         <UpdateForm
