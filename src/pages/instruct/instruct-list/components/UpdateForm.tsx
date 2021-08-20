@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps ,Checkbox,Row,Col} from 'antd';
+import { Form, Button, Input, Modal,  Select, } from 'antd';
 
 import { TableListItem } from '../data.d';
 
@@ -18,10 +18,8 @@ export interface UpdateFormProps {
   values: Partial<TableListItem>;
 }
 const FormItem = Form.Item;
-const { Step } = Steps;
-const { TextArea } = Input;
 const { Option } = Select;
-const RadioGroup = Radio.Group;
+
 
 export interface UpdateFormState {
   formVals: FormValueType;
@@ -46,8 +44,6 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     pid:props.values.pid,
     rid:props.values.rid,
   });
-
-  const [currentStep, setCurrentStep] = useState<number>(0);
 
   const [form] = Form.useForm();
 
@@ -281,10 +277,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       footer={renderFooter()}
       onCancel={() => handleUpdateModalVisible()}
     >
-      {/*<Steps style={{ marginBottom: 28 }} size="small" current={currentStep}>*/}
-      {/*  <Step title="配置" />*/}
-      {/*  <Step title="配置分类" />*/}
-      {/*</Steps>*/}
+
       <Form
         {...formLayout}
         form={form}

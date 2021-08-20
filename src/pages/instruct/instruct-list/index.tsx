@@ -75,16 +75,9 @@ const TableList: React.FC<{}> = () => {
           },
         ],
       },
-      // render: (dom, entity) => {
-      //   return <a onClick={() => setRow(entity)}>{dom}</a>;
-      // },
+
     },
-    // {
-    //   title: '标题',
-    //   dataIndex: 'title',
-    //   valueType: 'textarea',
-    //   hideInForm: true,
-    // },
+
     {
       title: 'PID',
       dataIndex: 'pid',
@@ -119,23 +112,7 @@ const TableList: React.FC<{}> = () => {
         'unpin': { text: 'unpin', status: 'unpin' },
       },
     },
-    // {
-    //   title: '上次调度时间',
-    //   dataIndex: 'updatedAt',
-    //   sorter: true,
-    //   valueType: 'dateTime',
-    //   hideInForm: true,
-    //   renderFormItem: (item, { defaultRender, ...rest }, form) => {
-    //     const status = form.getFieldValue('status');
-    //     if (`${status}` === '0') {
-    //       return false;
-    //     }
-    //     if (`${status}` === '3') {
-    //       return <Input {...rest} placeholder="请输入异常原因！" />;
-    //     }
-    //     return defaultRender(item);
-    //   },
-    // },
+
     {
       title: '操作',
       dataIndex: 'option',

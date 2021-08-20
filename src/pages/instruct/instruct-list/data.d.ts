@@ -9,6 +9,9 @@ export interface TableListItem {
   information_id: string;
   action: string;
   name: string;
+  video_no: string;
+  intro: string;
+  title: string;
 }
 
 export interface TableListPagination {
@@ -37,4 +40,7 @@ export interface TableListParams {
   currentPage?: number;
   filter?: { [key: string]: any[] };
   sorter?: { [key: string]: any };
+  page?: number;
+  current?: number;
+  per_page?: number;
 }
