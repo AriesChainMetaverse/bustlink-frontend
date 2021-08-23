@@ -7,7 +7,8 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import {updateRule, addRule, removeRule, queryTopList, updateTopList} from './service';
+import { addRule,  queryTopList, updateTopList} from './service';
+
 
 /**
  * 添加节点
@@ -55,26 +56,26 @@ const handleUpdate = async (fields: FormValueType) => {
 
 /**
  *  删除节点
- * @param selectedRows
  */
-const handleRemove = async (selectedRows: TableListItem[]) => {
-  const hide = message.loading('正在删除');
-  if (!selectedRows) return true;
-  try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
-    });
-    hide();
-    message.success('删除成功，即将刷新');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('删除失败，请重试');
-    return false;
-  }
-};
+// const handleRemove = async (selectedRows: TableListItem[]) => {
+//   const hide = message.loading('正在删除');
+//   if (!selectedRows) return true;
+//   try {
+//     await removeRule({
+//       key: selectedRows.map((row) => row.key),
+//     });
+//     hide();
+//     message.success('删除成功，即将刷新');
+//     return true;
+//   } catch (error) {
+//     hide();
+//     message.error('删除失败，请重试');
+//     return false;
+//   }
+// };
 
-function cateroryTrans (catetoryList){
+function cateroryTrans(catetoryList: React.ReactNode){
+  // @ts-ignore
   return catetoryList.toString()
 }
 
@@ -106,7 +107,7 @@ const TableList: React.FC<{}> = () => {
           // />
         <Image
           width="250px"
-          src={localStorage.getItem("InformationImgUrl") + entity.root + '/' + entity.poster_path + "?ts=1"}
+          src={`${localStorage.getItem("InformationImgUrl") + entity.root  }/${  entity.poster_path  }?ts=1`}
           fallback="/admin/failed/147x200.svg"
           crossOrigin="anonymous"
         />
@@ -186,7 +187,7 @@ const TableList: React.FC<{}> = () => {
       hideInForm: true,
       hideInSearch: true,
       valueType: 'textarea',
-      render: (text,record,index) => cateroryTrans(text),
+      render: (text) => cateroryTrans(text),
     },
     {
       title: '下角标',

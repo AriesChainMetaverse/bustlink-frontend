@@ -40,4 +40,7 @@ export interface TableListParams {
   lower_banner?: string;
   top_right?: number;
   category?: array;
+  per_page?: number;
+  page?: number;
+  current?: number;
 }
