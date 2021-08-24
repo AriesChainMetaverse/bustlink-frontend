@@ -16,7 +16,7 @@ export async function queryPropertyList(params?: TableListParams) {
   return response;
 }
 
-export async function removeAnnounce(params: { ids: number[] }) {
+export async function removeAnnounce(params: { ids: string[] }) {
   return request('/api/v0/adminannounce', {
     method: 'DELETE',
     data: {

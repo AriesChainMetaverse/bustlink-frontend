@@ -1,6 +1,6 @@
 
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Divider, message, Input, Drawer } from 'antd';
+import { Button,  message,  Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -9,7 +9,7 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import {updateProperty, addProperty, removeAnnounce, queryPropertyList} from './service';
-import Editor from "for-editor";
+
 
 /**
  * 添加公告
@@ -75,9 +75,9 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   }
 };
 
-function cateroryTrans (catetoryList){
-  return catetoryList.toString()
-}
+// function cateroryTrans (catetoryList){
+//   return catetoryList.toString()
+// }
 
 const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
@@ -175,7 +175,6 @@ const TableList: React.FC<{}> = () => {
             <div>
               已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
               <span>
-                {/*服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万*/}
               </span>
             </div>
           }
