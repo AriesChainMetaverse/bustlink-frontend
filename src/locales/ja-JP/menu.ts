@@ -52,6 +52,7 @@ export default {
 
   'menu.users': 'ユーザー',
   'menu.users.user-list': 'ユーザーリスト',
+  'menu.users.role-list': '役リスト',
 
   'menu.channel': 'チャンネル',
   'menu.channel.channel-list': 'チャンネルリスト',

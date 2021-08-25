@@ -299,6 +299,13 @@
                     path: '../users/user-list',
                     component: './users',
                   },
+                  {
+                    name: 'role-list',
+                    icon: 'smile',
+                    path: '../users/role-list',
+                    component: './role/role-list',
+                  },
+
                 ],
               },
               {
@@ -311,6 +318,7 @@
                     icon: 'smile',
                     path: '../channel/channel-list',
                     component: './channel',
+
                   },
                 ],
               },

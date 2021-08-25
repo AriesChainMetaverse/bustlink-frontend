@@ -51,6 +51,7 @@ export default {
   'menu.editor.koni': '拓扑编辑器',
   'menu.users': '用户',
   'menu.users.user-list': '用户列表',
+  'menu.users.role-list': '角色列表',
 
   'menu.channel': '频道',
   'menu.channel.channel-list': '频道列表',
