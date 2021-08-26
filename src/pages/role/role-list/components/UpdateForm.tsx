@@ -8,8 +8,6 @@ import { TableListItem } from '../data.d';
 export interface FormValueType extends Partial<TableListItem> {
   id?: string;
   announce_no?: string;
-  title?: string;
-  content?: string;
   kind?: string;
   link?: string;
 }

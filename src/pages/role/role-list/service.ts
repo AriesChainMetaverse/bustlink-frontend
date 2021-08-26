@@ -3,13 +3,13 @@ import request from '@/utils/request';
 import { TableListParams } from './data.d';
 
 
-export async function queryAnnounceList(params?: TableListParams) {
+export async function queryRoleList(params?: TableListParams) {
 
   //配合接口的分页变量名
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminannounce', {
+  const response = await request('/api/v0/adminrole', {
     method:"GET", params
 
   });
@@ -17,8 +17,8 @@ export async function queryAnnounceList(params?: TableListParams) {
   return response;
 }
 
-export async function removeAnnounce(params: { ids: number[] }) {
-  return request('/api/v0/adminannounce', {
+export async function removeRole(params: { ids: string[] }) {
+  return request('/api/v0/adminrole', {
     method: 'DELETE',
     data: {
       ...params,
@@ -27,8 +27,10 @@ export async function removeAnnounce(params: { ids: number[] }) {
   });
 }
 
-export async function addAnnounce(params: TableListParams) {
-  return request('/api/v0/adminannounce', {
+export async function addRole(params: TableListParams) {
+  params.status = Number(params.status)
+  params.sort = Number(params.sort)
+  return request('/api/v0/adminrole/edit', {
     method: 'POST',
     data: {
       ...params,
@@ -37,9 +39,9 @@ export async function addAnnounce(params: TableListParams) {
   });
 }
 
-export async function updateAnnounce(params: TableListParams) {
-  return request(`/api/v0/adminannounce/${params.id}`, {
-    method: 'PUT',
+export async function updateRole(params: TableListParams) {
+  return request('/api/v0/adminrole/edit', {
+    method: 'POST',
     data: {
       ...params,
     },

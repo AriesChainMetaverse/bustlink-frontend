@@ -1,12 +1,14 @@
 export interface TableListItem {
   key: number;
   id: string;
-  information_id: string;
-  video_no: string;
-  link: string;
-  kind: string;
+  comment: string;
+  data_scope: string;
+  flag: string;
+  name: string;
   title: string;
   content: string;
+  status: number;
+  sort: number;
 
 }
 
@@ -23,11 +25,12 @@ export interface TableListData {
 
 export interface TableListParams {
   id?: string;
-  status?: string;
-  name?: string;
-  desc?: string;
-  link: string;
-  kind: string;
+  status?: number;
+  sort?: number;
+  flag?: string;
+  data_scope?: string;
+  comment: string;
+  name: string;
   title: string;
   content: string;
   key?: number;
