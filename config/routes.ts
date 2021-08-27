@@ -299,10 +299,24 @@
                     path: '../users/user-list',
                     component: './users',
                   },
+
+                ],
+              },
+              {
+                path: '/sysuser',
+                icon: 'table',
+                name: 'sysuser',
+                routes: [
+                  {
+                    name: 'sysuser-list',
+                    icon: 'smile',
+                    path: '../sysuser/sysuser-list',
+                    component: './sysuser/sysuser-list',
+                  },
                   {
                     name: 'role-list',
                     icon: 'smile',
-                    path: '../users/role-list',
+                    path: '../sysuser/role-list',
                     component: './role/role-list',
                   },
 

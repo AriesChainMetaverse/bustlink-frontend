@@ -52,7 +52,10 @@ export default {
 
   'menu.users': 'ユーザー',
   'menu.users.user-list': 'ユーザーリスト',
-  'menu.users.role-list': '役リスト',
+
+  'menu.sysuser': 'システムユーザ',
+  'menu.sysuser.sysuser-list': 'システムユーザリスト',
+  'menu.sysuser.role-list': '役リスト',
 
   'menu.channel': 'チャンネル',
   'menu.channel.channel-list': 'チャンネルリスト',

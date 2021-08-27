@@ -8,7 +8,7 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import BindForm, { FormValueTypeBind } from './components/BindForm';
 import { TableListItem } from './data.d';
-import {updateRole, addRole, removeRole, queryRoleList, bindPermission} from './service';
+import {updateSysUser, addSysUser, removeSysUser, queryRoleList, bindRole, querySysUserList} from './service';
 import Editor from "for-editor";
 import {array} from "prop-types";
 
@@ -19,7 +19,7 @@ import {array} from "prop-types";
 const handleAdd = async (fields: TableListItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addRole({ ...fields });
+    await addSysUser({ ...fields });
     hide();
     message.success('添加成功');
     return true;
@@ -37,13 +37,16 @@ const handleAdd = async (fields: TableListItem) => {
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
-    await updateRole({
+    await updateSysUser({
       id:fields.id,
       name: fields.name,
       status: fields.status,
-      sort: fields.sort,
-      flag: fields.flag,
-      data_scope: fields.data_scope,
+      username: fields.username,
+      password: fields.password,
+      nickname: fields.nickname,
+      email: fields.email,
+      phone: fields.phone,
+      sex: fields.sex,
       comment: fields.comment,
 
     });
@@ -65,9 +68,9 @@ const handleUpdate = async (fields: FormValueType) => {
 const handleBind = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
-    await bindPermission({
-      role_id:fields.id,
-      permission_ids:fields.permissions
+    await bindRole({
+      user_id:fields.id,
+      role_ids:fields.roles
     });
     hide();
 
@@ -88,7 +91,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await removeRole({
+    await removeSysUser({
       ids: selectedRows.map((row) => row.id),
     });
     hide();
@@ -125,8 +128,8 @@ const TableList: React.FC<{}> = () => {
       // },
     },
     {
-      title: '名称',
-      dataIndex: 'name',
+      title: '用户名',
+      dataIndex: 'username',
       sorter: false,
       hideInForm: false,
       valueType: 'text',
@@ -134,82 +137,79 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '标题必填',
+            message: '用户名必填',
           },
         ],
       },
     },
     {
-      title: '角色排序',
-      dataIndex: 'sort',
+      title: '初始密码',
+      dataIndex: 'password',
+      sorter: false,
+      hideInForm: false,
+      hideInTable: true,
+      valueType: 'text',
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '初始密码必填',
+          },
+        ],
+      },
+    },
+    {
+      title: '昵称',
+      dataIndex: 'nickname',
       sorter: false,
       hideInForm: false,
       hideInSearch: true,
       valueType: 'text',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '标题必填',
-          },
-        ],
-      },
+
     },
     {
-      title: '角色状态',
+      title: '状态',
       dataIndex: 'status',
       sorter: false,
       hideInForm: false,
       hideInSearch: true,
       valueType: 'text',
+    },
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      hideInSearch: true,
+      hideInForm: false,
+
+    },
+
+    {
+      title: '性别',
+      dataIndex: 'sex',
+      sorter: false,
+      hideInForm: false,
+      hideInSearch: true,
+      valueType: 'text',
+      valueEnum: {
+        0: { text: '女', status: 0 },
+        1: { text: '男', status: 1 },
+      },
       formItemProps: {
         rules: [
           {
             required: true,
-            message: '标题必填',
+            message: '性别必填',
           },
         ],
       },
     },
     {
-      title: '描述',
-      dataIndex: 'comment',
-      hideInSearch: true,
-      hideInForm: false,
-
-    },
-
-    {
-      title: 'flag',
-      dataIndex: 'flag',
+      title: '邮箱',
+      dataIndex: 'email',
       sorter: false,
       hideInForm: false,
       hideInSearch: true,
       valueType: 'text',
-      formItemProps: {
-        rules: [
-          {
-            required: false,
-            message: '选填',
-          },
-        ],
-      },
-    },
-    {
-      title: 'dataScope',
-      dataIndex: 'data_scope',
-      sorter: false,
-      hideInForm: false,
-      hideInSearch: true,
-      valueType: 'text',
-      formItemProps: {
-        rules: [
-          {
-            required: false,
-            message: '选填',
-          },
-        ],
-      },
     },
     {
       title: '操作',
@@ -232,7 +232,7 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            配置权限
+            配置角色
           </a>
         </>
       ),
@@ -242,7 +242,7 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="角色列表"
+        headerTitle="系统用户列表"
         actionRef={actionRef}
         rowKey="id"
         search={{
@@ -253,7 +253,7 @@ const TableList: React.FC<{}> = () => {
             <PlusOutlined /> 新建
           </Button>,
         ]}
-        request={(params, sorter, filter) => queryRoleList({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => querySysUserList({ ...params, sorter, filter })}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => setSelectedRows(selectedRows),

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps ,Checkbox,Row,Col} from 'antd';
 
-import Editor from 'for-editor';
 
 import { TableListItem } from '../data.d';
 
@@ -37,10 +36,12 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     id: props.values.id,
     name: props.values.name,
     comment: props.values.comment,
-    sort: props.values.sort,
+    sex: props.values.sex,
     status: props.values.status,
-    flag: props.values.flag,
-    data_scope: props.values.data_scope,
+    email: props.values.email,
+    nickname: props.values.nickname,
+    username: props.values.username,
+    password: props.values.password,
   });
 
   // const [currentStep, setCurrentStep] = useState<number>(0);
@@ -83,26 +84,47 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
         <FormItem
+          name="username"
+          label="登录用户名"
+          rules={[{ required: true, message: '请输入至少两个字符的描述！', min: 2 }]}
+
+        >
+          <Input placeholder="请输入" disabled={true}/>
+        </FormItem>
+        <FormItem
+          name="password"
+          label="重置密码"
+        >
+          <Input placeholder="请输入" />
+        </FormItem>
+        <FormItem
+          name="nickname"
+          label="昵称"
+        >
+          <Input placeholder="请输入" />
+        </FormItem>
+
+        <FormItem
           name="name"
           label="名称"
-          rules={[{ required: true, message: '请输入至少两个字符的描述！', min: 2 }]}
         >
           <Input placeholder="请输入" />
         </FormItem>
         <FormItem
           name="comment"
           label="描述"
-          rules={[{ required: true, message: '请输入至少两个字符的描述！', min: 2 }]}
         >
           <TextArea rows={4} placeholder="请输入至少两个字符" />
         </FormItem>
 
-        <FormItem
-          name="sort"
-          label="排序"
-        >
-          <Input placeholder="请输入" />
-        </FormItem>
+
+          <FormItem name="sex" label="性别">
+            <Select style={{ width: '100%' }}>
+              <Option value="0">女</Option>
+              <Option value="1">男</Option>
+            </Select>
+          </FormItem>
+
 
         <FormItem
           name="status"
@@ -112,15 +134,15 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         </FormItem>
 
         <FormItem
-          name="flag"
-          label="flag"
+          name="email"
+          label="email"
         >
           <Input placeholder="请输入" />
         </FormItem>
 
         <FormItem
-          name="data-scope"
-          label="data-scope"
+          name="phone"
+          label="phone"
         >
           <Input placeholder="请输入" />
         </FormItem>
@@ -183,9 +205,12 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           name: formVals.name,
           comment: formVals.comment,
           status: formVals.status,
-          sort: formVals.sort,
-          flag: formVals.flag,
-          data_scope: formVals.data_scope,
+          sex: formVals.sex,
+          username: formVals.username,
+          password: formVals.password,
+          email: formVals.email,
+          phone: formVals.phone,
+          nickname: formVals.nickname,
 
         }}
       >

@@ -3,13 +3,13 @@ import request from '@/utils/request';
 import { TableListParams } from './data.d';
 
 
-export async function queryRoleList(params?: TableListParams) {
+export async function querySysUserList(params?: TableListParams) {
 
   //配合接口的分页变量名
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminrole', {
+  const response = await request('/api/v0/adminuser', {
     method:"GET", params
 
   });
@@ -21,28 +21,30 @@ export async function queryRoleList(params?: TableListParams) {
     if(response.data[i].edges !== "" && response.data[i].edges !== undefined && JSON.stringify(response.data[i].edges) !== "{}"){
 
       obj.id = response.data[i].id
+      obj.username = response.data[i].username
+      obj.nickname = response.data[i].nickname
+      obj.phone = response.data[i].phone
       obj.name = response.data[i].name
+      obj.sex = response.data[i].sex
+      obj.email = response.data[i].email
       obj.status = response.data[i].status
-      obj.comment = response.data[i].comment
-      obj.sort = response.data[i].sort
-      obj.flag = response.data[i].flag
-      obj.dataScope = response.data[i].dataScope
 
-      let newPermission = [];
-      response.data[i].edges.permissions.forEach(e => {
-        newPermission.push(e.id)
+      let newRole = [];
+      response.data[i].edges.roles.forEach(e => {
+        newRole.push(e.id)
       })
-      obj.permissions = newPermission
+      obj.roles = newRole
 
     }else{
       obj.id = response.data[i].id
+      obj.username = response.data[i].username
+      obj.nickname = response.data[i].nickname
+      obj.phone = response.data[i].phone
       obj.name = response.data[i].name
+      obj.sex = response.data[i].sex
+      obj.email = response.data[i].email
       obj.status = response.data[i].status
-      obj.comment = response.data[i].comment
-      obj.sort = response.data[i].sort
-      obj.flag = response.data[i].flag
-      obj.dataScope = response.data[i].dataScope
-      obj.permissions = []
+      obj.roles = []
     }
     newData.push(obj)
   }
@@ -52,9 +54,9 @@ export async function queryRoleList(params?: TableListParams) {
 }
 
 
-export async function queryPermissionList() {
+export async function queryRoleList() {
 
-  const response = await request('/api/v0/adminpermission', {
+  const response = await request('/api/v0/adminrole', {
     method:"GET",
   });
 
@@ -63,8 +65,8 @@ export async function queryPermissionList() {
 
 
 
-export async function removeRole(params: { ids: string[] }) {
-  return request('/api/v0/adminrole', {
+export async function removeSysUser(params: { ids: string[] }) {
+  return request('/api/v0/adminuser', {
     method: 'DELETE',
     data: {
       ...params,
@@ -73,10 +75,10 @@ export async function removeRole(params: { ids: string[] }) {
   });
 }
 
-export async function addRole(params: TableListParams) {
+export async function addSysUser(params: TableListParams) {
   params.status = Number(params.status)
-  params.sort = Number(params.sort)
-  return request('/api/v0/adminrole', {
+  params.sex = Number(params.sex)
+  return request('/api/v0/adminuser', {
     method: 'POST',
     data: {
       ...params,
@@ -85,10 +87,10 @@ export async function addRole(params: TableListParams) {
   });
 }
 
-export async function updateRole(params: TableListParams) {
+export async function updateSysUser(params: TableListParams) {
   params.status = Number(params.status)
-  params.sort = Number(params.sort)
-  return request('/api/v0/adminrole', {
+  params.sex = Number(params.sex)
+  return request('/api/v0/adminuser', {
     method: 'POST',
     data: {
       ...params,
@@ -96,8 +98,8 @@ export async function updateRole(params: TableListParams) {
   });
 }
 
-export async function bindPermission(params: TableListParams) {
-  return request('/api/v0/adminrole/bindpermission', {
+export async function bindRole(params: TableListParams) {
+  return request('/api/v0/adminuser/bindrole', {
     method: 'POST',
     data: {
       ...params,

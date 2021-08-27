@@ -3,7 +3,7 @@ import { Form, Button, Input, Modal,  Select, Steps ,Checkbox,Row,Col} from 'ant
 
 import { TableListItem } from '../data.d';
 
-import { queryPermissionList} from '../service';
+import { queryRoleList} from '../service';
 import {forEach} from "lodash";
 import {render} from "react-dom";
 
@@ -40,7 +40,7 @@ const formLayout = {
 const BindForm: React.FC<BindFormProps> = (props) => {
   const [formVals, setFormVals] = useState<FormValueTypeBind>({
     id: props.values.id,
-    permissions:props.values.permissions,
+    roles:props.values.roles,
   });
 
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -68,9 +68,9 @@ const BindForm: React.FC<BindFormProps> = (props) => {
 
   async function getCheckboxItemList() {
 
-    const permissonList =  await queryPermissionList()
+    const roleList =  await queryRoleList()
     const elements: JSX.Element[] =[]
-    permissonList.forEach((item)=>{
+    roleList.forEach((item)=>{
       elements.push(
         <Checkbox key={item.id}
           value={item.id}
@@ -87,8 +87,8 @@ const BindForm: React.FC<BindFormProps> = (props) => {
 
   const renderContent = () => {
       return (
-        <FormItem name="permissions" label="权限"
-                  rules={[{required: true, message: '请设置角色的权限'}]}>
+        <FormItem name="roles" label="角色"
+                  rules={[{required: true, message: '请设置用户的角色'}]}>
           <Checkbox.Group>
             <Row>
               {CheckBoxItemList}
@@ -116,7 +116,7 @@ const BindForm: React.FC<BindFormProps> = (props) => {
       width={640}
       bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
-      title="给角色配置权限"
+      title="给用户配置角色"
       visible={bindModalVisible}
       footer={renderFooter()}
       onCancel={() => handlebindModalVisible()}
@@ -127,7 +127,7 @@ const BindForm: React.FC<BindFormProps> = (props) => {
         form={form}
         initialValues={{
           id: formVals.id,
-          permissions:formVals.permissions,
+          roles:formVals.roles,
 
         }}
       >
