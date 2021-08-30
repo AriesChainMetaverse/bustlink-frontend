@@ -55,6 +55,7 @@ export default {
   'menu.sysuser': '系统用户管理',
   'menu.sysuser.sysuser-list': '系统用户列表',
   'menu.sysuser.role-list': '角色列表',
+  'menu.sysuser.permission-list': '权限列表',
 
   'menu.channel': '频道',
   'menu.channel.channel-list': '频道列表',
