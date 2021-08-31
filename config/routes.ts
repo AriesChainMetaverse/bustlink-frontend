@@ -319,6 +319,12 @@
                     path: '../sysuser/role-list',
                     component: './role/role-list',
                   },
+                  {
+                    name: 'permission-list',
+                    icon: 'smile',
+                    path: '../sysuser/permission-list',
+                    component: './permission/permission-list',
+                  },
 
                 ],
               },
