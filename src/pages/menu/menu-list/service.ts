@@ -3,13 +3,13 @@ import request from '@/utils/request';
 import { TableListParams } from './data.d';
 
 
-export async function queryRoleList(params?: TableListParams) {
+export async function queryMenuList(params?: TableListParams) {
 
   //配合接口的分页变量名
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminrole', {
+  const response = await request('/api/v0/adminmenu', {
     method:"GET", params
 
   });
@@ -22,27 +22,18 @@ export async function queryRoleList(params?: TableListParams) {
 
       obj.id = response.data[i].id
       obj.name = response.data[i].name
-      obj.status = response.data[i].status
+      obj.parent_id = response.data[i].parent_id
       obj.comment = response.data[i].comment
-      obj.sort = response.data[i].sort
-      obj.flag = response.data[i].flag
-      obj.dataScope = response.data[i].dataScope
-
-      let newPermission = [];
-      response.data[i].edges.permissions.forEach(e => {
-        newPermission.push(e.id)
-      })
-      obj.permissions = newPermission
+      obj.path = response.data[i].path
+      obj.parent_name = response.data[i].edges.parent.name
 
     }else{
       obj.id = response.data[i].id
       obj.name = response.data[i].name
-      obj.status = response.data[i].status
+      obj.parent_id = response.data[i].parent_id
       obj.comment = response.data[i].comment
-      obj.sort = response.data[i].sort
-      obj.flag = response.data[i].flag
-      obj.dataScope = response.data[i].dataScope
-      obj.permissions = []
+      obj.path = response.data[i].path
+      obj.parent_name = ""
     }
     newData.push(obj)
   }
@@ -50,6 +41,17 @@ export async function queryRoleList(params?: TableListParams) {
   console.log(response)
   return response;
 }
+
+
+export async function querySelectMenuList(parentID) {
+
+  const response = await request(`/api/v0/adminmenu?parent_id=${parentID}`, {
+    method:"GET",
+  });
+
+  return response.data;
+}
+
 
 
 export async function queryPermissionList() {
@@ -63,8 +65,8 @@ export async function queryPermissionList() {
 
 
 
-export async function removeRole(params: { ids: string[] }) {
-  return request('/api/v0/adminrole', {
+export async function removeMenu(params: { ids: string[] }) {
+  return request('/api/v0/adminmenu', {
     method: 'DELETE',
     data: {
       ...params,
@@ -73,10 +75,10 @@ export async function removeRole(params: { ids: string[] }) {
   });
 }
 
-export async function addRole(params: TableListParams) {
+export async function addMenu(params: TableListParams) {
   params.status = Number(params.status)
   params.sort = Number(params.sort)
-  return request('/api/v0/adminrole', {
+  return request('/api/v0/adminmenu', {
     method: 'POST',
     data: {
       ...params,
@@ -85,10 +87,10 @@ export async function addRole(params: TableListParams) {
   });
 }
 
-export async function updateRole(params: TableListParams) {
+export async function updateMenu(params: TableListParams) {
   params.status = Number(params.status)
   params.sort = Number(params.sort)
-  return request('/api/v0/adminrole', {
+  return request('/api/v0/adminmenu', {
     method: 'POST',
     data: {
       ...params,

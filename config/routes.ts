@@ -325,6 +325,12 @@
                     path: '../sysuser/permission-list',
                     component: './permission/permission-list',
                   },
+                  {
+                    name: 'menu-list',
+                    icon: 'smile',
+                    path: '../sysuser/menu-list',
+                    component: './menu/menu-list',
+                  },
 
                 ],
               },

@@ -50,7 +50,7 @@ export async function queryPermissionList(params?: TableListParams) {
 
 export async function queryMenuList() {
 
-  const response = await request('/api/v0/adminmenu', {
+  const response = await request('/api/v0/adminmenu?per_page=100', {
     method:"GET",
   });
 

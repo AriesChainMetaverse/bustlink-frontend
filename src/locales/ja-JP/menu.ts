@@ -57,6 +57,7 @@ export default {
   'menu.sysuser.sysuser-list': 'システムユーザリスト',
   'menu.sysuser.role-list': '役リスト',
   'menu.sysuser.permission-list': '権限リスト',
+  'menu.sysuser.menu-list': 'メニューリスト',
 
   'menu.channel': 'チャンネル',
   'menu.channel.channel-list': 'チャンネルリスト',
