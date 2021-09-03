@@ -17,16 +17,23 @@ export interface MenuModelType {
   };
 }
 
+
+const nest = (items, id = "00000000-0000-0000-0000-000000000000", link = 'parent_id') =>
+  items
+    .filter(item => item[link] === id)
+    .map(item => ({ ...item, children: nest(items, item.id) }));
+
 //这里做了个转换，可能服务端返回的接口格式和前端的路由格式并不一致，可以在这个方法里进行调整，这里的方法仅作参考，根据自己实际情况进行调整即可
 const menuFormatter = (response: any) => {
+
   if (response === null)
     return [];
 
-  var re = response.map((item: { name: string; route: string; children: any; }) => {
+  var re = response.map((item: { name: string; path: string; children: any; }) => {
     const result = {
       children: {},
       name: item.name,
-      path: item.route === null ? '/' : item.route,
+      path: item.path === null || item.path ==="" ? '/' : item.path,
     };
 
     if (item.children) {
@@ -48,9 +55,14 @@ const MenuModel: MenuModelType = {
   effects: {
     *getMenuData(_, { put, call }) {
       const response = yield call(query);
+
+      const nestedComments = nest(response.data[0]);
+
+      console.log("menuFormatter",menuFormatter(nestedComments))
+
       yield put({
         type: 'saveMenuData',
-        payload: menuFormatter(response.data.viewMenu),
+        payload: menuFormatter(nestedComments),
       });
     },
   },

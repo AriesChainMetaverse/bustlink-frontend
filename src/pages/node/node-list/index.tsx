@@ -7,7 +7,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import {updateAnnounce, addAnnounce, removeAnnounce, queryNodeList} from './service';
+import { addAnnounce, removeAnnounce, queryNodeList} from './service';
 import moment from 'moment';
 /**
  * 添加公告

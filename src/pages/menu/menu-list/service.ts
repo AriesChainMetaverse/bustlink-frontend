@@ -25,7 +25,9 @@ export async function queryMenuList(params?: TableListParams) {
       obj.parent_id = response.data[i].parent_id
       obj.comment = response.data[i].comment
       obj.path = response.data[i].path
+      obj.depth = response.data[i].depth
       obj.parent_name = response.data[i].edges.parent.name
+
 
     }else{
       obj.id = response.data[i].id
@@ -33,6 +35,8 @@ export async function queryMenuList(params?: TableListParams) {
       obj.parent_id = response.data[i].parent_id
       obj.comment = response.data[i].comment
       obj.path = response.data[i].path
+      obj.depth = response.data[i].depth
+
       obj.parent_name = ""
     }
     newData.push(obj)
@@ -63,8 +67,6 @@ export async function queryPermissionList() {
   return response.data;
 }
 
-
-
 export async function removeMenu(params: { ids: string[] }) {
   return request('/api/v0/adminmenu', {
     method: 'DELETE',
@@ -76,8 +78,7 @@ export async function removeMenu(params: { ids: string[] }) {
 }
 
 export async function addMenu(params: TableListParams) {
-  params.status = Number(params.status)
-  params.sort = Number(params.sort)
+
   return request('/api/v0/adminmenu', {
     method: 'POST',
     data: {
@@ -88,8 +89,7 @@ export async function addMenu(params: TableListParams) {
 }
 
 export async function updateMenu(params: TableListParams) {
-  params.status = Number(params.status)
-  params.sort = Number(params.sort)
+
   return request('/api/v0/adminmenu', {
     method: 'POST',
     data: {

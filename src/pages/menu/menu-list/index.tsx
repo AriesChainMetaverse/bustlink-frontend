@@ -6,7 +6,8 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
-import BindForm, { FormValueTypeBind } from './components/BindForm';
+import AddForm, { FormValueTypeAdd } from './components/AddForm';
+
 import { TableListItem } from './data.d';
 import {updateMenu, addMenu, removeMenu, queryMenuList, bindPermission} from './service';
 import Editor from "for-editor";
@@ -43,6 +44,7 @@ const handleUpdate = async (fields: FormValueType) => {
       name: fields.name,
       path: fields.path,
       comment: fields.comment,
+      depth: fields.depth,
 
     });
     hide();
@@ -85,6 +87,7 @@ function cateroryTrans (catetoryList){
 const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
+  const [addModalVisible, handleAddModalVisible] = useState<boolean>(false);
   const [bindModalVisible, handleBindModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef<ActionType>();
@@ -124,6 +127,22 @@ const TableList: React.FC<{}> = () => {
       hideInSearch: true,
       valueType: 'text',
     },
+    // {
+    //   title: '菜单层级',
+    //   dataIndex: 'depth',
+    //   sorter: false,
+    //   hideInForm: false,
+    //   hideInSearch: true,
+    //   valueType: 'text',
+    //   formItemProps: {
+    //     rules: [
+    //       {
+    //         required: true,
+    //         message: '路径必填',
+    //       },
+    //     ],
+    //   },
+    // },
     {
       title: '路径',
       dataIndex: 'path',
@@ -179,7 +198,7 @@ const TableList: React.FC<{}> = () => {
           labelWidth: 120,
         }}
         toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
+          <Button type="primary" onClick={() => handleAddModalVisible(true)}>
             <PlusOutlined /> 新建
           </Button>,
         ]}
@@ -247,6 +266,25 @@ const TableList: React.FC<{}> = () => {
           values={stepFormValues}
         />
       ) : null}
+        <AddForm
+          onSubmit={async (value) => {
+            const success = await handleAdd(value);
+            if (success) {
+              handleAddModalVisible(false);
+              setStepFormValues({});
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }}
+          onCancel={() => {
+            handleAddModalVisible(false);
+            setStepFormValues({});
+          }}
+          addModalVisible={addModalVisible}
+          values={stepFormValues}
+        />
+
 
       <Drawer
         width={600}

@@ -4,15 +4,15 @@ import {Button, Checkbox, Form, Input, Modal, Radio, Select, Steps, Tree } from 
 import {TableListItem} from '../data.d';
 import { querySelectMenuList} from "@/pages/menu/menu-list/service";
 
-export interface FormValueType extends Partial<TableListItem> {
+export interface FormValueTypeAdd extends Partial<TableListItem> {
   id?: string;
 
 }
 
-export interface UpdateFormProps {
-  onCancel: (flag?: boolean, formVals?: FormValueType) => void;
-  onSubmit: (values: FormValueType) => void;
-  updateModalVisible: boolean;
+export interface AddFormProps {
+  onCancel: (flag?: boolean, formVals?: FormValueTypeAdd) => void;
+  onSubmit: (values: FormValueTypeAdd) => void;
+  addModalVisible: boolean;
   values: Partial<TableListItem>;
 }
 
@@ -25,8 +25,8 @@ const RadioGroup = Radio.Group;
 
 
 
-export interface UpdateFormState {
-  formVals: FormValueType;
+export interface AddFormState {
+  formVals: FormValueTypeAdd;
   currentStep: number;
 }
 
@@ -40,16 +40,15 @@ const {TreeNode} = Tree;
 
 
 
-const UpdateForm: React.FC<UpdateFormProps> = (props) => {
-  const [formVals, setFormVals] = useState<FormValueType>({
+const AddForm: React.FC<AddFormProps> = (props) => {
+  const [formVals, setFormVals] = useState<FormValueTypeAdd>({
     id: props.values.id,
     parent_id: props.values.parent_id,
-    parent_name: props.values.parent_name,
     comment: props.values.comment,
     name: props.values.name,
     path: props.values.path,
-    depth: props.values.depth,
-  })
+
+  });
 
   // const [currentStep, setCurrentStep] = useState<number>(0);
   // const [MenuList, setMenuList] = useState<[]>([]);
@@ -58,9 +57,9 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const [form] = Form.useForm();
 
   const {
-    onSubmit: handleUpdate,
-    onCancel: handleUpdateModalVisible,
-    updateModalVisible,
+    onSubmit: handleAdd,
+    onCancel: handleAddModalVisible,
+    addModalVisible,
     values,
   } = props;
 
@@ -80,12 +79,12 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       SelectMenuList.push({ name: item.name, key: item.id }
       );
     })
-    // console.log("selectmemu list is ",SelectMenuList)
+    console.log("selectmemu list is ",SelectMenuList)
     return SelectMenuList
   };
 
   const onSelect= (info) =>{
-    // console.log('selected', info);
+    console.log('selected', info[0]);
     if (info[0] !== undefined) {
       let spstr = info[0].split("&")
       let paramKey = spstr[spstr.length-1]
@@ -97,6 +96,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const onLoadData = async (treeNode) => {
        const treeData = [...TreeData];
         getNewTreeData(treeData, treeNode.props.eventKey, await generateTreeNodes(treeNode), 2);
+    console.log('NewTreeData', treeData);
         setTreeData(treeData);
   };
 
@@ -155,7 +155,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const handleNext = async () => {
     const fieldsValue = await form.validateFields();
 
-    handleUpdate({...formVals, ...fieldsValue});
+    handleAdd({...formVals, ...fieldsValue});
 
   };
 
@@ -175,12 +175,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
 
     return (
       <>
-        <FormItem
-          name="id"
-          label="ID"
-        >
-          <Input placeholder="请输入" disabled={true}/>
-        </FormItem>
+
         <FormItem
           name="name"
           label="名称"
@@ -195,12 +190,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         >
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
-        <FormItem
-          name="parent_name"
-          label="父级菜单名称"
-        >
-          <Input placeholder="请输入" disabled={true}/>
-        </FormItem>
+
         <FormItem
           name="menu-list"
           label="菜单列表"
@@ -212,12 +202,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         <FormItem
           name="path"
           label="路径"
-        >
-          <Input placeholder="请输入"/>
-        </FormItem>
-        <FormItem
-          name="depth"
-          label="菜单层级关系"
+          rules={[{required: true, message: '请输入菜单path！', min: 1}]}
         >
           <Input placeholder="请输入"/>
         </FormItem>
@@ -239,7 +224,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     // if (currentStep === 1) {
     return (
       <>
-        <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
+        <Button onClick={() => handleAddModalVisible(false, values)}>取消</Button>
         <Button type="primary" onClick={() => handleNext()}>
           完成
         </Button>
@@ -274,10 +259,10 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       width={1000}
       bodyStyle={{padding: '32px 40px 48px'}}
       destroyOnClose
-      title="菜单编辑"
-      visible={updateModalVisible}
+      title="新建菜单"
+      visible={addModalVisible}
       footer={renderFooter()}
-      onCancel={() => handleUpdateModalVisible()}
+      onCancel={() => handleAddModalVisible()}
     >
 
       <Form
@@ -285,13 +270,10 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         form={form}
         initialValues={{
 
-          id: formVals.id,
-          name: formVals.name,
-          comment: formVals.comment,
-          parent_id: formVals.parent_id,
-          parent_name: formVals.parent_name,
-          path: formVals.path,
-          depth: formVals.depth,
+          name: "",
+          comment: "",
+          parent_id: "00000000-0000-0000-0000-000000000000",
+          path: "",
 
 
         }}
@@ -302,4 +284,4 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   );
 };
 
-export default UpdateForm;
+export default AddForm;

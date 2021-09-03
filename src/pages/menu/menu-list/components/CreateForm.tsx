@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal } from 'antd';
+import {Modal, Tree} from 'antd';
 
 interface CreateFormProps {
   modalVisible: boolean;
@@ -13,7 +13,7 @@ const CreateForm: React.FC<CreateFormProps> = (props) => {
     <Modal
       width={1000}
       destroyOnClose
-      title="新建公告通知"
+      title="新建菜单"
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={null}

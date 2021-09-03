@@ -7,8 +7,9 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import BindForm, { FormValueTypeBind } from './components/BindForm';
+import BindAPI, { FormValueTypeBindAPI } from './components/BindAPI';
 import { TableListItem } from './data.d';
-import {updatePermission, addPermission, removePermission, queryPermissionList, bindMenu} from './service';
+import {updatePermission, addPermission, removePermission, queryPermissionList, bindMenu,bindAPI} from './service';
 import Editor from "for-editor";
 import {array} from "prop-types";
 
@@ -78,6 +79,29 @@ const handleBind = async (fields: FormValueType) => {
 };
 
 /**
+ * 给权限分配API
+ * @param fields
+ */
+const handleBindAPI = async (fields: FormValueType) => {
+  const hide = message.loading('正在配置');
+  try {
+    await bindAPI({
+      permission_id:fields.id,
+      api_ids:fields.apis
+    });
+    hide();
+
+    message.success('配置成功');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('配置失败请重试！');
+    return false;
+  }
+};
+
+
+/**
  *  删除节点
  * @param selectedRows
  */
@@ -102,6 +126,7 @@ const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [bindModalVisible, handleBindModalVisible] = useState<boolean>(false);
+  const [apiModalVisible, handleApiModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<TableListItem>();
@@ -179,6 +204,15 @@ const TableList: React.FC<{}> = () => {
             }}
           >
             配置菜单
+          </a>
+          <Divider type="vertical" />
+          <a
+            onClick={async () => {
+              handleApiModalVisible(true);
+              setStepFormValues(record);
+            }}
+          >
+            配置API
           </a>
         </>
       ),
@@ -283,6 +317,27 @@ const TableList: React.FC<{}> = () => {
           values={stepFormValues}
         />
       ) : null}
+      {stepFormValues && Object.keys(stepFormValues).length ? (
+        <BindAPI
+          onSubmit={async (value) => {
+            const success = await handleBindAPI(value);
+            if (success) {
+              handleApiModalVisible(false);
+              setStepFormValues({});
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }}
+          onCancel={() => {
+            handleApiModalVisible(false);
+            setStepFormValues({});
+          }}
+          apiModalVisible={apiModalVisible}
+          values={stepFormValues}
+        />
+      ) : null}
+
       <Drawer
         width={600}
         visible={!!row}

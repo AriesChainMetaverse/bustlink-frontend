@@ -25,12 +25,21 @@ export async function queryPermissionList(params?: TableListParams) {
       obj.comment = response.data[i].comment
       obj.title = response.data[i].title
 
-
       let newMenu = [];
-      response.data[i].edges.menus.forEach(e => {
-        newMenu.push(e.id)
-      })
+      if(response.data[i].edges.menus !== "" && response.data[i].edges.menus !== undefined && JSON.stringify(response.data[i].edges.menus) !== "{}") {
+        response.data[i].edges.menus.forEach(e => {
+          newMenu.push(e.id)
+        })
+      }
       obj.menus = newMenu
+
+      let newApi = [];
+      if(response.data[i].edges.apis !== "" && response.data[i].edges.apis !== undefined && JSON.stringify(response.data[i].edges.apis) !== "{}"){
+        response.data[i].edges.apis.forEach(e => {
+          newApi.push(e.id)
+        })
+      }
+      obj.apis = newApi
 
     }else{
       obj.id = response.data[i].id
@@ -39,6 +48,7 @@ export async function queryPermissionList(params?: TableListParams) {
       obj.title = response.data[i].title
 
       obj.menus = []
+      obj.apis = []
     }
     newData.push(obj)
   }
@@ -57,6 +67,14 @@ export async function queryMenuList() {
   return response.data;
 }
 
+export async function queryAPIList() {
+
+  const response = await request('/api/v0/adminapi?per_page=100', {
+    method:"GET",
+  });
+
+  return response.data;
+}
 
 
 export async function removePermission(params: { ids: string[] }) {
@@ -92,6 +110,15 @@ export async function updatePermission(params: TableListParams) {
 
 export async function bindMenu(params: TableListParams) {
   return request('/api/v0/adminpermission/bindmenu', {
+    method: 'POST',
+    data: {
+      ...params,
+    },
+  });
+}
+
+export async function bindAPI(params: TableListParams) {
+  return request('/api/v0/adminpermission/bindapi', {
     method: 'POST',
     data: {
       ...params,
