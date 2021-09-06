@@ -9,6 +9,7 @@ export interface TableListItem {
   content: string;
   status: number;
   sort: number;
+  menus: string;
 
 }
 

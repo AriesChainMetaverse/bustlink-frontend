@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { Form, Button, Input, Modal,  Select, Steps ,Checkbox,Row,Col} from 'antd';
+import { Form, Button,  Modal,  Checkbox,Row,} from 'antd';
 
 import { TableListItem } from '../data.d';
 
 import { queryMenuList} from '../service';
-import {forEach} from "lodash";
-import {render} from "react-dom";
+
 
 export interface FormValueTypeBind extends Partial<TableListItem> {
   target?: string;
@@ -22,9 +21,7 @@ export interface BindFormProps {
   values: Partial<TableListItem>;
 }
 const FormItem = Form.Item;
-const { Step } = Steps;
-const { TextArea } = Input;
-const { Option } = Select;
+
 
 
 export interface BindFormState {
@@ -43,7 +40,7 @@ const BindForm: React.FC<BindFormProps> = (props) => {
     menus:props.values.menus,
   });
 
-  const [currentStep, setCurrentStep] = useState<number>(0);
+  // const [currentStep, setCurrentStep] = useState<number>(0);
   const [CheckBoxItemList, setCheckBoxItemList] = useState<[]>([]);
 
   const [form] = Form.useForm();
@@ -63,6 +60,7 @@ const BindForm: React.FC<BindFormProps> = (props) => {
   };
 
   useEffect(() => {
+    // @ts-ignore
     getCheckboxItemList().then(r => setCheckBoxItemList(r));
   }, []);
 
@@ -70,7 +68,7 @@ const BindForm: React.FC<BindFormProps> = (props) => {
 
     const menunList =  await queryMenuList()
     const elements: JSX.Element[] =[]
-    menunList.forEach((item)=>{
+    menunList.forEach((item: { id: React.Key | null | undefined; name: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; })=>{
       elements.push(
         <Checkbox key={item.id}
           value={item.id}
