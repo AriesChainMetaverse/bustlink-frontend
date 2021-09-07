@@ -58,7 +58,7 @@ const MenuModel: MenuModelType = {
 
       const nestedComments = nest(response.data[0]);
 
-      console.log("menuFormatter",menuFormatter(nestedComments))
+      // console.log("menuFormatter",menuFormatter(nestedComments))
 
       yield put({
         type: 'saveMenuData',

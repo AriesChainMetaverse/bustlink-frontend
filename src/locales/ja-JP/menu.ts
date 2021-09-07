@@ -54,6 +54,7 @@ export default {
   'menu.users.user-list': 'ユーザーリスト',
 
   'menu.sysuser': 'システムユーザ',
+  'menu.sysuser.organization-list': '組織リスト',
   'menu.sysuser.sysuser-list': 'システムユーザリスト',
   'menu.sysuser.role-list': '役リスト',
   'menu.sysuser.permission-list': '権限リスト',

@@ -91,6 +91,12 @@
                 name: 'sysuser',
                 routes: [
                   {
+                    name: 'organization-list',
+                    icon: 'smile',
+                    path: './organization-list',
+                    component: './organization/organization-list',
+                  },
+                  {
                     name: 'sysuser-list',
                     icon: 'smile',
                     path: './sysuser-list',

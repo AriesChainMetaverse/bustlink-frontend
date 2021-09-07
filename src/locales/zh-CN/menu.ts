@@ -53,6 +53,7 @@ export default {
   'menu.users.user-list': '用户列表',
 
   'menu.sysuser': '系统用户管理',
+  'menu.sysuser.organization-list': '组织机构列表',
   'menu.sysuser.sysuser-list': '系统用户列表',
   'menu.sysuser.role-list': '角色列表',
   'menu.sysuser.permission-list': '权限列表',
