@@ -119,13 +119,6 @@
                     icon: 'smile',
                     path: './menu-list',
                     component: './menu/menu-list',
-                    routes: [
-                      {
-                        name: '3rdpage',
-                        icon: 'smile',
-                        path: './menu-list/3rdpage',
-                        component: './menu/menu-list',
-                      },],
                   },
 
                 ],

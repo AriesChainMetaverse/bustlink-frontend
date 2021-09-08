@@ -56,7 +56,7 @@ const Model: LoginModelType = {
           payload: response1,
         });
         localStorage.setItem("name",response1.data[0].username)
-        localStorage.setItem("is_admin",true)
+        localStorage.setItem("is_admin",response1.data[0].is_admin)
 
         // 获取系统配置信息
         const response2 = yield call(fakeSystemProperty, 'InformationImgUrl');
