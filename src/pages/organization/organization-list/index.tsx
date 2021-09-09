@@ -6,11 +6,10 @@ import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
-import BindForm, { FormValueTypeBind } from './components/BindForm';
+
 import { TableListItem } from './data.d';
-import {updateSysUser, addSysUser, removeSysUser, queryRoleList, bindRole, querySysUserList} from './service';
-import Editor from "for-editor";
-import {array} from "prop-types";
+import {updateSysOrganization, addSysOrganization, removeSysUser, querySysOrganizationList} from './service';
+
 
 /**
  * 添加组织
@@ -19,7 +18,7 @@ import {array} from "prop-types";
 const handleAdd = async (fields: TableListItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addSysUser({ ...fields });
+    await addSysOrganization({ ...fields });
     hide();
     message.success('添加成功');
     return true;
@@ -37,17 +36,17 @@ const handleAdd = async (fields: TableListItem) => {
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
-    await updateSysUser({
+    await updateSysOrganization({
       id:fields.id,
-      name: fields.name,
-      status: fields.status,
-      username: fields.username,
-      password: fields.password,
-      nickname: fields.nickname,
-      email: fields.email,
-      phone: fields.phone,
-      sex: fields.sex,
+      corporate_name: fields.corporate_name,
+      corporate_hash: fields.corporate_hash,
+      corporate_legal_user: fields.corporate_legal_user,
+      corporate_id_card_facade: fields.corporate_id_card_facade,
+      corporate_id_card_obverse: fields.corporate_id_card_obverse,
+      corporate_code: fields.corporate_code,
+      business_license: fields.business_license,
       comment: fields.comment,
+      is_verify: fields.is_verify,
 
     });
     hide();
@@ -61,27 +60,7 @@ const handleUpdate = async (fields: FormValueType) => {
   }
 };
 
-/**
- * 给角色分配权限
- * @param fields
- */
-const handleBind = async (fields: FormValueType) => {
-  const hide = message.loading('正在配置');
-  try {
-    await bindRole({
-      user_id:fields.id,
-      role_ids:fields.roles
-    });
-    hide();
 
-    message.success('配置成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('配置失败请重试！');
-    return false;
-  }
-};
 
 /**
  *  删除节点
@@ -104,14 +83,11 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   }
 };
 
-function cateroryTrans (catetoryList){
-  return catetoryList.toString()
-}
+
 
 const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
-  const [bindModalVisible, handleBindModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<TableListItem>();
@@ -128,8 +104,8 @@ const TableList: React.FC<{}> = () => {
       // },
     },
     {
-      title: '用户名',
-      dataIndex: 'username',
+      title: '企业名称',
+      dataIndex: 'corporate_name',
       sorter: false,
       hideInForm: false,
       valueType: 'text',
@@ -137,79 +113,88 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '用户名必填',
+            message: '必填',
           },
         ],
       },
     },
     {
-      title: '初始密码',
-      dataIndex: 'password',
+      title: '法人资料存放目录',
+      dataIndex: 'corporate_hash',
       sorter: false,
       hideInForm: false,
       hideInTable: true,
       valueType: 'text',
+
+    },
+    {
+      title: '企业法人',
+      dataIndex: 'corporate_legal_user',
+      sorter: false,
+      hideInForm: false,
+      hideInSearch: true,
+      valueType: 'text',
+
+    },
+    {
+      title: '法人身份证(正)',
+      dataIndex: 'corporate_id_card_facade',
+      sorter: false,
+      hideInForm: false,
+      hideInSearch: true,
+      valueType: 'text',
+    },
+    {
+      title: '法人身份证(反)',
+      dataIndex: 'corporate_id_card_obverse',
+      hideInSearch: true,
+      hideInForm: false,
+
+    },
+
+    {
+      title: '社会统一信用代码',
+      dataIndex: 'corporate_code',
+      sorter: false,
+      hideInForm: false,
+      hideInSearch: true,
+      valueType: 'text',
+    },
+    {
+      title: '营业执照',
+      dataIndex: 'business_license',
+      sorter: false,
+      hideInForm: false,
+      hideInSearch: true,
+      valueType: 'text',
+    },
+    {
+      title: '备注',
+      dataIndex: 'comment',
+      sorter: false,
+      hideInForm: false,
+      hideInSearch: true,
+      valueType: 'text',
       formItemProps: {
         rules: [
           {
             required: true,
-            message: '初始密码必填',
+            message: '必填',
           },
         ],
       },
     },
     {
-      title: '昵称',
-      dataIndex: 'nickname',
+      title: '验证状态',
+      dataIndex: 'is_verify',
       sorter: false,
-      hideInForm: false,
-      hideInSearch: true,
-      valueType: 'text',
-
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      sorter: false,
-      hideInForm: false,
-      hideInSearch: true,
-      valueType: 'text',
-    },
-    {
-      title: '姓名',
-      dataIndex: 'name',
-      hideInSearch: true,
-      hideInForm: false,
-
-    },
-
-    {
-      title: '性别',
-      dataIndex: 'sex',
-      sorter: false,
-      hideInForm: false,
+      hideInForm: true,
       hideInSearch: true,
       valueType: 'text',
       valueEnum: {
-        0: { text: '女', status: 0 },
-        1: { text: '男', status: 1 },
+        false: { text: '否', status: false },
+        true: { text: '是', status: true },
       },
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '性别必填',
-          },
-        ],
-      },
-    },
-    {
-      title: '邮箱',
-      dataIndex: 'email',
-      sorter: false,
-      hideInForm: false,
-      hideInSearch: true,
-      valueType: 'text',
     },
     {
       title: '操作',
@@ -225,15 +210,6 @@ const TableList: React.FC<{}> = () => {
           >
             编辑
           </a>
-          <Divider type="vertical" />
-          <a
-            onClick={async () => {
-              handleBindModalVisible(true);
-              setStepFormValues(record);
-            }}
-          >
-            配置角色
-          </a>
         </>
       ),
     },
@@ -242,7 +218,7 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="系统用户列表"
+        headerTitle="组织列表"
         actionRef={actionRef}
         rowKey="id"
         search={{
@@ -253,7 +229,7 @@ const TableList: React.FC<{}> = () => {
             <PlusOutlined /> 新建
           </Button>,
         ]}
-        request={(params, sorter, filter) => querySysUserList({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => querySysOrganizationList({ ...params, sorter, filter })}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => setSelectedRows(selectedRows),
@@ -270,15 +246,15 @@ const TableList: React.FC<{}> = () => {
             </div>
           }
         >
-          <Button
-            onClick={async () => {
-              await handleRemove(selectedRowsState);
-              setSelectedRows([]);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            批量删除
-          </Button>
+          {/*<Button*/}
+          {/*  onClick={async () => {*/}
+          {/*    await handleRemove(selectedRowsState);*/}
+          {/*    setSelectedRows([]);*/}
+          {/*    actionRef.current?.reloadAndRest?.();*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  批量删除*/}
+          {/*</Button>*/}
         </FooterToolbar>
       )}
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
@@ -314,26 +290,6 @@ const TableList: React.FC<{}> = () => {
             setStepFormValues({});
           }}
           updateModalVisible={updateModalVisible}
-          values={stepFormValues}
-        />
-      ) : null}
-      {stepFormValues && Object.keys(stepFormValues).length ? (
-        <BindForm
-          onSubmit={async (value) => {
-            const success = await handleBind(value);
-            if (success) {
-              handleBindModalVisible(false);
-              setStepFormValues({});
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          onCancel={() => {
-            handleBindModalVisible(false);
-            setStepFormValues({});
-          }}
-          bindModalVisible={bindModalVisible}
           values={stepFormValues}
         />
       ) : null}

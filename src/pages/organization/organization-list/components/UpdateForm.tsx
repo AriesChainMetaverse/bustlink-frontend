@@ -32,16 +32,18 @@ const formLayout = {
 };
 
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
+  // @ts-ignore
   const [formVals, setFormVals] = useState<FormValueType>({
     id: props.values.id,
-    name: props.values.name,
+    is_verify: props.values.is_verify ? "1" :"0",
+    corporate_hash: props.values.corporate_hash,
+    corporate_name: props.values.corporate_name,
+    corporate_legal_user: props.values.corporate_legal_user,
+    corporate_id_card_facade: props.values.corporate_id_card_facade,
+    corporate_id_card_obverse: props.values.corporate_id_card_obverse,
+    corporate_code: props.values.corporate_code,
+    business_license: props.values.business_license,
     comment: props.values.comment,
-    sex: props.values.sex,
-    status: props.values.status,
-    email: props.values.email,
-    nickname: props.values.nickname,
-    username: props.values.username,
-    password: props.values.password,
   });
 
   // const [currentStep, setCurrentStep] = useState<number>(0);
@@ -84,67 +86,66 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
         <FormItem
-          name="username"
-          label="登录用户名"
+          name="corporate_name"
+          label="企业名称"
           rules={[{ required: true, message: '请输入至少两个字符的描述！', min: 2 }]}
 
         >
-          <Input placeholder="请输入" disabled={true}/>
+          <Input placeholder="请输入" />
         </FormItem>
         <FormItem
-          name="password"
-          label="重置密码"
+          name="corporate_hash"
+          label="法人资料存放目录"
         >
           <Input placeholder="请输入" />
         </FormItem>
         <FormItem
-          name="nickname"
-          label="昵称"
+          name="corporate_legal_user"
+          label="企业法人"
         >
           <Input placeholder="请输入" />
         </FormItem>
 
         <FormItem
-          name="name"
-          label="名称"
+          name="corporate_id_card_facade"
+          label="法人身份证(正)"
         >
           <Input placeholder="请输入" />
         </FormItem>
         <FormItem
-          name="comment"
-          label="描述"
+          name="corporate_id_card_obverse"
+          label="法人身份证(反)"
         >
           <TextArea rows={4} placeholder="请输入至少两个字符" />
         </FormItem>
-
-
-          <FormItem name="sex" label="性别">
-            <Select style={{ width: '100%' }}>
-              <Option value="0">女</Option>
-              <Option value="1">男</Option>
-            </Select>
-          </FormItem>
-
-
         <FormItem
-          name="status"
-          label="状态"
+          name="corporate_code"
+          label="社会统一信用代码"
         >
           <Input placeholder="请输入" />
         </FormItem>
 
         <FormItem
-          name="email"
-          label="email"
+          name="business_license"
+          label="营业执照"
         >
           <Input placeholder="请输入" />
         </FormItem>
 
         <FormItem
-          name="phone"
-          label="phone"
+          name="comment"
+          label="备注"
+          rules={[{ required: true, message: '请输入至少两个字符的描述！', min: 2 }]}
         >
           <Input placeholder="请输入" />
+        </FormItem>
+
+        <FormItem name="is_verify" label="验证状态"
+        >
+          <Select style={{ width: '100%' }}>
+            <Option value="0">否</Option>
+            <Option value="1">是</Option>
+          </Select>
         </FormItem>
 
       </>
@@ -190,7 +191,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       width={1000}
       bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
-      title="通知内容配置"
+      title="组织信息配置"
       visible={updateModalVisible}
       footer={renderFooter()}
       onCancel={() => handleUpdateModalVisible()}
@@ -202,15 +203,15 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         initialValues={{
 
           id: formVals.id,
-          name: formVals.name,
+          is_verify: formVals.is_verify,
+          corporate_hash: formVals.corporate_hash,
+          corporate_name: formVals.corporate_name,
+          corporate_legal_user: formVals.corporate_legal_user,
+          corporate_id_card_facade: formVals.corporate_id_card_facade,
+          corporate_id_card_obverse: formVals.corporate_id_card_obverse,
+          corporate_code: formVals.corporate_code,
+          business_license: formVals.business_license,
           comment: formVals.comment,
-          status: formVals.status,
-          sex: formVals.sex,
-          username: formVals.username,
-          password: formVals.password,
-          email: formVals.email,
-          phone: formVals.phone,
-          nickname: formVals.nickname,
 
         }}
       >

@@ -134,7 +134,7 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '标题必填',
+            message: '必填',
           },
         ],
       },
@@ -150,7 +150,7 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '标题必填',
+            message: '必填',
           },
         ],
       },
@@ -166,7 +166,7 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '标题必填',
+            message: '必填',
           },
         ],
       },
@@ -176,7 +176,14 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'comment',
       hideInSearch: true,
       hideInForm: false,
-
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '必填',
+          },
+        ],
+      },
     },
 
     {

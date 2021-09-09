@@ -10,8 +10,7 @@ import AddForm, { FormValueTypeAdd } from './components/AddForm';
 
 import { TableListItem } from './data.d';
 import {updateMenu, addMenu, removeMenu, queryMenuList, bindPermission} from './service';
-import Editor from "for-editor";
-import {array} from "prop-types";
+
 
 /**
  * 添加公告
@@ -114,7 +113,7 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '标题必填',
+            message: '必填',
           },
         ],
       },
@@ -164,7 +163,14 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'comment',
       hideInSearch: true,
       hideInForm: false,
-
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: '必填',
+          },
+        ],
+      },
     },
 
 
