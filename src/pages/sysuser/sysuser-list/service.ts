@@ -34,6 +34,14 @@ export async function querySysUserList(params?: TableListParams) {
         newRole.push(e.id)
       })
       obj.roles = newRole
+      obj.organization = ""
+      obj.OrganizationName = ""
+      if ( response.data[i].edges.belong_organization !== undefined){
+
+        obj.organization = response.data[i].edges.belong_organization[0].id
+        obj.OrganizationName = response.data[i].edges.belong_organization[0].corporate_name
+      }
+
 
     }else{
       obj.id = response.data[i].id
@@ -45,6 +53,9 @@ export async function querySysUserList(params?: TableListParams) {
       obj.email = response.data[i].email
       obj.status = response.data[i].status
       obj.roles = []
+      obj.organization = ""
+      obj.OrganizationName = ""
+
     }
     newData.push(obj)
   }
@@ -100,6 +111,25 @@ export async function updateSysUser(params: TableListParams) {
 
 export async function bindRole(params: TableListParams) {
   return request('/api/v0/adminuser/bindrole', {
+    method: 'POST',
+    data: {
+      ...params,
+    },
+  });
+}
+
+export async function queryOrganizationList() {
+
+  const response = await request('/api/v0/adminorganization?per_page=100', {
+    method:"GET",
+  });
+
+  return response.data;
+}
+
+
+export async function bindOrganization(params: TableListParams) {
+  return request('/api/v0/adminuser/bindorganization', {
     method: 'POST',
     data: {
       ...params,

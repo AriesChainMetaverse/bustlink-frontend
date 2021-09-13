@@ -8,9 +8,10 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import BindForm, { FormValueTypeBind } from './components/BindForm';
 import { TableListItem } from './data.d';
-import {updateSysUser, addSysUser, removeSysUser, queryRoleList, bindRole, querySysUserList} from './service';
+import {updateSysUser, addSysUser, removeSysUser, queryRoleList, bindRole, querySysUserList,bindOrganization} from './service';
 import Editor from "for-editor";
 import {array} from "prop-types";
+import BindOrganization from "@/pages/sysuser/sysuser-list/components/BindOrganization";
 
 /**
  * 添加公告
@@ -82,6 +83,28 @@ const handleBind = async (fields: FormValueType) => {
     return false;
   }
 };
+/**
+ * 给用户指定组织机构
+ * @param fields
+ */
+const handleBindOrganization = async (fields: FormValueType) => {
+  const hide = message.loading('正在配置');
+  try {
+    await bindOrganization({
+      user_id:fields.id,
+      organization_id:fields.organization
+    });
+    hide();
+
+    message.success('配置成功');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('配置失败请重试！');
+    return false;
+  }
+};
+
 
 /**
  *  删除节点
@@ -112,6 +135,7 @@ const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [bindModalVisible, handleBindModalVisible] = useState<boolean>(false);
+  const [bindOrganizationModalVisible, handleBindOrganizationModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<TableListItem>();
@@ -148,6 +172,7 @@ const TableList: React.FC<{}> = () => {
       sorter: false,
       hideInForm: false,
       hideInTable: true,
+      hideInSearch: true,
       valueType: 'text',
       formItemProps: {
         rules: [
@@ -212,6 +237,24 @@ const TableList: React.FC<{}> = () => {
       valueType: 'text',
     },
     {
+      title: '机构组织',
+      dataIndex: 'OrganizationName',
+      sorter: false,
+      hideInForm: true,
+      hideInSearch: true,
+      valueType: 'text',
+    },
+    {
+      title: '机构ID',
+      dataIndex: 'organization',
+      sorter: false,
+      hideInForm: true,
+      hideInSearch: true,
+      hideInTable:true,
+      valueType: 'text',
+    },
+
+    {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
@@ -234,11 +277,21 @@ const TableList: React.FC<{}> = () => {
           >
             配置角色
           </a>
+          <Divider type="vertical" />
+          <a
+            onClick={async () => {
+              handleBindOrganizationModalVisible(true);
+              setStepFormValues(record);
+            }}
+          >
+            设置组织
+          </a>
         </>
       ),
     },
   ];
 
+  // @ts-ignore
   return (
     <PageContainer>
       <ProTable<TableListItem>
@@ -334,6 +387,26 @@ const TableList: React.FC<{}> = () => {
             setStepFormValues({});
           }}
           bindModalVisible={bindModalVisible}
+          values={stepFormValues}
+        />
+      ) : null}
+      {stepFormValues && Object.keys(stepFormValues).length ? (
+        <BindOrganization
+          onSubmit={async (value) => {
+            const success = await handleBindOrganization(value);
+            if (success) {
+              handleBindOrganizationModalVisible(false);
+              setStepFormValues({});
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }}
+          onCancel={() => {
+            handleBindOrganizationModalVisible(false);
+            setStepFormValues({});
+          }}
+          bindOrganizationModalVisible={bindOrganizationModalVisible}
           values={stepFormValues}
         />
       ) : null}
