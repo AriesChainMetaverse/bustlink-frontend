@@ -5,7 +5,7 @@ import { TableListParams } from './data.d';
 
 export async function querySysOrganizationList(params?: TableListParams) {
 
-  //配合接口的分页变量名
+  // 配合接口的分页变量名
   params.page = params.current;
   params.per_page = params.pageSize;
 

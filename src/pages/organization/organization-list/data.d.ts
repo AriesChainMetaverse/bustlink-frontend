@@ -9,6 +9,14 @@ export interface TableListItem {
   content: string;
   status: number;
   sort: number;
+  corporate_name: string;
+  corporate_hash: string;
+  corporate_legal_user: string;
+  corporate_id_card_facade: string;
+  corporate_id_card_obverse: string;
+  corporate_code: string;
+  business_license: string;
+  is_verify: string;
 
 }
 
@@ -35,7 +43,9 @@ export interface TableListParams {
   content: string;
   key?: number;
   pageSize?: number;
+  current?: number;
   currentPage?: number;
   filter?: { [key: string]: any[] };
   sorter?: { [key: string]: any };
+  is_verify: string;
 }
