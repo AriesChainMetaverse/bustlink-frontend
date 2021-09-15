@@ -9,6 +9,7 @@ export interface TableListItem {
   content: string;
   status: number;
   sort: number;
+  organization: string;
 
 }
 
@@ -25,6 +26,8 @@ export interface TableListData {
 
 export interface TableListParams {
   id?: string;
+  user_id?: string;
+  organization_id?: string;
   status?: number;
   sort?: number;
   flag?: string;

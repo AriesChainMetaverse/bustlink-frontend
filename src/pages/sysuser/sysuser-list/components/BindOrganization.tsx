@@ -13,6 +13,7 @@ export interface FormValueTypeBind extends Partial<TableListItem> {
   type?: string;
   time?: string;
   frequency?: string;
+  organization?: string;
 }
 
 export interface BindOrganizationProps {
@@ -43,7 +44,6 @@ const BindOrganization: React.FC<BindOrganizationProps> = (props) => {
     organization:props.values.organization,
   });
 
-  const [currentStep, setCurrentStep] = useState<number>(0);
   const [CheckBoxItemList, setCheckBoxItemList] = useState<[]>([]);
 
   const [form] = Form.useForm();
