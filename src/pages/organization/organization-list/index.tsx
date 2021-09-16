@@ -124,6 +124,7 @@ const TableList: React.FC<{}> = () => {
       sorter: false,
       hideInForm: false,
       hideInTable: true,
+      hideInSearch: true,
       valueType: 'text',
 
     },

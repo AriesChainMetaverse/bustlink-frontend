@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps ,Checkbox,Row,Col} from 'antd';
+import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps ,Checkbox,Row,Col,Upload, Icon} from 'antd';
 
 
 import { TableListItem } from '../data.d';
@@ -44,9 +44,53 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     corporate_code: props.values.corporate_code,
     business_license: props.values.business_license,
     comment: props.values.comment,
+    file_list: props.values.file_list,
   });
 
   // const [currentStep, setCurrentStep] = useState<number>(0);
+
+  const normFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+
+
+  const handleChange= (info) => {
+
+    let fileList = info.fileList;
+
+    fileList = fileList.slice(-2);
+    console.log('fileList:', fileList);
+
+    setFormVals({
+      business_license: "",
+      comment: "",
+      content: "",
+      corporate_code: "",
+      corporate_hash: "",
+      corporate_id_card_facade: "",
+      corporate_id_card_obverse: "",
+      corporate_legal_user: "",
+      corporate_name: "",
+      data_scope: "",
+      flag: "",
+      id: "",
+      is_verify: "",
+      key: 0,
+      name: "",
+      sort: 0,
+      status: 0,
+      title: "",
+      file_list:fileList})
+
+  };
+
+  const beforeUpload = ({fileList}) => {
+    return  false;
+  }
 
   const [form] = Form.useForm();
 
@@ -72,11 +116,17 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       handleUpdate({ ...formVals, ...fieldsValue });
     // }
   };
-
+  const upload_props = {
+    // action: '/upload.do',
+    onChange: handleChange,
+    multiple: false,
+    beforeUpload
+  };
 
 
 
   const renderContent = () => {
+    // @ts-ignore
     return (
       <>
         <FormItem
@@ -130,6 +180,21 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           label="营业执照"
         >
           <Input placeholder="请输入" />
+        </FormItem>
+
+        <FormItem
+          label="营业执照"
+          name="business_license"
+          help="营业执照"
+          getValueFromEvent={normFile}
+        >
+          <Upload {...upload_props} name="business_license"
+          >
+            <Button type="ghost">
+              <Icon type="upload" /> 点击上传
+            </Button>
+          </Upload>
+
         </FormItem>
 
         <FormItem
@@ -212,7 +277,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           corporate_code: formVals.corporate_code,
           business_license: formVals.business_license,
           comment: formVals.comment,
-
+          file_list: formVals.file_list,
         }}
       >
         {renderContent()}
