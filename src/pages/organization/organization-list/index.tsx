@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Divider, message, Input, Drawer } from 'antd';
+import {Button, Divider, message, Input, Drawer, Image} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -55,6 +55,7 @@ const handleUpdate = async (fields: FormValueType) => {
     return true;
   } catch (error) {
     hide();
+    console.log(error);
     message.error('配置失败请重试！');
     return false;
   }
@@ -141,16 +142,35 @@ const TableList: React.FC<{}> = () => {
       title: '法人身份证(正)',
       dataIndex: 'corporate_id_card_facade',
       sorter: false,
-      hideInForm: false,
+      hideInForm: true,
       hideInSearch: true,
       valueType: 'text',
+      render: (dom, entity) => {
+        return (
+          <Image
+            width="150px"
+            src={`data:image/png;base64,${entity.corporate_id_card_facade}`}
+            fallback="/admin/failed/147x200.svg"
+            crossOrigin="anonymous"
+          />
+        );
+      },
     },
     {
       title: '法人身份证(反)',
       dataIndex: 'corporate_id_card_obverse',
       hideInSearch: true,
-      hideInForm: false,
-
+      hideInForm: true,
+      render: (dom, entity) => {
+        return (
+          <Image
+            width="150px"
+            src={`data:image/png;base64,${entity.corporate_id_card_obverse}`}
+            fallback="/admin/failed/147x200.svg"
+            crossOrigin="anonymous"
+          />
+        );
+      },
     },
 
     {
@@ -165,9 +185,19 @@ const TableList: React.FC<{}> = () => {
       title: '营业执照',
       dataIndex: 'business_license',
       sorter: false,
-      hideInForm: false,
+      hideInForm: true,
       hideInSearch: true,
       valueType: 'text',
+      render: (dom, entity) => {
+        return (
+          <Image
+            width="150px"
+            src={`data:image/png;base64,${entity.business_license}`}
+            fallback="/admin/failed/147x200.svg"
+            crossOrigin="anonymous"
+          />
+        );
+      },
     },
     {
       title: '备注',

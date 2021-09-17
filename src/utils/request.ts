@@ -60,6 +60,11 @@ const request = extend({
 request.interceptors.request.use(async (url, options) => {
 
   if(url !== '/oauth2/token?client_id=000000&client_secret=999999&scope=all&grant_type=password'){
+
+    if(url === '/api/v0/adminorganization' && options.method === 'post'){
+      return
+    }
+
     if (
       options.method === 'post' ||
       options.method === 'put' ||

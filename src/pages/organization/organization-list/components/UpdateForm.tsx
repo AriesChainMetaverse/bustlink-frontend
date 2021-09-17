@@ -44,13 +44,31 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     corporate_code: props.values.corporate_code,
     business_license: props.values.business_license,
     comment: props.values.comment,
-    file_list: props.values.file_list,
+
   });
+
+  const [fileList1,setFileList1] = useState(props.values.fileList1)
+  const [fileList2,setFileList2] = useState(props.values.fileList2)
+  const [fileList3,setFileList3] = useState(props.values.fileList3)
 
   // const [currentStep, setCurrentStep] = useState<number>(0);
 
-  const normFile = (e) => {
-    console.log('Upload event:', e);
+  const normFile1 = (e) => {
+    setFormVals({business_license:e.file})
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+  const normFile2 = (e) => {
+    setFormVals({corporate_id_card_facade:e.file})
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+  const normFile3 = (e) => {
+    setFormVals({corporate_id_card_obverse:e.file})
     if (Array.isArray(e)) {
       return e;
     }
@@ -58,35 +76,22 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   };
 
 
-  const handleChange= (info) => {
+  const handleChange1= (info) => {
+    let uploadFileList = info.fileList;
+    uploadFileList = uploadFileList.slice(-1);
+    setFileList1(uploadFileList);
+  }
+  const handleChange2= (info) => {
+    let uploadFileList = info.fileList;
+    uploadFileList = uploadFileList.slice(-1);
+    setFileList2(uploadFileList);
+  }
+  const handleChange3= (info) => {
+    let uploadFileList = info.fileList;
+    uploadFileList = uploadFileList.slice(-1);
+    setFileList3(uploadFileList);
+  }
 
-    let fileList = info.fileList;
-
-    fileList = fileList.slice(-2);
-    console.log('fileList:', fileList);
-
-    setFormVals({
-      business_license: "",
-      comment: "",
-      content: "",
-      corporate_code: "",
-      corporate_hash: "",
-      corporate_id_card_facade: "",
-      corporate_id_card_obverse: "",
-      corporate_legal_user: "",
-      corporate_name: "",
-      data_scope: "",
-      flag: "",
-      id: "",
-      is_verify: "",
-      key: 0,
-      name: "",
-      sort: 0,
-      status: 0,
-      title: "",
-      file_list:fileList})
-
-  };
 
   const beforeUpload = ({fileList}) => {
     return  false;
@@ -107,22 +112,23 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
 
   const handleNext = async () => {
     const fieldsValue = await form.validateFields();
-
-    // setFormVals({ ...formVals, ...fieldsValue });
-    //
-    // if (currentStep < 1) {
-    //   forward();
-    // } else {
-      handleUpdate({ ...formVals, ...fieldsValue });
-    // }
+    handleUpdate({ ...formVals, ...fieldsValue });
   };
-  const upload_props = {
-    // action: '/upload.do',
-    onChange: handleChange,
-    multiple: false,
+  const upload_props1 = {
+    onChange: handleChange1,
+    multiple: true,
     beforeUpload
   };
-
+  const upload_props2 = {
+    onChange: handleChange2,
+    multiple: true,
+    beforeUpload
+  };
+  const upload_props3 = {
+    onChange: handleChange3,
+    multiple: true,
+    beforeUpload
+  };
 
 
   const renderContent = () => {
@@ -159,14 +165,30 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         <FormItem
           name="corporate_id_card_facade"
           label="法人身份证(正)"
+          help="法人身份证(正)"
+          getValueFromEvent={normFile2}
         >
-          <Input placeholder="请输入" />
+          <Upload {...upload_props2}
+                  fileList={fileList2}
+          >
+            <Button type="ghost">
+              <Icon type="upload" /> 点击上传
+            </Button>
+          </Upload>
         </FormItem>
         <FormItem
           name="corporate_id_card_obverse"
           label="法人身份证(反)"
+          help="法人身份证(反)"
+          getValueFromEvent={normFile3}
         >
-          <TextArea rows={4} placeholder="请输入至少两个字符" />
+          <Upload {...upload_props3}
+                  fileList={fileList3}
+          >
+            <Button type="ghost">
+              <Icon type="upload" /> 点击上传
+            </Button>
+          </Upload>
         </FormItem>
         <FormItem
           name="corporate_code"
@@ -176,19 +198,13 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         </FormItem>
 
         <FormItem
-          name="business_license"
-          label="营业执照"
-        >
-          <Input placeholder="请输入" />
-        </FormItem>
-
-        <FormItem
           label="营业执照"
           name="business_license"
           help="营业执照"
-          getValueFromEvent={normFile}
+          getValueFromEvent={normFile1}
         >
-          <Upload {...upload_props} name="business_license"
+          <Upload {...upload_props1}
+                  fileList={fileList1}
           >
             <Button type="ghost">
               <Icon type="upload" /> 点击上传
@@ -265,6 +281,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       <Form
         {...formLayout}
         form={form}
+
         initialValues={{
 
           id: formVals.id,
@@ -277,7 +294,6 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           corporate_code: formVals.corporate_code,
           business_license: formVals.business_license,
           comment: formVals.comment,
-          file_list: formVals.file_list,
         }}
       >
         {renderContent()}
