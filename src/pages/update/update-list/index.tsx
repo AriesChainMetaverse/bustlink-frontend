@@ -165,7 +165,7 @@ const TableList: React.FC<{}> = () => {
       // tip: '公告编号是唯一的',
       hideInForm: true,
       hideInSearch: true,
-
+      copyable: true,
 
     },
 
