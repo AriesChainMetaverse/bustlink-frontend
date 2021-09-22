@@ -118,6 +118,7 @@ const TableList: React.FC<{}> = () => {
       title: '视频番号',
       dataIndex: 'video_no',
       tip: '视频番号是唯一的',
+      copyable: true,
       formItemProps: {
         rules: [
           {
@@ -135,6 +136,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'root',
       hideInForm: true,
       hideInSearch: true,
+      copyable: true,
       hideInTable: true,
     },
     {
@@ -142,6 +144,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'poster_path',
       hideInForm: true,
       hideInSearch: true,
+      copyable: true,
       hideInTable: true,
     },
     {
