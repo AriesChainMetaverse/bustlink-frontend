@@ -65,17 +65,36 @@ export async function removeSysUser(params: { ids: string[] }) {
 }
 
 export async function addSysOrganization(params: TableListParams) {
-  params.is_verify = Boolean(params.is_verify)
+  // params.is_verify = Boolean(params.is_verify)
+
+  const formData = new FormData();
+  formData.append("id",params.id)
+  formData.append("corporate_name",params.corporate_name)
+  formData.append("corporate_hash",params.corporate_hash)
+  formData.append("corporate_legal_user",params.corporate_legal_user)
+  formData.append("corporate_code",params.corporate_code)
+  formData.append("comment",params.comment)
+  formData.append("is_verify",params.is_verify)
+  // formData.append("business_license",params.business_license[0].originFileObj)
+  // formData.append("corporate_id_card_facade",params.corporate_id_card_facade[0].originFileObj)
+  // formData.append("corporate_id_card_obverse",params.corporate_id_card_obverse[0].originFileObj)
+
   return request('/api/v0/adminorganization', {
     method: 'POST',
-    data: {
-      ...params,
-      method: 'post',
+    // data: {
+    //   // ...params,
+    //   method: 'post',
+    // },
+    body:formData,
+    headers: {
+      "Accept": "application/json",
+      "type": "formData",
+      Authorization:`Bearer ${localStorage.getItem("token")}`
     },
   });
 }
 
-export async function updateSysOrganization(params: TableListParams) {
+export async function updateSysOrganization(params: { corporate_id_card_obverse: string | undefined; corporate_code: string | undefined; corporate_hash: string | undefined; corporate_legal_user: string | undefined; is_verify: string | undefined; corporate_name: string | undefined; comment: string | undefined; id: string | undefined; business_license: string | undefined; corporate_id_card_facade: string | undefined }) {
 
   // params.is_verify = Boolean(Number(params.is_verify))
   // params.business_license = params.business_license[0]

@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import {Button, Divider, message, Input, Drawer, Image} from 'antd';
+import {Button,  message,  Drawer, Image} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -46,7 +46,7 @@ const handleUpdate = async (fields: FormValueType) => {
       corporate_code: fields.corporate_code,
       business_license: fields.business_license,
       comment: fields.comment,
-      is_verify: fields.is_verify,
+      is_verify: fields.is_verify
 
     });
     hide();
