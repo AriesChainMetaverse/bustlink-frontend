@@ -88,7 +88,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'pid',
       tip: '节点ID是唯一',
       hideInForm: true,
-
+      copyable: true,
       // render: (dom, entity) => {
       //   return <a onClick={() => setRow(entity)}>{dom}</a>;
       // },
@@ -99,11 +99,19 @@ const TableList: React.FC<{}> = () => {
       sorter: false,
       hideInForm: true,
       hideInSearch: true,
-
       valueType: 'textarea',
       render: (text, entity) => {
         return text.toString();
       },
+      // render: (textArr, entity) => {
+      //   return (<div>
+      //     {
+      //       textArr.map(t=>{
+      //         return (<li>{t}</li>)
+      //       })
+      //     }
+      //   </div>)
+      // },
     },
     {
       title: '设备序列号',
@@ -111,7 +119,7 @@ const TableList: React.FC<{}> = () => {
       sorter: false,
       hideInForm: false,
       valueType: 'textarea',
-
+      copyable: true,
     },
     {
       title: '最新响应时间',
@@ -123,27 +131,10 @@ const TableList: React.FC<{}> = () => {
          if(text === undefined || text ==="-"){
            return "-";
          }
-         return moment(parseInt(text*1000)).format('YYYY-MM-DD HH:mm:ss');
+         return moment(parseInt(text/1000000)).format('YYYY-MM-DD HH:mm:ss');
       },
     },
 
-    // {
-    //   title: '操作',
-    //   dataIndex: 'option',
-    //   valueType: 'option',
-    //   render: (_, record) => (
-    //     <>
-    //       <a
-    //         onClick={() => {
-    //           handleUpdateModalVisible(true);
-    //           setStepFormValues(record);
-    //         }}
-    //       >
-    //         配置
-    //       </a>
-    //     </>
-    //   ),
-    // },
   ];
 
   return (
