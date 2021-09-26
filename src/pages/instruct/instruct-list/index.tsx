@@ -67,6 +67,7 @@ const TableList: React.FC<{}> = () => {
       title: '视频番号',
       dataIndex: 'video_no',
       tip: '视频番号是唯一的',
+      copyable: true,
       formItemProps: {
         rules: [
           {
@@ -84,7 +85,7 @@ const TableList: React.FC<{}> = () => {
       valueType: 'textarea',
       hideInForm: true,
       hideInSearch: true,
-
+      copyable: true,
     },
 
     {
@@ -93,7 +94,7 @@ const TableList: React.FC<{}> = () => {
       valueType: 'textarea',
       hideInForm: true,
       hideInSearch: true,
-
+      copyable: true,
     },
     {
       title: '类型',
