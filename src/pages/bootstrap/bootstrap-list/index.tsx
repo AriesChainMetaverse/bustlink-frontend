@@ -102,6 +102,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'pid',
       tip: '节点ID（pid）是唯一',
       hideInForm: false,
+      copyable: true,
       formItemProps: {
         rules: [
           {
@@ -117,7 +118,7 @@ const TableList: React.FC<{}> = () => {
       sorter: false,
       hideInForm: false,
       hideInSearch: true,
-      tip: '输入过多个ip地址，请用;间隔',
+      tip: '输入过多个ip地址，请用,间隔',
       valueType: 'textarea',
       formItemProps: {
         rules: [
@@ -127,8 +128,14 @@ const TableList: React.FC<{}> = () => {
           },
         ],
       },
-      render: (text, entity) => {
-        return text.toString();
+      render: (textArr, entity) => {
+        return (<div>
+          {
+            textArr.map(t=>{
+              return (<li>{t}</li>)
+            })
+          }
+        </div>)
       },
     },
     {

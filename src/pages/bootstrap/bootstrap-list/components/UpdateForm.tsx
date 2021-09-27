@@ -111,6 +111,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         </FormItem>
         <FormItem
           name="addrs" label="IP地址"
+          help="多个IP请用英文逗号,隔开"
           rules={[{ required: true, message: '请输入IP地址！', min: 10,transform:(value)=> {
             return value.toString()
           } }]}
