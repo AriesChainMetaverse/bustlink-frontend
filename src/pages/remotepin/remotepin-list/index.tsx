@@ -8,11 +8,8 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import {
-
   addRule,
-
   queryAdminPinList,
-
   syncAdminPin,
   updateAdminPin
 } from './service';
