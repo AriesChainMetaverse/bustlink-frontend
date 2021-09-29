@@ -4,8 +4,12 @@ import { TableListParams } from './data.d';
 
 export async function queryPropertyList(params?: TableListParams) {
 
-  //配合接口的分页变量名
+  // 配合接口的分页变量名
+  // @ts-ignore
+  // eslint-disable-next-line no-param-reassign
   params.page = params.current;
+  // @ts-ignore
+  // eslint-disable-next-line no-param-reassign
   params.per_page = params.pageSize;
 
   const response = await request('/api/v0/adminproperty', {

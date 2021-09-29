@@ -36,4 +36,7 @@ export interface TableListParams {
   currentPage?: number;
   filter?: { [key: string]: any[] };
   sorter?: { [key: string]: any };
+  current?: number;
+  page?: number;
+  per_page?: number;
 }
