@@ -5,8 +5,11 @@ import { TableListParams } from './data.d';
 
 export async function queryPermissionList(params?: TableListParams) {
 
-  //配合接口的分页变量名
+  // 配合接口的分页变量名
+  // eslint-disable-next-line no-param-reassign
+  // @ts-ignore
   params.page = params.current;
+  // @ts-ignore
   params.per_page = params.pageSize;
 
   const response = await request('/api/v0/adminpermission', {
@@ -53,7 +56,7 @@ export async function queryPermissionList(params?: TableListParams) {
     newData.push(obj)
   }
   response.data = newData
-  console.log(response)
+  // console.log(response)
   return response;
 }
 
