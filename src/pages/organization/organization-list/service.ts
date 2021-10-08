@@ -54,8 +54,8 @@ export async function querySysOrganizationList(params?: TableListParams) {
 }
 
 
-export async function removeSysUser(params: { ids: string[] }) {
-  return request('/api/v0/adminuser', {
+export async function removeSysOrganization(params: { ids: string[] }) {
+  return request('/api/v0/adminorganization', {
     method: 'DELETE',
     data: {
       ...params,
@@ -68,6 +68,7 @@ export async function addSysOrganization(params: TableListParams) {
   // params.is_verify = Boolean(params.is_verify)
 
   const formData = new FormData();
+  // @ts-ignore
   formData.append("id",params.id)
   formData.append("corporate_name",params.corporate_name)
   formData.append("corporate_hash",params.corporate_hash)
@@ -102,6 +103,7 @@ export async function updateSysOrganization(params: { corporate_id_card_obverse:
   // console.log(params.business_license)
 
   const formData = new FormData();
+  // @ts-ignore
   formData.append("id",params.id)
   formData.append("corporate_name",params.corporate_name)
   formData.append("corporate_hash",params.corporate_hash)

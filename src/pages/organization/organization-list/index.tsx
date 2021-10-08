@@ -8,7 +8,7 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 
 import { TableListItem } from './data.d';
-import {updateSysOrganization, addSysOrganization, removeSysUser, querySysOrganizationList} from './service';
+import {updateSysOrganization, addSysOrganization, removeSysOrganization, querySysOrganizationList} from './service';
 
 
 /**
@@ -71,7 +71,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await removeSysUser({
+    await removeSysOrganization({
       ids: selectedRows.map((row) => row.id),
     });
     hide();
@@ -246,6 +246,7 @@ const TableList: React.FC<{}> = () => {
     },
   ];
 
+  // @ts-ignore
   return (
     <PageContainer>
       <ProTable<TableListItem>
@@ -272,20 +273,19 @@ const TableList: React.FC<{}> = () => {
             <div>
               已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
               <span>
-                {/*服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万*/}
               </span>
             </div>
           }
         >
-          {/*<Button*/}
-          {/*  onClick={async () => {*/}
-          {/*    await handleRemove(selectedRowsState);*/}
-          {/*    setSelectedRows([]);*/}
-          {/*    actionRef.current?.reloadAndRest?.();*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  批量删除*/}
-          {/*</Button>*/}
+          <Button
+            onClick={async () => {
+              await handleRemove(selectedRowsState);
+              setSelectedRows([]);
+              actionRef.current?.reloadAndRest?.();
+            }}
+          >
+            批量删除
+          </Button>
         </FooterToolbar>
       )}
       <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>

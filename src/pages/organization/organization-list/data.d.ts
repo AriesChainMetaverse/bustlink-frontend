@@ -32,6 +32,10 @@ export interface TableListData {
 }
 
 export interface TableListParams {
+  corporate_code: string;
+  corporate_legal_user: string;
+  corporate_hash: string;
+  corporate_name: string;
   id?: string;
   status?: number;
   sort?: number;
