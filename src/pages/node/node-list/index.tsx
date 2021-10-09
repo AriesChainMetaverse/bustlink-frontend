@@ -1,58 +1,58 @@
 
-import { Button,  message,  Drawer } from 'antd';
+import {   message,  Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProDescriptions from '@ant-design/pro-descriptions';
-import CreateForm from './components/CreateForm';
-import UpdateForm, { FormValueType } from './components/UpdateForm';
+// import CreateForm from './components/CreateForm';
+// import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import { addAnnounce, removeAnnounce, queryNodeList} from './service';
+import {  removeAnnounce, queryNodeList} from './service';
 import moment from 'moment';
 /**
  * 添加公告
  * @param fields
  */
-const handleAdd = async (fields: TableListItem) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addAnnounce({ ...fields });
-    hide();
-    message.success('添加成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('添加失败请重试！');
-    return false;
-  }
-};
+// const handleAdd = async (fields: TableListItem) => {
+//   const hide = message.loading('正在添加');
+//   try {
+//     await addAnnounce({ ...fields });
+//     hide();
+//     message.success('添加成功');
+//     return true;
+//   } catch (error) {
+//     hide();
+//     message.error('添加失败请重试！');
+//     return false;
+//   }
+// };
 
 /**
  * 更新节点
  * @param fields
  */
-const handleUpdate = async (fields: FormValueType) => {
-  const hide = message.loading('正在配置');
-  try {
-    await updateAnnounce({
-      id:fields.id,
-      announce_no: fields.announce_no,
-      title: fields.title,
-      content: fields.content,
-      kind: fields.kind,
-      link: fields.link,
-
-    });
-    hide();
-
-    message.success('配置成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('配置失败请重试！');
-    return false;
-  }
-};
+// const handleUpdate = async (fields: FormValueType) => {
+//   const hide = message.loading('正在配置');
+//   try {
+//     await updateAnnounce({
+//       id:fields.id,
+//       announce_no: fields.announce_no,
+//       title: fields.title,
+//       content: fields.content,
+//       kind: fields.kind,
+//       link: fields.link,
+//
+//     });
+//     hide();
+//
+//     message.success('配置成功');
+//     return true;
+//   } catch (error) {
+//     hide();
+//     message.error('配置失败请重试！');
+//     return false;
+//   }
+// };
 
 /**
  *  删除节点
@@ -101,6 +101,7 @@ const TableList: React.FC<{}> = () => {
       hideInSearch: true,
       valueType: 'textarea',
       render: (text, entity) => {
+        // @ts-ignore
         return text.toString();
       },
       // render: (textArr, entity) => {
@@ -131,7 +132,8 @@ const TableList: React.FC<{}> = () => {
          if(text === undefined || text ==="-"){
            return "-";
          }
-         return moment(parseInt(text/1000000)).format('YYYY-MM-DD HH:mm:ss');
+         // @ts-ignore
+        return moment(parseInt(String(text / 1000000), 10)).format('YYYY-MM-DD HH:mm:ss');
       },
     },
 
@@ -166,53 +168,44 @@ const TableList: React.FC<{}> = () => {
             </div>
           }
         >
-          {/*<Button*/}
-          {/*  onClick={async () => {*/}
-          {/*    await handleRemove(selectedRowsState);*/}
-          {/*    setSelectedRows([]);*/}
-          {/*    actionRef.current?.reloadAndRest?.();*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  批量删除*/}
-          {/*</Button>*/}
         </FooterToolbar>
       )}
-      <CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
-        <ProTable<TableListItem, TableListItem>
-          onSubmit={async (value) => {
-            const success = await handleAdd(value);
-            if (success) {
-              handleModalVisible(false);
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          rowKey="id"
-          type="form"
-          columns={columns}
-        />
-      </CreateForm>
-      {stepFormValues && Object.keys(stepFormValues).length ? (
-        <UpdateForm
-          onSubmit={async (value) => {
-            const success = await handleUpdate(value);
-            if (success) {
-              handleUpdateModalVisible(false);
-              setStepFormValues({});
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          onCancel={() => {
-            handleUpdateModalVisible(false);
-            setStepFormValues({});
-          }}
-          updateModalVisible={updateModalVisible}
-          values={stepFormValues}
-        />
-      ) : null}
+      {/*<CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>*/}
+      {/*  <ProTable<TableListItem, TableListItem>*/}
+      {/*    onSubmit={async (value) => {*/}
+      {/*      const success = await handleAdd(value);*/}
+      {/*      if (success) {*/}
+      {/*        handleModalVisible(false);*/}
+      {/*        if (actionRef.current) {*/}
+      {/*          actionRef.current.reload();*/}
+      {/*        }*/}
+      {/*      }*/}
+      {/*    }}*/}
+      {/*    rowKey="id"*/}
+      {/*    type="form"*/}
+      {/*    columns={columns}*/}
+      {/*  />*/}
+      {/*</CreateForm>*/}
+      {/*{stepFormValues && Object.keys(stepFormValues).length ? (*/}
+      {/*  <UpdateForm*/}
+      {/*    onSubmit={async (value) => {*/}
+      {/*      const success = await handleUpdate(value);*/}
+      {/*      if (success) {*/}
+      {/*        handleUpdateModalVisible(false);*/}
+      {/*        setStepFormValues({});*/}
+      {/*        if (actionRef.current) {*/}
+      {/*          actionRef.current.reload();*/}
+      {/*        }*/}
+      {/*      }*/}
+      {/*    }}*/}
+      {/*    onCancel={() => {*/}
+      {/*      handleUpdateModalVisible(false);*/}
+      {/*      setStepFormValues({});*/}
+      {/*    }}*/}
+      {/*    updateModalVisible={updateModalVisible}*/}
+      {/*    values={stepFormValues}*/}
+      {/*  />*/}
+      {/*) : null}*/}
 
       <Drawer
         width={600}
