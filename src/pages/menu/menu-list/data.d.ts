@@ -2,6 +2,7 @@ export interface TableListItem {
   key: number;
   id: string;
   comment: string;
+  depth: string;
   data_scope: string;
   flag: string;
   name: string;
@@ -9,6 +10,8 @@ export interface TableListItem {
   content: string;
   status: number;
   sort: number;
+  path: string;
+  parent_id: string;
 
 }
 
