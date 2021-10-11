@@ -9,7 +9,7 @@ import UpdateForm, { FormValueType } from './components/UpdateForm';
 import AddForm, { FormValueTypeAdd } from './components/AddForm';
 
 import { TableListItem } from './data.d';
-import {updateMenu, addMenu, removeMenu, queryMenuList, bindPermission} from './service';
+import {updateMenu, addMenu, removeMenu, queryMenuList} from './service';
 
 
 /**
@@ -43,7 +43,7 @@ const handleUpdate = async (fields: FormValueType) => {
       name: fields.name,
       path: fields.path,
       comment: fields.comment,
-      depth: fields.depth,
+      depth: fields.depth
 
     });
     hide();
@@ -87,7 +87,6 @@ const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [addModalVisible, handleAddModalVisible] = useState<boolean>(false);
-  const [bindModalVisible, handleBindModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<TableListItem>();
@@ -220,7 +219,6 @@ const TableList: React.FC<{}> = () => {
             <div>
               已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
               <span>
-                {/*服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万*/}
               </span>
             </div>
           }
