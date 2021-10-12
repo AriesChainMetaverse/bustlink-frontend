@@ -17,10 +17,18 @@ import {addBootstrap, removeAnnounce, queryBootstrapList, updateBootstrap} from 
 const handleAdd = async (fields: TableListItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addBootstrap({ ...fields });
+    const response = await addBootstrap({ ...fields });
+
+    if (response.status === "success"){
+      hide();
+      message.success('添加成功');
+      return true;
+    }
     hide();
-    message.success('添加成功');
-    return true;
+    console.log(response.message)
+    message.error('添加失败请重试！');
+    return false;
+
   } catch (error) {
     hide();
     message.error('添加失败请重试！');
@@ -36,7 +44,7 @@ const handleUpdate = async (fields: FormValueType) => {
 
   const hide = message.loading('正在配置');
   try {
-    await updateBootstrap({
+    const response = await updateBootstrap({
       id:fields.id,
       pid: fields.pid,
       expired:  fields.expired,
@@ -46,10 +54,17 @@ const handleUpdate = async (fields: FormValueType) => {
       addrs:  fields.addrs.toString(),
 
     });
-    hide();
+    if (response.status === "success"){
+      hide();
+      message.success('配置成功');
+      return true;
+    }
+      hide();
+      console.log(response.message)
+      message.error('配置失败请重试！');
+      return false;
 
-    message.success('配置成功');
-    return true;
+
   } catch (error) {
     console.log(error)
     hide();

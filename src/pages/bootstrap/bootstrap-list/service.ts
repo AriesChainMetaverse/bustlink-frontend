@@ -13,6 +13,17 @@ export async function queryBootstrapList(params?: TableListParams) {
 
   });
 
+
+  // 整理接口返回值符合Protable格式
+  for(let i = 0; i < response.data.length; i++) {
+    if(response.data[i].expired === undefined){
+      response.data[i].expired = false
+    }
+  }
+
+  console.log(response)
+
+
   return response;
 }
 

@@ -97,7 +97,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         </FormItem>
         <FormItem name="expired" label="是否到期">
           <RadioGroup style={{ width: '100%' }} >
-            <Radio value={false} >否</Radio>
+            <Radio value={false}>否</Radio>
             <Radio value={true}>是</Radio>
           </RadioGroup>
         </FormItem>
