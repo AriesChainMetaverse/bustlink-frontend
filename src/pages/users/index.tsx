@@ -100,7 +100,7 @@ const UserList: React.FC<{}> = () => {
       dataIndex: 'avatar',
       render: (dom, entity) => {
         return <Avatar
-          src={'http://127.0.0.1:10080/link/bafybeigaywv3husgeyjlmnyyxl7tbvuaeesfzgwzkpfwjbh2h4bzh4csau/image/thumb.jpg' + "?ts=" + Math.round(Date.now() / 1000)}
+          src={'http://127.0.0.1:18080/link/bafybeigaywv3husgeyjlmnyyxl7tbvuaeesfzgwzkpfwjbh2h4bzh4csau/image/thumb.jpg' + "?ts=" + Math.round(Date.now() / 1000)}
           shape="square" size="large"/>;
       },
     },
