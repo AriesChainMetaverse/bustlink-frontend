@@ -102,13 +102,13 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
     return await uploadScrape(values);
   };
 
-  const startScrapeCall = async () => {
-    return  startScrape();
-  };
-
-  const stopScrapeCall = async () => {
-    return  stopScrape();
-  };
+  // const startScrapeCall = async () => {
+  //   return  startScrape();
+  // };
+  //
+  // const stopScrapeCall = async () => {
+  //   return  stopScrape();
+  // };
 
   const columns: ProColumns<ScrapeItem>[] = [
     {
@@ -503,27 +503,23 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
           pagination={false}
           polling={polling || undefined}
           toolBarRender={() => [
-            <Button
-              key="4"
-              type="primary"
-              onClick={() => {
-                if (scraping) {
-                  setScraping(undefined);
-                  stopScrapeCall()
-                  return;
-                }
-
-                setScraping(1000);
-                startScrapeCall()
-
-
-
-
-              }}
-            >
-              {scraping ? <LoadingOutlined /> : <ReloadOutlined />}
-              {scraping ? '停止爬虫' : '启动爬虫'}
-            </Button>,
+            // <Button
+            //   key="4"
+            //   type="primary"
+            //   onClick={() => {
+            //     if (scraping) {
+            //       setScraping(undefined);
+            //       stopScrapeCall()
+            //       return;
+            //     }
+            //     setScraping(1000);
+            //     startScrapeCall()
+            //
+            //   }}
+            // >
+            //   {scraping ? <LoadingOutlined /> : <ReloadOutlined />}
+            //   {scraping ? '停止爬虫' : '启动爬虫'}
+            // </Button>,
             <Button
               key="3"
               type="primary"
