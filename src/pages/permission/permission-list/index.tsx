@@ -19,10 +19,18 @@ import {updatePermission, addPermission, removePermission, queryPermissionList, 
 const handleAdd = async (fields: TableListItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addPermission({ ...fields });
+    const response = await addPermission({ ...fields });
+
+    if (response.status === "success"){
+      hide();
+      message.success('添加成功');
+      return true;
+    }
     hide();
-    message.success('添加成功');
-    return true;
+    console.log(response.message)
+    message.error('添加失败请重试！');
+    return false;
+
   } catch (error) {
     hide();
     message.error('添加失败请重试！');
@@ -37,17 +45,24 @@ const handleAdd = async (fields: TableListItem) => {
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
-    await updatePermission({
+    const response = await updatePermission({
       id:fields.id,
       name: fields.name,
       title: fields.title,
       comment: fields.comment,
 
     });
-    hide();
 
-    message.success('配置成功');
-    return true;
+    if (response.status === "success"){
+      hide();
+      message.success('配置成功');
+      return true;
+    }
+    hide();
+    console.log(response.message)
+    message.error('配置失败请重试！');
+    return false;
+
   } catch (error) {
     hide();
     message.error('配置失败请重试！');
