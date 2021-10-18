@@ -89,6 +89,7 @@ const TableList: React.FC<{}> = () => {
       tip: '节点ID是唯一',
       hideInForm: true,
       copyable: true,
+      ellipsis: true,
       // render: (dom, entity) => {
       //   return <a onClick={() => setRow(entity)}>{dom}</a>;
       // },
@@ -100,20 +101,34 @@ const TableList: React.FC<{}> = () => {
       hideInForm: true,
       hideInSearch: true,
       valueType: 'textarea',
-      render: (text, entity) => {
-        // @ts-ignore
-        return text.toString();
+      render: (textArray, entity) => {
+        return (<div>
+          {
+            textArray.map(t=>{
+              return (<li>{t}</li>)
+            })
+          }
+        </div>)
       },
-      // render: (textArr, entity) => {
-      //   return (<div>
-      //     {
-      //       textArr.map(t=>{
-      //         return (<li>{t}</li>)
-      //       })
-      //     }
-      //   </div>)
-      // },
     },
+    {
+      title: '地理地址',
+      dataIndex: 'location',
+      sorter: false,
+      hideInForm: true,
+      hideInSearch: true,
+      valueType: 'textarea',
+      render: (textArray) => {
+        return (<div>
+          {
+            textArray.map(t=>{
+              return (<li>{t}</li>)
+            })
+          }
+        </div>)
+      },
+    },
+
     {
       title: '设备序列号',
       dataIndex: 'serial',

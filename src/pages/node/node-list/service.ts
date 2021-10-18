@@ -16,6 +16,34 @@ export async function queryNodeList(params?: TableListParams) {
 
     });
 
+    // 整理接口返回值符合Protable格式
+    var location = [];
+    var lArr = [];
+    var response2;
+    for(let i = 0; i < response.data.length; i++) {
+      location = [];
+      if(response.data[i].addr === undefined){
+        response.data[i].addr = []
+        response.data[i].location = []
+      }else{
+
+        for(let j = 0; j < response.data[i].addr.length; j++) {
+
+          lArr = response.data[i].addr[j].split("/")
+
+          // eslint-disable-next-line no-await-in-loop
+          response2 = await getlocationByIP(lArr[2])
+          if(response2.data[0] !== undefined){
+            location.push(response2.data[0])
+          }
+        }
+
+        response.data[i].location = location
+      }
+
+    }
+
+
     return response;
   }
   return null;
@@ -48,4 +76,13 @@ export async function updateNode(params: TableListParams) {
       ...params,
     },
   });
+}
+
+async function getlocationByIP(ipaddress: string) {
+
+  const response = await request(`/api/v0/getlocationbyip?ip=${ipaddress}`, {
+    method:"GET",
+  });
+  return response;
+
 }
