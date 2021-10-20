@@ -86,6 +86,7 @@ const TableList: React.FC<{}> = () => {
       hideInForm: true,
       hideInSearch: true,
       copyable: true,
+      ellipsis: true,
     },
 
     {
@@ -95,6 +96,7 @@ const TableList: React.FC<{}> = () => {
       hideInForm: true,
       hideInSearch: true,
       copyable: true,
+      ellipsis: true,
     },
     {
       title: '类型',
