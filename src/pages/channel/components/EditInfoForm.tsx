@@ -102,7 +102,7 @@ const EditInfoForm: React.FC<EditInfoFormProps> = (props) => {
                   ]}
                   cover={<Image
                     width='100%'
-                    src={`http://127.0.0.1:10080/link/${item.root}/${item.thumb_path}`} />}
+                    src={`http://127.0.0.1:18080/link/${item.root}/${item.thumb_path}`} />}
             >
               <Space>{item.sharpness}{item.language}</Space>
             </Card>
