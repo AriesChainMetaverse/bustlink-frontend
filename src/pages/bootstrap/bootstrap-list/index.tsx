@@ -98,6 +98,15 @@ function cateroryTrans (catetoryList){
   return catetoryList.toString()
 }
 
+const validatorPID = (rule: any, value: string, callback: (message?: string) => void) => {
+  if(value.indexOf("1") === 0 || value.indexOf("Qm") === 0){
+    callback();
+  }else{
+    callback("节点PID格式不正确");
+  }
+};
+
+
 const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
@@ -105,6 +114,7 @@ const TableList: React.FC<{}> = () => {
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<TableListItem>();
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
+  // @ts-ignore
   const columns: ProColumns<TableListItem>[] = [
     {
       title: 'ID',
@@ -118,12 +128,17 @@ const TableList: React.FC<{}> = () => {
       tip: '节点ID（pid）是唯一',
       hideInForm: false,
       copyable: true,
+      ellipsis: true,
       formItemProps: {
         rules: [
           {
             required: true,
             message: '节点PID必填',
-          },
+          },{
+          max:52,min:52
+          },{
+          validator:validatorPID
+          }
         ],
       },
     },
@@ -196,13 +211,16 @@ const TableList: React.FC<{}> = () => {
       sorter: false,
       hideInForm: false,
       hideInSearch: true,
-      valueType: 'number',
       formItemProps: {
         rules: [
           {
             required: true,
             message: '服务端口必填',
           },
+          {
+          type: 'number',
+          transform:(value)=>{return Number(value)}
+          }
         ],
       },
     },
@@ -210,9 +228,8 @@ const TableList: React.FC<{}> = () => {
       title: 'fail_counts',
       dataIndex: 'fail_counts',
       sorter: false,
-      hideInForm: false,
+      hideInForm: true,
       hideInSearch: true,
-      valueType: 'number',
     },
 
     {
