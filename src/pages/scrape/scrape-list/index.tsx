@@ -278,8 +278,8 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       hideInForm: true,
       hideInSearch:true,
       render: (_, record) => (
-        <Space>{moment.unix(record.updated_unix).format('YYYY-MM-DD HH:mm:ss')}</Space>
-      ),
+        <Space>{moment.unix(Number((String(record.updated_unix).substring(0,10)))).format('YYYY-MM-DD HH:mm:ss')}</Space>
+),
     },
     {
       title: '创建时间',
@@ -290,8 +290,10 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       hideInForm: true,
       hideInSearch:true,
       render: (_, record) => (
-        <Space>{moment.unix(record.updated_unix).format('YYYY-MM-DD HH:mm:ss')}</Space>
-      ),
+        // <Space>{moment.unix(record.updated_unix).format('YYYY-MM-DD HH:mm:ss')}</Space>
+      <Space>{moment.unix(Number((String(record.updated_unix).substring(0,10)))).format('YYYY-MM-DD HH:mm:ss')}</Space>
+
+),
     },
     {
       title: '强制执行',
