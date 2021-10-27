@@ -97,4 +97,10 @@ export default {
 
   'menu.remotepin': 'system remotepin',
   'menu.remotepin.remotepin-list': 'remotepin-list',
+
+  'menu.discovery': 'discovery',
+  'menu.discovery.discovery-list': 'discovery-list',
+
+
+
 };

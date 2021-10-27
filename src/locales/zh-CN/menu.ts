@@ -99,4 +99,7 @@ export default {
 
   'menu.remotepin': '全量节点PIN资源',
   'menu.remotepin.remotepin-list': '全量节点PIN资源列表',
+
+  'menu.discovery': '发现页',
+  'menu.discovery.discovery-list': '发现页列表',
 };

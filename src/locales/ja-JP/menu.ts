@@ -97,4 +97,8 @@ export default {
 
   'menu.remotepin': 'リモートPIN管理',
   'menu.remotepin.remotepin-list': 'リモートPIN管理リスト',
+
+  'menu.discovery': '探すページ',
+  'menu.discovery.discovery-list': '探すリスト',
+
 };
