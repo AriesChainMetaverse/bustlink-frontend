@@ -7,7 +7,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import {updateRule, addRule, removeRule, queryInforList, updateInforList,initCreateAdminInfor} from './service';
+import {updateRule, addRule, removeRule, queryInforList, updateInforList,initCreateAdminInfor,updateAdminInformationFrames} from './service';
 import {channelSyncInstructInfo} from "@/pages/channel/service";
 
 /**
@@ -15,17 +15,17 @@ import {channelSyncInstructInfo} from "@/pages/channel/service";
  * @param fields
  */
 const handleAdd = async (fields: TableListItem) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addRule({ ...fields });
-    hide();
-    message.success('添加成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('添加失败请重试！');
-    return false;
-  }
+  // const hide = message.loading('正在添加');
+  // try {
+  //   await addRule({ ...fields });
+  //   hide();
+  //   message.success('添加成功');
+  //   return true;
+  // } catch (error) {
+  //   hide();
+  //   message.error('添加失败请重试！');
+  //   return false;
+  // }
 };
 
 /**
@@ -33,25 +33,23 @@ const handleAdd = async (fields: TableListItem) => {
  * @param fields
  */
 const handleUpdate = async (fields: FormValueType) => {
-  // const hide = message.loading('正在配置');
-  // try {
-  //   await updateTopList({
-  //     information_id:fields.id,
-  //     title: fields.title,
-  //     intro: fields.intro,
-  //     lower_banner: fields.lower_banner,
-  //     top_right: fields.top_right,
-  //     category: fields.category,
-  //   });
-  //   hide();
-  //
-  //   message.success('配置成功');
-  //   return true;
-  // } catch (error) {
-  //   hide();
-  //   message.error('配置失败请重试！');
-  //   return false;
-  // }
+  const hide = message.loading('正在配置');
+  try {
+    await updateAdminInformationFrames({
+      id:fields.id,
+      name: fields.video_no,
+      frames_particulars: fields.frames_particulars,
+
+    });
+    hide();
+
+    message.success('配置成功');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('配置失败请重试！');
+    return false;
+  }
 };
 
 /**
@@ -173,23 +171,23 @@ const TableList: React.FC<{}> = () => {
         "down": { text: '已下架', status: "down" },
       },
     },
-    // {
-    //   title: '操作',
-    //   dataIndex: 'option',
-    //   valueType: 'option',
-    //   render: (_, record) => (
-    //     <>
-    //       <a
-    //         onClick={() => {
-    //           handleUpdateModalVisible(true);
-    //           setStepFormValues(record);
-    //         }}
-    //       >
-    //         配置
-    //       </a>
-    //     </>
-    //   ),
-    // },
+    {
+      title: '操作',
+      dataIndex: 'option',
+      valueType: 'option',
+      render: (_, record) => (
+        <>
+          <a
+            onClick={() => {
+              handleUpdateModalVisible(true);
+              setStepFormValues(record);
+            }}
+          >
+            配置跳帧图片
+          </a>
+        </>
+      ),
+    },
   ];
 
   return (

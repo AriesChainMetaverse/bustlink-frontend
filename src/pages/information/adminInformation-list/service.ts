@@ -25,6 +25,7 @@ export async function queryInforList(params?: TableListParams) {
       obj.title = response.data[i].edges.informationsV1.title
       obj.root = response.data[i].edges.informationsV1.root
       obj.poster_path = response.data[i].edges.informationsV1.poster_path
+      obj.frames_particulars = response.data[i].frames_particulars
 
 
     }else{
@@ -34,7 +35,7 @@ export async function queryInforList(params?: TableListParams) {
       obj.status = response.data[i].status
       obj.root = ""
       obj.poster_path = ""
-
+      obj.frames_particulars = response.data[i].frames_particulars
     }
     newData.push(obj)
   }
@@ -74,5 +75,32 @@ export async function updateInforList(params: { ids: string[],status: string  })
 export async function initCreateAdminInfor() {
   return request(`/api/v0/initadmininformations/`, {
     method: 'POST',
+  });
+}
+
+export async function updateAdminInformationFrames(params: TableListParams) {
+  const { ...restParams } = params;
+
+  // 处理跳帧图片数据格式
+  let newFrameParticipants =[];
+  for(let i = 0; i < params.frames_particulars.length; i++) {
+    console.log(params.frames_particulars[i])
+    let obj = {};
+    obj.index = Number(params.frames_particulars[i].index)
+    obj.time = Number(params.frames_particulars[i].time)
+    obj.row = Number(params.frames_particulars[i].row)
+    obj.column = Number(params.frames_particulars[i].column)
+    obj.caption = params.frames_particulars[i].caption
+    console.log(obj)
+    newFrameParticipants.push(obj)
+  }
+
+  restParams.frames_particulars = newFrameParticipants
+
+  return request(`/api/v0/admininformations/${params.id}`, {
+    method: 'PUT',
+    data: {
+      ...restParams,
+    },
   });
 }
