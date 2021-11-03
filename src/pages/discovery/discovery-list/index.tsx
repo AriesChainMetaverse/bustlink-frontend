@@ -43,6 +43,7 @@ const handleUpdate = async (fields: FormValueType) => {
       links:  fields.links.toString(),
       date:fields.date,
       rid: fields.rid,
+      publish: fields.publish,
     });
     hide();
 
@@ -138,8 +139,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'id',
       tip: 'ID是唯一的',
       hideInForm: true,
-
-      copyable:true,
+      copyable:false,
       render: (dom, entity) => {
         return <a onClick={() => setRow(entity)}>{dom}</a>;
       },
