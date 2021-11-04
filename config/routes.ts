@@ -309,6 +309,22 @@
                 ],
               },
               {
+                path: './discovery',
+                icon: 'table',
+                authority: ['admin', 'user'],//权限控制
+                name: 'discovery',
+                routes: [
+                  {
+                    name: 'discovery-list',
+                    icon: 'smile',
+                    path: './discovery-list',
+                    component: './discovery/discovery-list',
+                  },
+                ],
+              },
+
+
+              {
                 component: '404',
               },
 
