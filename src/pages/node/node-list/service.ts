@@ -22,14 +22,14 @@ export async function queryNodeList(params?: TableListParams) {
     var response2;
     for(let i = 0; i < response.data.length; i++) {
       location = [];
-      if(response.data[i].addr === undefined){
-        response.data[i].addr = []
+      if(response.data[i].addrs === undefined){
+        response.data[i].addrs = []
         response.data[i].location = []
       }else{
 
-        for(let j = 0; j < response.data[i].addr.length; j++) {
+        for(let j = 0; j < response.data[i].addrs.length; j++) {
 
-          lArr = response.data[i].addr[j].split("/")
+          lArr = response.data[i].addrs[j].split("/")
 
           // eslint-disable-next-line no-await-in-loop
           response2 = await getlocationByIP(lArr[2])

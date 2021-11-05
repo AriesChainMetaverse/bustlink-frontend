@@ -96,7 +96,7 @@ const TableList: React.FC<{}> = () => {
     },
     {
       title: 'IP地址',
-      dataIndex: 'addr',
+      dataIndex: 'addrs',
       sorter: false,
       hideInForm: true,
       hideInSearch: true,
@@ -111,6 +111,38 @@ const TableList: React.FC<{}> = () => {
         </div>)
       },
     },
+
+    {
+      title: '分类',
+      dataIndex: 'type',
+      sorter: false,
+      hideInForm: true,
+      hideInSearch: false,
+      hideInTable: false,
+      valueEnum: {
+        '0': { text: 'Server', status: '0' },
+        '1': { text: 'Adapter', status: '1' },
+        '2': { text: 'Box', status: '2' },
+        '3': { text: 'Mobile', status: '3' },
+        '4': { text: 'Max', status: '4' },
+      },
+    },
+    {
+      title: '状态',
+      dataIndex: 'state',
+      sorter: false,
+      hideInForm: true,
+      hideInSearch: false,
+      hideInTable: false,
+      valueEnum: {
+        '0': { text: 'Initialized', status: '0' },
+        '1': { text: 'Start', status: '1' },
+        '2': { text: 'Online', status: '2' },
+        '3': { text: 'Offline', status: '3' },
+        '4': { text: 'Max', status: '4' },
+      },
+    },
+
     {
       title: '地理地址',
       dataIndex: 'location',
