@@ -45,11 +45,6 @@ const TagMappingForm: FC<TagMappingFormProps> = (props) => {
     const { publicType } = changedValues;
     if (publicType) setShowPublicUsers(publicType === '2');
   };
-  const headers = {
-    // 'Content-Type': 'multipart/form-data',
-    // Accept: 'application/json',
-    Authorization:`Bearer ${localStorage.getItem("token")}`
-  };
 
   const uploadProps ={
     name: 'tagMappingFile',
@@ -57,7 +52,6 @@ const TagMappingForm: FC<TagMappingFormProps> = (props) => {
     action: '/api/v0/tagmapping/upload',
     showUploadList:false,
     method:"post",
-    headers:headers,
     onChange(info) {
       console.log(info)
       const { status } = info.file;
