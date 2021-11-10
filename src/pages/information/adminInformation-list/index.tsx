@@ -35,16 +35,23 @@ const handleAdd = async (fields: TableListItem) => {
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
-    await updateAdminInformationFrames({
+    const response = await updateAdminInformationFrames({
       id:fields.id,
       name: fields.video_no,
       frames_particulars: fields.frames_particulars,
 
     });
-    hide();
 
-    message.success('配置成功');
-    return true;
+    if (response.status === "success"){
+      hide();
+      message.success('配置成功');
+      return true;
+    }
+    hide();
+    console.log(response.message)
+    message.error('配置失败请重试！');
+    return false;
+
   } catch (error) {
     hide();
     message.error('配置失败请重试！');
