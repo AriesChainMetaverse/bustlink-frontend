@@ -62,16 +62,4 @@ export default {
   'pages.searchTable.tenThousand': '万',
   'pages.searchTable.batchDeletion': '批量删除',
   'pages.searchTable.batchApproval': '批量审批',
-  'pages.announce.indexForm.announce_no': '公告编号',
-  'pages.announce.indexForm.announce_no_tip': '公告编号是唯一的',
-  'pages.announce.indexForm.title': '标题',
-  'pages.announce.indexForm.kind': '分类',
-  'pages.announce.indexForm.kind_notice': '系统通知',
-  'pages.announce.indexForm.kind_announcement': '公告',
-  'pages.announce.indexForm.kind_event': '活动',
-  'pages.announce.indexForm.content': '内容',
-  'pages.announce.indexForm.link': '链接',
-  'pages.announce.indexForm.option': '操作',
-
-
 };
