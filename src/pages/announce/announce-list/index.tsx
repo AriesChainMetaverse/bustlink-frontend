@@ -9,6 +9,7 @@ import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import {updateAnnounce, addAnnounce, removeAnnounce, queryAnnounceList} from './service';
 import Editor from "for-editor";
+import { useIntl, FormattedMessage } from 'umi';
 
 /**
  * 添加公告
@@ -87,19 +88,35 @@ const TableList: React.FC<{}> = () => {
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<TableListItem>();
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
+
+  /**
+   * 国际化配置
+   */
+  const intl = useIntl();
+
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '公告编号',
+      title: (
+        <FormattedMessage
+          id="pages.announce.indexForm.announce_no"
+          defaultMessage="公告编号"
+        />
+      ),
       dataIndex: 'announce_no',
-      tip: '公告编号是唯一的',
+      tip: intl.formatMessage({
+        id: 'pages.announce.indexForm.announce_no_tip',
+        defaultMessage: '公告编号是唯一的',
+      }),
       hideInForm: true,
 
-      // render: (dom, entity) => {
-      //   return <a onClick={() => setRow(entity)}>{dom}</a>;
-      // },
     },
     {
-      title: '标题',
+      title: (
+        <FormattedMessage
+        id='pages.announce.indexForm.title'
+        defaultMessage= '标题'
+        />
+      ),
       dataIndex: 'title',
       sorter: false,
       hideInForm: false,
@@ -108,35 +125,57 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '标题必填',
+            message: <FormattedMessage
+              id= 'pages.announce.indexForm.ruleRequired'
+              defaultMessage= '必填项'
+            />,
           },
         ],
       },
     },
     {
-      title: '分类',
+      title: <FormattedMessage
+        id= 'pages.announce.indexForm.kind'
+        defaultMessage= '分类'
+      />,
       dataIndex: 'kind',
       hideInForm: false,
       valueEnum: {
-        'notice': { text: '系统通知', status: 'notice' },
-        'announcement': { text: '公告', status: 'announcement' },
-        'event': { text: '活动', status: 'event' },
+        'notice': { text: intl.formatMessage({
+            id: 'pages.announce.indexForm.kind_notice',
+            defaultMessage: '系统通知',
+          }),status: 'notice' },
+        'announcement': { text: intl.formatMessage({
+              id: 'pages.announce.indexForm.kind_announcement',
+              defaultMessage: '公告',
+            }), status: 'announcement' },
+        'event': { text: intl.formatMessage({
+            id: 'pages.announce.indexForm.kind_event',
+            defaultMessage: '活动',
+          }), status: 'event' },
 
       },
       formItemProps: {
         rules: [
           {
             required: true,
-            message: '分类必选',
+            message: <FormattedMessage
+              id= 'pages.announce.indexForm.ruleRequired'
+              defaultMessage= '分类必选'
+            />,
           },
         ],
       },
     },
     {
-      title: '内容',
+      title: <FormattedMessage
+        id= 'pages.announce.indexForm.content'
+        defaultMessage= '内容'
+      />,
       dataIndex: 'content',
       sorter: false,
       hideInForm: false,
+      hideInSearch: true,
       // valueType: 'textarea',
       renderFormItem: (item,{value, onChange} ) => {
         return <Editor value={value} onChange={onChange}allowClear/>
@@ -145,28 +184,31 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '通知内容必填项',
+            message: <FormattedMessage
+              id= 'pages.announce.indexForm.ruleRequired'
+              defaultMessage= '必填项'
+            />,
           },
         ],
       },
     },
     {
-      title: '链接',
+      title: <FormattedMessage
+        id='pages.announce.indexForm.link'
+        defaultMessage= '链接'
+      />,
       dataIndex: 'link',
       sorter: false,
       hideInForm: false,
+      hideInSearch: true,
       valueType: 'textarea',
-      formItemProps: {
-        rules: [
-          {
-            required: false,
-            message: '链接选填',
-          },
-        ],
-      },
+
     },
     {
-      title: '操作',
+      title: <FormattedMessage
+        id= 'pages.announce.indexForm.option'
+        defaultMessage='操作'
+      />,
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
@@ -177,7 +219,10 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            配置
+            {intl.formatMessage({
+              id: 'pages.announce.indexForm.set',
+              defaultMessage: '配置',
+            })}
           </a>
         </>
       ),
@@ -187,7 +232,10 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="公告列表"
+        headerTitle={intl.formatMessage({
+          id: 'pages.announce.indexForm.list',
+          defaultMessage: '公告列表',
+        })}
         actionRef={actionRef}
         rowKey="id"
         search={{
@@ -195,7 +243,10 @@ const TableList: React.FC<{}> = () => {
         }}
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> 新建
+            <PlusOutlined /> {intl.formatMessage({
+            id: 'pages.announce.indexForm.newcreate',
+            defaultMessage: '新建',
+          })}
           </Button>,
         ]}
         request={(params, sorter, filter) => queryAnnounceList({ ...params, sorter, filter })}
@@ -208,7 +259,10 @@ const TableList: React.FC<{}> = () => {
         <FooterToolbar
           extra={
             <div>
-              已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
+              {intl.formatMessage({
+                id: 'pages.announce.indexForm.seleted',
+                defaultMessage: '已选择',
+              })} <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> &nbsp;&nbsp;
               <span>
                 {/*服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万*/}
               </span>
@@ -222,7 +276,10 @@ const TableList: React.FC<{}> = () => {
               actionRef.current?.reloadAndRest?.();
             }}
           >
-            批量删除
+            {intl.formatMessage({
+              id: 'pages.announce.indexForm.batchDelete',
+              defaultMessage: '批量删除',
+            })}
           </Button>
         </FooterToolbar>
       )}
