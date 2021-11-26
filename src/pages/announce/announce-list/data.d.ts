@@ -7,7 +7,6 @@ export interface TableListItem {
   kind: string;
   title: string;
   content: string;
-  announce_no: string;
 
 }
 
