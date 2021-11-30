@@ -80,7 +80,8 @@ export default {
   'menu.instruct.instruct-list': '指令列表',
 
   'menu.top': '客户端首页',
-  'menu.top.top-list': '客户端首页信息',
+  'menu.top.page-list': '页面信息',
+  'menu.top.top-list': '分类信息',
 
   'menu.announce': '通知',
   'menu.announce.announce-list': '通知列表',
