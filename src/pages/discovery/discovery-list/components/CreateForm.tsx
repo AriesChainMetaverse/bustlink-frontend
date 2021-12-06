@@ -29,9 +29,11 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
     links: "",
     title: "",
     detail: "",
+    rid: "",
 
 
   });
+  const [needRequired, setNeedRequired] = useState<boolean>(false);
 
   const {
     onSubmit: handleCreate,
@@ -60,6 +62,13 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
     setFormVals(form.getFieldsValue());
     handleCreate({ ...formVals, ...fieldsValue });
   };
+  function handleChange(value) {
+    if (value === "none"){
+      setNeedRequired(false) ;
+    }else{
+      setNeedRequired(true) ;
+    }
+  }
 
   const renderContent = () => {
     return (
@@ -77,12 +86,26 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
           label="分类"
           rules={[{ required: true, message: '请设置！', min: 2 }]}
         >
-          <Select style={{ width: '100%' }}>
+          <Select style={{ width: '100%' }} onChange={handleChange}>
             <Option value="none">none</Option>
             <Option value="video">video</Option>
             <Option value="photo">photo</Option>
             <Option value="both">both</Option>
           </Select>
+        </FormItem>
+        <FormItem
+          name="links"
+          label="链接"
+          rules={[{ required: needRequired, message: '请输入链接！' }]}
+        >
+          <TextArea rows={2} placeholder="both的情况请输入两个链接，请用,间隔,前一个是video，后一个是photo" />
+        </FormItem>
+        <FormItem
+          name="rid"
+          label="RID"
+          rules={[{ required: false, message: '关联资源的rid！', min: 2 }]}
+        >
+          <TextArea rows={1} placeholder="关联资源的rid" />
         </FormItem>
         <FormItem
           name="date"
@@ -101,13 +124,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         >
           <Editor />
         </FormItem>
-        <FormItem
-          name="links"
-          label="链接"
-          rules={[{ required: false, message: '请输入至少两个字符的描述！', min: 2 }]}
-        >
-          <TextArea rows={2} placeholder="输入多个链接，请用,间隔" />
-        </FormItem>
+
 
       </>
     );
