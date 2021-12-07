@@ -50,7 +50,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     rid: props.values.rid,
   });
 
-  // const [currentStep, setCurrentStep] = useState<number>(0);
+  const [needRequired, setNeedRequired] = useState<boolean>(props.values.mtype!=="none");
 
   const [form] = Form.useForm();
 
@@ -84,6 +84,22 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   //   console.log(file)
   // }
 
+  function handleChange(value) {
+      if (value === "none"){
+        setNeedRequired(false) ;
+      }else{
+        setNeedRequired(true) ;
+      }
+  }
+
+  // const handleChange = e => {
+  //   if (e.target.value === "none"){
+  //     setNeedRequired(false) ;
+  //   }else{
+  //     setNeedRequired(true) ;
+  //   }
+  // };
+
 
   const renderContent = () => {
     return (
@@ -111,12 +127,12 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         </FormItem>
         <FormItem
           name="rid"
-          label="rid"
+          label="RID"
         >
-          <Input placeholder="请输入" disabled={true}/>
+          <Input placeholder="请输入" />
         </FormItem>
         <FormItem name="mtype" label="分类">
-          <Select style={{ width: '100%' }}>
+          <Select style={{ width: '100%' }} onChange={handleChange}>
             <Option value="none">none</Option>
             <Option value="video">video</Option>
             <Option value="photo">photo</Option>
@@ -125,18 +141,21 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           </Select>
         </FormItem>
         <FormItem
+          name="links"
+          label="链接"
+          rules={[{ required: needRequired, message: '请输入链接！' }]}
+
+        >
+          <TextArea rows={4} placeholder="both的情况请输入两个链接，请用,间隔,前一个是video，后一个是photo" />
+        </FormItem>
+        <FormItem
           name="detail"
           label="发现内容"
           rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
         >
           <Editor />
         </FormItem>
-        <FormItem
-          name="links"
-          label="链接"
-        >
-          <TextArea rows={4} placeholder="请输入至少五个字符" />
-        </FormItem>
+
         <FormItem name="publish" label="是否发布">
           <RadioGroup style={{ width: '100%' }} >
             <Radio value={false} >否</Radio>
