@@ -140,9 +140,9 @@ const TableList: React.FC<{}> = () => {
       tip: 'ID是唯一的',
       hideInForm: true,
       copyable:false,
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>;
-      },
+      // render: (dom, entity) => {
+      //   return <a onClick={() => setRow(entity)}>{dom}</a>;
+      // },
     },
     {
       title: '标题',
@@ -243,31 +243,31 @@ const TableList: React.FC<{}> = () => {
     {
       title: 'rid',
       dataIndex: 'rid',
-      hideInForm: true,
-      hideInTable: true,
+      hideInForm: false,
+      hideInTable: false,
       hideInSearch: true,
-
+      tip: '关联视频资源的rid',
     },
-    {
-      title: '上传图/视频文件',
-      dataIndex: 'mediaFile',
-      hideInForm: true,
-      hideInTable: true,
-      hideInSearch: true,
-
-      render: (_, record) => (
-        <>
-          <Upload {...uploadProps}>
-            <Button
-              size={'small'}
-              icon={<CloudUploadOutlined />}
-              disabled={ !(row?.rid === undefined)}
-            >点击上传</Button>
-          </Upload>
-        </>
-      ),
-
-    },
+    // {
+    //   title: '上传图/视频文件',
+    //   dataIndex: 'mediaFile',
+    //   hideInForm: true,
+    //   hideInTable: true,
+    //   hideInSearch: true,
+    //
+    //   render: (_, record) => (
+    //     <>
+    //       <Upload {...uploadProps}>
+    //         <Button
+    //           size={'small'}
+    //           icon={<CloudUploadOutlined />}
+    //           disabled={ !(row?.rid === undefined)}
+    //         >点击上传</Button>
+    //       </Upload>
+    //     </>
+    //   ),
+    //
+    // },
     {
       title: '操作',
       dataIndex: 'option',

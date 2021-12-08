@@ -40,8 +40,10 @@ export async function removeDiscovery(params: { ids: number[] }) {
 
 export async function addDiscovery(params: TableListParams) {
 
-  if(params.links !== undefined){
+  if(params.links !== undefined && params.links.length>0){
     params.links = params.links.split(",");
+  }else{
+    params.links = null
   }
   return request('/api/v0/admindiscovery', {
     method: 'POST',
@@ -54,8 +56,10 @@ export async function addDiscovery(params: TableListParams) {
 
 export async function updateDiscovery(params: TableListParams) {
 
-  if(params.links !== undefined){
+  if(params.links !== undefined && params.links.length>0){
     params.links = params.links.split(",");
+  }else{
+    params.links = null
   }
 
 
