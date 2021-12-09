@@ -5,6 +5,7 @@ import {TableListItem} from "@/pages/update/update-list/data";
 import {FormValueType, UpdateFormProps} from "@/pages/update/update-list/components/UpdateForm";
 import {CloudUploadOutlined} from "@ant-design/icons";
 import {array} from "prop-types";
+import {FormattedMessage, useIntl} from "umi";
 
 interface CreateFormProps {
   // modalVisible: boolean;
@@ -21,6 +22,10 @@ const formLayout = {
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const CreateForm: React.FC<UpdateFormProps> = (props) => {
+  /**
+   * 国际化配置
+   */
+  const intl = useIntl();
   const { modalVisible, onCancel } = props;
   const [formVals, setFormVals] = useState<FormValueType>({
 
@@ -68,16 +73,25 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
 
         <FormItem
           name="version"
-          label="版本号"
-          rules={[{ required: true, message: '请设置版本号！', min: 2 }]}
+          label={intl.formatMessage({
+            id: 'pages.update.indexForm.version',
+            defaultMessage: '版本号',
+          })}
+          rules={[{ required: true, message: <FormattedMessage
+              id= 'pages.ruleRequired'
+              defaultMessage= '请设置！'
+            />, min: 2 }]}
 
         >
-          <Input placeholder="请输入" />
+          <Input />
         </FormItem>
         <FormItem
           name="os"
           label="os"
-          rules={[{ required: true, message: '请设置！', min: 2 }]}
+          rules={[{ required: true, message:  <FormattedMessage
+              id= 'pages.ruleRequired'
+              defaultMessage= '请设置！'
+            />, min: 2 }]}
         >
           <Select style={{ width: '100%' }}>
             <Option value="android">android</Option>
@@ -88,7 +102,10 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         <FormItem
           name="arch"
           label="arch"
-          rules={[{ required: true, message: '请设置！', min: 2 }]}
+          rules={[{ required: true, message:  <FormattedMessage
+              id= 'pages.ruleRequired'
+              defaultMessage= '请设置！'
+            />, min: 2 }]}
 
         >
           <Select style={{ width: '100%' }}>
@@ -100,7 +117,10 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
         <FormItem
           name="attr"
           label="attr"
-          rules={[{ required: true, message: '请设置！', min: 2 }]}
+          rules={[{ required: true, message:  <FormattedMessage
+              id= 'pages.ruleRequired'
+              defaultMessage= '请设置！'
+            />, min: 2 }]}
 
         >
           <Select style={{ width: '100%' }}>
@@ -113,17 +133,35 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
 
         <FormItem
           name="title"
-          label="标题"
-          rules={[{ required: true, message: '请输入至少两个字符的描述！', min: 2 }]}
+          label={intl.formatMessage({
+            id: 'pages.update.indexForm.title',
+            defaultMessage: '标题',
+          })}
+          rules={[{ required: true, message:  <FormattedMessage
+              id= 'pages.ruleRequiredMin2'
+              defaultMessage= '请输入至少两个字符！'
+            />, min: 2 }]}
         >
-          <TextArea rows={2} placeholder="请输入至少两个字符" />
+          <TextArea rows={2} placeholder={intl.formatMessage({
+            id: 'pages.ruleRequiredMin2',
+            defaultMessage: '请输入至少两个字符',
+          })} />
         </FormItem>
         <FormItem
           name="detail"
-          label="内容"
-          rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
+          label={intl.formatMessage({
+            id: 'pages.update.indexForm.detail',
+            defaultMessage: '内容',
+          })}
+          rules={[{ required: true, message: <FormattedMessage
+              id= 'pages.ruleRequiredMin5'
+              defaultMessage= '请输入至少五个字符的描述！'
+            />, min: 5 }]}
         >
-          <TextArea rows={4} placeholder="请输入至少五个字符的描述" />
+          <TextArea rows={4} placeholder={intl.formatMessage({
+            id: 'pages.ruleRequiredMin5',
+            defaultMessage: '请输入至少五个字符的描述',
+          })} />
         </FormItem>
 
 
@@ -135,9 +173,17 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
     // if (currentStep === 1) {
     return (
       <>
-        <Button onClick={() => handleModalVisible(false, values)}>取消</Button>
+        <Button onClick={() => handleModalVisible(false, values)}>
+          {intl.formatMessage({
+            id: 'pages.cancel',
+            defaultMessage: '取消',
+          })}
+        </Button>
         <Button type="primary" onClick={() => handleNext()}>
-          完成
+          {intl.formatMessage({
+            id: 'pages.submit',
+            defaultMessage: '完成',
+          })}
         </Button>
       </>
     );
@@ -146,7 +192,10 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
     <Modal
       width={1000}
       destroyOnClose
-      title="新建更新包文件"
+      title={intl.formatMessage({
+        id: 'pages.update.createForm.create',
+        defaultMessage: '新建更新包文件',
+      })}
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={null}
