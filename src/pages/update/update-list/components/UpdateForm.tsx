@@ -3,6 +3,7 @@ import { Form, Button,  Input, Modal, Radio, } from 'antd';
 
 
 import { TableListItem } from '../data.d';
+import {FormattedMessage, useIntl} from "umi";
 
 export interface FormValueType extends Partial<TableListItem> {
   os?: string;
@@ -42,6 +43,10 @@ const formLayout = {
 };
 
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
+  /**
+   * 国际化配置
+   */
+  const intl = useIntl();
   const [formVals, setFormVals] = useState<FormValueType>({
 
     id: props.values.id,
@@ -106,75 +111,105 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           name="id"
           label="ID"
         >
-          <Input placeholder="请输入" disabled={true}/>
+          <Input  disabled={true}/>
         </FormItem>
         <FormItem
           name="version"
-          label="版本号"
+          label={intl.formatMessage({
+            id: 'pages.update.indexForm.version',
+            defaultMessage: '版本号',
+          })}
         >
-          <Input placeholder="请输入" disabled={true}/>
+          <Input  disabled={true}/>
         </FormItem>
         <FormItem
           name="os"
           label="os"
         >
-          <Input placeholder="请输入" disabled={true}/>
+          <Input  disabled={true}/>
         </FormItem>
         <FormItem
           name="arch"
           label="arch"
         >
-          <Input placeholder="请输入" disabled={true}/>
+          <Input  disabled={true}/>
         </FormItem>
         <FormItem
           name="filename"
           label="filename"
         >
-          <Input placeholder="请输入" disabled={true}/>
+          <Input  disabled={true}/>
         </FormItem>
         <FormItem
           name="attr"
           label="attr"
         >
-          <Input placeholder="请输入" disabled={true}/>
+          <Input  disabled={true}/>
         </FormItem>
         <FormItem
           name="rid"
           label="rid"
         >
-          <Input placeholder="请输入" disabled={true}/>
+          <Input  disabled={true}/>
         </FormItem>
         <FormItem
           name="title"
-          label="标题"
-          rules={[{ required: true, message: '请输入至少两个字符的描述！', min: 2 }]}
+          label={intl.formatMessage({
+            id: 'pages.update.indexForm.title',
+            defaultMessage: '标题',
+          })}
+          rules={[{ required: true, message: <FormattedMessage
+              id= 'pages.ruleRequiredMin2'
+              defaultMessage= '请输入至少两个字符！'
+            />, min: 2 }]}
         >
-          <TextArea rows={4} placeholder="请输入至少两个字符" />
+          <TextArea rows={4} placeholder={intl.formatMessage({
+            id: 'pages.ruleRequiredMin2',
+            defaultMessage: '请输入至少两个字符',
+          })} />
         </FormItem>
-        <FormItem name="publish" label="是否发布更新">
+        <FormItem name="publish" label={intl.formatMessage({
+          id: 'pages.update.indexForm.publish',
+          defaultMessage: '是否发布更新',
+        })}>
           <RadioGroup style={{ width: '100%' }} >
-            <Radio value={false} >否</Radio>
-            <Radio value={true}>是</Radio>
+            <Radio value={false} >false</Radio>
+            <Radio value={true}>true</Radio>
           </RadioGroup>
         </FormItem>
-        <FormItem name="forcibly" label="是否强制更新">
+        <FormItem name="forcibly" label={intl.formatMessage({
+          id: 'pages.update.indexForm.upgrade',
+          defaultMessage: '是否强制更新',
+        })}>
           <RadioGroup style={{ width: '100%' }}>
-            <Radio value={false} >否</Radio>
-            <Radio value={true}>是</Radio>
+            <Radio value={false} >false</Radio>
+            <Radio value={true}>true</Radio>
           </RadioGroup>
         </FormItem>
-        <FormItem name="truncate" label="是否强制清库">
+        <FormItem name="truncate" label={intl.formatMessage({
+          id: 'pages.update.indexForm.clear',
+          defaultMessage: '是否强制清库',
+        })}>
           <RadioGroup style={{ width: '100%' }}>
-            <Radio value={false} >否</Radio>
-            <Radio value={true}>是</Radio>
+            <Radio value={false}>false</Radio>
+            <Radio value={true}>true</Radio>
           </RadioGroup>
         </FormItem>
         <FormItem
           name="detail"
-          label="内容"
-          rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
+          label={intl.formatMessage({
+            id: 'pages.update.indexForm.detail',
+            defaultMessage: '内容',
+          })}
+          rules={[{ required: true, message: <FormattedMessage
+              id= 'pages.ruleRequiredMin5'
+              defaultMessage= '请输入至少五个字符的描述！'
+            />, min: 5 }]}
         >
-          <TextArea rows={4} placeholder="请输入至少五个字符" />
+          <TextArea rows={4} placeholder={intl.formatMessage({
+            id: 'pages.ruleRequiredMin5',
+            defaultMessage: '请输入至少五个字符的描述',
+          })} />
         </FormItem>
 
       </>
@@ -185,9 +220,17 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     // if (currentStep === 1) {
       return (
         <>
-          <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
+          <Button onClick={() => handleUpdateModalVisible(false, values)}>
+            {intl.formatMessage({
+              id: 'pages.cancel',
+              defaultMessage: '取消',
+            })}
+          </Button>
           <Button type="primary" onClick={() => handleNext()}>
-            完成
+            {intl.formatMessage({
+              id: 'pages.submit',
+              defaultMessage: '完成',
+            })}
           </Button>
         </>
       );
@@ -220,7 +263,10 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       width={1000}
       bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
-      title="包更新配置"
+      title={intl.formatMessage({
+        id: 'pages.update.updateForm.update',
+        defaultMessage: '包更新配置',
+      })}
       visible={updateModalVisible}
       footer={renderFooter()}
       onCancel={() => handleUpdateModalVisible()}
