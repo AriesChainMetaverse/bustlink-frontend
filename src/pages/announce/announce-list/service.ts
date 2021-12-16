@@ -9,7 +9,7 @@ export async function queryAnnounceList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminannounce', {
+  const response = await request('/api/v0/admin/announce', {
     method:"GET", params
 
   });
@@ -18,7 +18,7 @@ export async function queryAnnounceList(params?: TableListParams) {
 }
 
 export async function removeAnnounce(params: { ids: number[] }) {
-  return request('/api/v0/adminannounce', {
+  return request('/api/v0/admin/announce', {
     method: 'DELETE',
     data: {
       ...params,
@@ -28,7 +28,7 @@ export async function removeAnnounce(params: { ids: number[] }) {
 }
 
 export async function addAnnounce(params: TableListParams) {
-  return request('/api/v0/adminannounce', {
+  return request('/api/v0/admin/announce', {
     method: 'POST',
     data: {
       ...params,
@@ -38,7 +38,7 @@ export async function addAnnounce(params: TableListParams) {
 }
 
 export async function updateAnnounce(params: TableListParams) {
-  return request(`/api/v0/adminannounce/${params.id}`, {
+  return request(`/api/v0/admin/announce/${params.id}`, {
     method: 'PUT',
     data: {
       ...params,
