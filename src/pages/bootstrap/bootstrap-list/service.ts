@@ -28,7 +28,7 @@ export async function queryBootstrapList(params?: TableListParams) {
 }
 
 export async function removeAnnounce(params: { ids: number[] }) {
-  return request('/api/v0/adminannounce', {
+  return request('/api/v0/admin/announce', {
     method: 'DELETE',
     data: {
       ...params,
