@@ -50,56 +50,39 @@ export default {
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
 
-  'menu.users': 'users',
-  'menu.users.user-list': 'user-list',
+  'menu.system': 'system',
+  'menu.system.sysuser': 'sysuser',
+  'menu.system.sysuser.organization-list': 'organization',
+  'menu.system.sysuser.sysuser-list': 'sysuser-list',
+  'menu.system.sysuser.role-list': 'role-list',
+  'menu.system.sysuser.permission-list': 'permission-list',
+  'menu.system.sysuser.menu-list': '.menu-list',
+  'menu.system.property': 'property',
 
-  'menu.sysuser': 'sysuser',
-  'menu.sysuser.organization-list': 'organization-list',
-  'menu.sysuser.sysuser-list': 'sysuser-list',
-  'menu.sysuser.role-list': 'role-list',
-  'menu.sysuser.permission-list': 'permission-list',
-  'menu.sysuser.menu-list': 'menu-list',
+  'menu.adminend': 'admin',
+  'menu.adminend.channel': 'channel',
+  'menu.adminend.information': 'information',
+  'menu.adminend.information.information-list': 'information-list',
+  'menu.adminend.information.admininformation-list': 'admininformation-list',
+  'menu.adminend.content': 'content',
+  'menu.adminend.scrape': 'scrape',
+  'menu.adminend.tagMapping': 'tagMapping',
+  'menu.adminend.instruct': 'instruct',
+  'menu.adminend.update': 'update',
+  'menu.adminend.remotepin': 'remotepin',
+  'menu.adminend.users': 'users',
 
-  'menu.channel': 'channel',
-  'menu.channel.channel-list': 'channel-list',
+  'menu.client': 'client',
+  'menu.client.top': 'toppage',
+  'menu.client.top.page-list': 'page-list',
+  'menu.client.top.top-list': 'top-list',
+  'menu.client.announce': 'announce',
+  'menu.client.discovery': 'discovery',
 
-  'menu.information': 'information',
-  'menu.information.information-list': 'information-list',
-  'menu.information.admininformation-list': 'admininformation-list',
-
-  'menu.content': 'content',
-  'menu.content.content-list': 'content-list',
-
-  'menu.scrape': 'scrape',
-  'menu.scrape.scrape-list': 'scrape-list',
-
-  'menu.tagMapping': 'tagMapping',
-  'menu.tagMapping.tagMapping-list': 'tagMapping-list',
-  'menu.tagMapping.edit': 'edit',
-
-  'menu.instruct': 'instruct',
-  'menu.instruct.instruct-list': 'instruct-list',
-
-  'menu.top': 'top',
-  'menu.top.top-list': 'top-list',
-
-  'menu.announce': 'announce',
-  'menu.announce.announce-list': 'announce-list',
-  'menu.update': 'update',
-  'menu.update.update-list': 'update-list',
   'menu.node': 'node',
-  'menu.node.node-list': 'node-list',
-  'menu.bootstrap': 'bootstrap',
-  'menu.bootstrap.bootstrap-list': 'bootstrap-list',
+  'menu.node.node': 'node-list',
+  'menu.node.bootstrap': 'bootstrap',
 
-  'menu.property': 'system property',
-  'menu.property.property-list': 'property-list',
-
-  'menu.remotepin': 'system remotepin',
-  'menu.remotepin.remotepin-list': 'remotepin-list',
-
-  'menu.discovery': 'discovery',
-  'menu.discovery.discovery-list': 'discovery-list',
 
 
 

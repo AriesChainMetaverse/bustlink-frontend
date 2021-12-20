@@ -168,6 +168,7 @@ export default {
   'pages.page.indexForm.title': 'Title',
   'pages.page.indexForm.featured_content': 'Content',
   'pages.page.indexForm.featured_index': 'Featured Index',
+  'pages.page.indexForm.parent_title': 'Parent Title',
   'pages.page.indexForm.option': 'Option',
   'pages.page.indexForm.ruleRequired':'input is required ',
   'pages.page.indexForm.ruleRequiredMin2':'Please enter at least 2 characters ',
