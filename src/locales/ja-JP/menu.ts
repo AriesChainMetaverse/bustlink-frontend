@@ -50,55 +50,40 @@ export default {
   'menu.editor.mind': 'マインドエディター',
   'menu.editor.koni': 'コニエディター',
 
-  'menu.users': 'ユーザー',
-  'menu.users.user-list': 'ユーザーリスト',
+  'menu.system': 'システム管理',
+  'menu.system.sysuser': 'システムユーザ',
+  'menu.system.sysuser.organization-list': '組織リスト',
+  'menu.system.sysuser.sysuser-list': 'システムユーザスト',
+  'menu.system.sysuser.role-list': '役リスト',
+  'menu.system.sysuser.permission-list': '権限リスト',
+  'menu.system.sysuser.menu-list': 'メニューリスト',
+  'menu.system.property': 'システム設定',
 
-  'menu.sysuser': 'システムユーザ',
-  'menu.sysuser.organization-list': '組織リスト',
-  'menu.sysuser.sysuser-list': 'システムユーザリスト',
-  'menu.sysuser.role-list': '役リスト',
-  'menu.sysuser.permission-list': '権限リスト',
-  'menu.sysuser.menu-list': 'メニューリスト',
+  'menu.adminend': 'サーバー管理',
+  'menu.adminend.channel': 'チャンネル',
+  'menu.adminend.information': '詳細情報',
+  'menu.adminend.information.information-list': '詳細情報リスト',
+  'menu.adminend.information.admininformation-list': 'オンライン管理',
+  'menu.adminend.content': '内容',
+  'menu.adminend.scrape': 'ネット爬虫',
+  'menu.adminend.tagMapping': 'タックマッピング',
+  'menu.adminend.instruct': '命令',
+  'menu.adminend.update': 'パッケージアップグレード',
+  'menu.adminend.remotepin': 'リモートPIN管理',
+  'menu.adminend.users': 'ユーザー',
 
-  'menu.channel': 'チャンネル',
-  'menu.channel.channel-list': 'チャンネルリスト',
+  'menu.client': 'クライアント管理',
+  'menu.client.top': 'トップページ',
+  'menu.client.top.page-list': 'ページ情報',
+  'menu.client.top.top-list': 'トップリスト',
+  'menu.client.announce': 'アナウンス',
+  'menu.client.discovery': '探すページ',
 
-  'menu.information': '詳細情報',
-  'menu.information.information-list': '詳細情報リスト',
-  'menu.information.admininformation-list': 'オンライン管理',
-
-  'menu.content': '内容',
-  'menu.content.content-list': '内容リスト',
-
-  'menu.scrape': 'ネット爬虫',
-  'menu.scrape.scrape-list': 'ネット爬虫リスト',
-
-  'menu.tagMapping': 'タックマッピング',
-  'menu.tagMapping.tagMapping-list': 'タックマッピングリスト',
-  'menu.tagMapping.edit': '設定ファイルをアップロード',
-
-  'menu.instruct': '命令',
-  'menu.instruct.instruct-list': '命令リスト',
-
-  'menu.top': 'トップ',
-  'menu.top.top-list': 'トップリスト',
-
-  'menu.announce': 'アナウンス',
-  'menu.announce.announce-list': 'アナウンスリスト',
-  'menu.update': 'パッケージアップグレード',
-  'menu.update.update-list': 'パッケージアップグレードリスト',
   'menu.node': 'ノード管理',
-  'menu.node.node-list': 'ノードリスト',
-  'menu.bootstrap': 'bootstrap管理',
-  'menu.bootstrap.bootstrap-list': 'bootstrapリスト',
+  'menu.node.node': 'ノードリスト',
+  'menu.node.bootstrap': 'bootstrap管理',
 
-  'menu.property': 'システム設定',
-  'menu.property.property-list': 'システム設定リスト',
 
-  'menu.remotepin': 'リモートPIN管理',
-  'menu.remotepin.remotepin-list': 'リモートPIN管理リスト',
 
-  'menu.discovery': '探すページ',
-  'menu.discovery.discovery-list': '探すリスト',
 
 };
