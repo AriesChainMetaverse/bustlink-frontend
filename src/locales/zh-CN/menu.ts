@@ -49,58 +49,43 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
-  'menu.users': '用户',
-  'menu.users.user-list': '用户列表',
 
-  'menu.sysuser': '系统用户管理',
-  'menu.sysuser.organization-list': '组织机构列表',
-  'menu.sysuser.sysuser-list': '系统用户列表',
-  'menu.sysuser.role-list': '角色列表',
-  'menu.sysuser.permission-list': '权限列表',
-  'menu.sysuser.menu-list': '菜单列表',
+  'menu.system': '系统管理',
+  'menu.system.sysuser': '系统用户管理',
+  'menu.system.sysuser.organization-list': '组织机构列表',
+  'menu.system.sysuser.sysuser-list': '系统用户列表',
+  'menu.system.sysuser.role-list': '角色列表',
+  'menu.system.sysuser.permission-list': '权限列表',
+  'menu.system.sysuser.menu-list': '菜单列表',
+  'menu.system.property': '系统配置',
 
-  'menu.channel': '频道',
-  'menu.channel.channel-list': '频道列表',
+  'menu.adminend': '服务端管理',
+  'menu.adminend.channel': '频道',
+  'menu.adminend.information': '信息',
+  'menu.adminend.information.information-list': '信息列表',
+  'menu.adminend.information.admininformation-list': '上下架管理',
+  'menu.adminend.content': '内容',
+  'menu.adminend.scrape': '爬虫',
+  'menu.adminend.tagMapping': '标签映射',
+  'menu.adminend.instruct': '指令',
+  'menu.adminend.update': '更新安装包',
+  'menu.adminend.remotepin': '节点PIN日志',
+  'menu.adminend.users': '用户',
 
-  'menu.information': '信息',
-  'menu.information.information-list': '信息列表',
-  'menu.information.admininformation-list': '上下架管理',
-
-  'menu.content': '内容',
-  'menu.content.content-list': '内容列表',
-
-  'menu.scrape': '爬虫',
-  'menu.scrape.scrape-list': '爬虫列表',
-
-  'menu.tagMapping': '标签映射',
-  'menu.tagMapping.tagMapping-list': '标签映射列表',
-  'menu.tagMapping.edit': '配置文件上传',
-
-  'menu.instruct': '指令',
-  'menu.instruct.instruct-list': '指令列表',
-
-  'menu.top': '客户端首页',
-  'menu.top.page-list': '页面信息',
-  'menu.top.top-list': '分类信息',
-
-  'menu.announce': '通知',
-  'menu.announce.announce-list': '通知列表',
-
-  'menu.update': '更新包',
-  'menu.update.update-list': '更新包列表',
+  'menu.client': '客户端管理',
+  'menu.client.top': '资源分类管理',
+  'menu.client.top.page-list': '页面管理',
+  'menu.client.top.top-list': '资源分类',
+  'menu.client.announce': '通知',
+  'menu.client.discovery': '发现页',
 
   'menu.node': '节点管理',
-  'menu.node.node-list': '节点列表',
+  'menu.node.node': '节点列表',
+  'menu.node.bootstrap': 'bootstrap管理',
 
-  'menu.bootstrap': 'bootstrap管理',
-  'menu.bootstrap.bootstrap-list': 'bootstrap列表',
 
-  'menu.property': '系统配置',
-  'menu.property.property-list': '系统配置列表',
 
-  'menu.remotepin': '全量节点PIN资源',
-  'menu.remotepin.remotepin-list': '全量节点PIN资源列表',
 
-  'menu.discovery': '发现页',
-  'menu.discovery.discovery-list': '发现页列表',
+
+
 };
