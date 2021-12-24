@@ -9,7 +9,7 @@ export async function querDiscoveryList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/admindiscovery', {
+  const response = await request('/api/v0/admin/discovery', {
     method:"GET", params
 
   });
@@ -29,7 +29,7 @@ export async function querDiscoveryList(params?: TableListParams) {
 }
 
 export async function removeDiscovery(params: { ids: number[] }) {
-  return request('/api/v0/admindiscovery', {
+  return request('/api/v0/admin/discovery', {
     method: 'DELETE',
     data: {
       ...params,
@@ -45,7 +45,7 @@ export async function addDiscovery(params: TableListParams) {
   }else{
     params.links = null
   }
-  return request('/api/v0/admindiscovery', {
+  return request('/api/v0/admin/discovery', {
     method: 'POST',
     data: {
       ...params,
@@ -63,7 +63,7 @@ export async function updateDiscovery(params: TableListParams) {
   }
 
 
-  return request(`/api/v0/admindiscovery/${params.id}`, {
+  return request(`/api/v0/admin/discovery/${params.id}`, {
     method: 'PUT',
     data: {
       ...params,
