@@ -9,6 +9,7 @@ import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import {updateDiscovery, addDiscovery, removeDiscovery,  querDiscoveryList} from './service';
 import Editor from "for-editor";
+import {useIntl,FormattedMessage} from "umi";
 
 /**
  * 添加公告
@@ -93,10 +94,14 @@ const TableList: React.FC<{}> = () => {
   const headers = {
     Authorization:`Bearer ${localStorage.getItem("token")}`
   };
+  /**
+   * 国际化配置
+   */
+  const intl = useIntl();
   const uploadProps ={
     name: 'mediaFile',
     multiple: true,
-    action: `/api/v0/admindiscovery/${row?.id}`,
+    action: `/api/v0/admin/discovery/${row?.id}`,
     showUploadList:false,
     method:"post",
     headers:headers,
@@ -133,6 +138,7 @@ const TableList: React.FC<{}> = () => {
     // },
   };
 
+  // @ts-ignore
   const columns: ProColumns<TableListItem>[] = [
     {
       title: 'ID',
@@ -145,7 +151,10 @@ const TableList: React.FC<{}> = () => {
       // },
     },
     {
-      title: '标题',
+      title: <FormattedMessage
+        id="pages.discovery.indexForm.title"
+        defaultMessage="标题"
+      />,
       dataIndex: 'title',
       sorter: false,
       hideInForm: false,
@@ -160,9 +169,13 @@ const TableList: React.FC<{}> = () => {
       },
     },
     {
-      title: '分类',
+      title: <FormattedMessage
+        id="pages.discovery.indexForm.mtype"
+        defaultMessage="分类"
+      />,
       dataIndex: 'mtype',
       hideInForm: false,
+      hideInSearch:true,
       valueEnum: {
         'none': { text: 'none', status: 'none' },
         'video': { text: 'video', status: 'video' },
@@ -174,16 +187,23 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '分类必选',
+            message: <FormattedMessage
+              id="pages.ruleRequired"
+              defaultMessage="必选"
+            />,
           },
         ],
       },
     },
     {
-      title: '日期',
+      title: <FormattedMessage
+        id="pages.discovery.indexForm.date"
+        defaultMessage="日期"
+      />,
       dataIndex: 'date',
       sorter: false,
       hideInForm: false,
+      hideInSearch:true,
       valueType: 'dateTime',
       renderFormItem: (dom, entity) => {
         return (
@@ -196,17 +216,24 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '时间必填项',
+            message: <FormattedMessage
+              id="pages.ruleRequired"
+              defaultMessage="必选"
+            />,
           },
         ],
       },
     },
 
     {
-      title: '内容',
+      title: <FormattedMessage
+        id="pages.discovery.indexForm.detail"
+        defaultMessage="内容"
+      />,
       dataIndex: 'detail',
       sorter: false,
       hideInForm: false,
+      hideInSearch:true,
       ellipsis:true,
       // valueType: 'textarea',
       renderFormItem: (item, {value,onChange} ) => {
@@ -218,17 +245,27 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '内容必填项',
+            message: <FormattedMessage
+              id="pages.ruleRequired"
+              defaultMessage="必选"
+            />,
           },
         ],
       },
     },
     {
-      title: '链接',
+      title: <FormattedMessage
+        id="pages.discovery.indexForm.links"
+        defaultMessage="链接"
+      />,
       dataIndex: 'links',
       sorter: false,
       hideInForm: false,
-      tip: '输入多个链接，请用,间隔',
+      hideInSearch:true,
+      tip: intl.formatMessage({
+        id: 'pages.discovery.indexForm.links_tip',
+        defaultMessage: '输入多个链接，请用,间隔',
+      }),
       valueType: 'textarea',
       render: (textArray, entity) => {
         return (<div>
@@ -246,7 +283,10 @@ const TableList: React.FC<{}> = () => {
       hideInForm: false,
       hideInTable: false,
       hideInSearch: true,
-      tip: '关联视频资源的rid',
+      tip: intl.formatMessage({
+        id: 'pages.discovery.indexForm.rid_tip',
+        defaultMessage: '关联视频资源的rid',
+      }),
     },
     // {
     //   title: '上传图/视频文件',
@@ -269,7 +309,10 @@ const TableList: React.FC<{}> = () => {
     //
     // },
     {
-      title: '操作',
+      title: <FormattedMessage
+        id="pages.discovery.indexForm.option"
+        defaultMessage="操作"
+      /> ,
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
@@ -280,7 +323,10 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            配置
+            {intl.formatMessage({
+              id: 'pages.discovery.indexForm.set',
+              defaultMessage: '配置',
+            })}
           </a>
         </>
       ),
@@ -290,7 +336,10 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="发现页列表"
+        headerTitle={intl.formatMessage({
+          id: 'pages.discovery.indexForm.list',
+          defaultMessage: '发现页列表',
+        })}
         actionRef={actionRef}
         rowKey="id"
         search={{
@@ -298,7 +347,10 @@ const TableList: React.FC<{}> = () => {
         }}
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> 新建
+            <PlusOutlined /> {intl.formatMessage({
+            id: 'pages.newcreate',
+            defaultMessage: '新建',
+          })}
           </Button>,
         ]}
         request={(params, sorter, filter) => querDiscoveryList({ ...params, sorter, filter })}
@@ -311,7 +363,10 @@ const TableList: React.FC<{}> = () => {
         <FooterToolbar
           extra={
             <div>
-              已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
+              {intl.formatMessage({
+                id: 'pages.seleted',
+                defaultMessage: '已选择',
+              })} <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> &nbsp;&nbsp;
               <span>
                 {/*服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万*/}
               </span>
@@ -325,7 +380,10 @@ const TableList: React.FC<{}> = () => {
               actionRef.current?.reloadAndRest?.();
             }}
           >
-            批量删除
+            {intl.formatMessage({
+              id: 'pages.batchDelete',
+              defaultMessage: '批量删除',
+            })}
           </Button>
         </FooterToolbar>
       )}
