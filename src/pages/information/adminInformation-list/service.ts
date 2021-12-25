@@ -8,7 +8,7 @@ export async function queryInforList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/admininformations', {
+  const response = await request('/api/v0/admin/informations', {
     method:"GET", params
 
   });
@@ -65,7 +65,7 @@ export async function addRule(params: TableListParams) {
 }
 
 export async function updateInforList(params: { ids: string[],status: string  }) {
-  return request(`/api/v0/admininformations/`, {
+  return request(`/api/v0/admin/informations/`, {
     method: 'POST',
     data: {
       ...params,
@@ -73,7 +73,7 @@ export async function updateInforList(params: { ids: string[],status: string  })
   });
 }
 export async function initCreateAdminInfor() {
-  return request(`/api/v0/initadmininformations/`, {
+  return request(`/api/v0/admin/initinformations/`, {
     method: 'POST',
   });
 }
@@ -97,7 +97,7 @@ export async function updateAdminInformationFrames(params: TableListParams) {
 
   restParams.frames_particulars = newFrameParticipants
 
-  return request(`/api/v0/admininformations/${params.id}`, {
+  return request(`/api/v0/admin/informations/${params.id}`, {
     method: 'PUT',
     data: {
       ...restParams,
