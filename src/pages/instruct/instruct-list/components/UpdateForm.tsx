@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Form, Button, Input, Modal,  Select, } from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Form, Button, Input, Modal, Select, Checkbox, Row,} from 'antd';
 
 import { TableListItem } from '../data.d';
+import {queryAdminNoteList} from "@/pages/instruct/instruct-list/service";
 
 export interface FormValueType extends Partial<TableListItem> {
   target?: string;
@@ -41,12 +42,12 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     action:props.values.action,
     information_id:props.values.information_id,
     type:props.values.type,
-    pid:props.values.pid,
+    nodes:props.values.nodes,
     rid:props.values.rid,
   });
 
   const [form] = Form.useForm();
-
+  const [CheckBoxItemList, setCheckBoxItemList] = useState<[]>([]);
   const {
     onSubmit: handleUpdate,
     onCancel: handleUpdateModalVisible,
@@ -69,6 +70,30 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       handleUpdate({ ...formVals, ...fieldsValue });
     // }
   };
+
+  useEffect(() => {
+    getCheckboxItemList().then(r => setCheckBoxItemList(r));
+  }, []);
+
+  async function getCheckboxItemList() {
+
+    const nodeList =  await queryAdminNoteList()
+    const elements: JSX.Element[] =[]
+    nodeList.forEach((item)=>{
+      elements.push(
+        <Checkbox key={item.id}
+                  value={item.id}
+                  style={{
+                    lineHeight: '32px',
+                  }}
+        >
+          {item.pid}
+        </Checkbox>
+      );
+    })
+    return elements
+  }
+
 
   const renderContent = () => {
     // if (currentStep === 1) {
@@ -211,6 +236,14 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         >
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
+        <FormItem name="nodes" label="PID"
+                  rules={[{required: true, message: '请设置PID'}]}>
+          <Checkbox.Group>
+            <Row>
+              {CheckBoxItemList}
+            </Row>
+          </Checkbox.Group>
+        </FormItem>
         <FormItem name="action" label="PIN状态">
           <Select style={{ width: '100%' }}>
             <Option value="none">none</Option>
@@ -269,7 +302,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
 
   return (
     <Modal
-      width={640}
+      width={840}
       bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
       title="视频资源PIN配置"
@@ -286,7 +319,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           id: formVals.id,
           title:formVals.title,
           action:formVals.action,
-          pid:formVals.pid,
+          nodes:formVals.nodes,
           rid:formVals.rid,
           type:formVals.type,
           information_id:formVals.information_id,
