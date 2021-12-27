@@ -1,7 +1,7 @@
 export interface TableListItem {
   id: number;
   rid: string;
-  pid: string;
+  nodes: string[];
   type: string;
   state: string;
   updated_unix: bigint;
@@ -31,6 +31,7 @@ export interface TableListParams {
   rid?: string;
   type?: string;
   information_id?: string;
+  instruct_id?: string;
   action?: string;
   status?: string;
   name?: string;
