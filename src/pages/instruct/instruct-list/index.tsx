@@ -35,12 +35,9 @@ const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
     await updateAdminInstruct({
-      id: fields.id,
-      pid: fields.pid,
-      rid: fields.rid,
-      type: fields.type,
+      instruct_id: fields.id,
+      adminnode_ids: fields.nodes,
       action: fields.action,
-      information_id: fields.information_id,
 
     });
     hide();
@@ -64,9 +61,9 @@ const TableList: React.FC<{}> = () => {
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '视频番号',
+      title: '资源番号',
       dataIndex: 'video_no',
-      tip: '视频番号是唯一的',
+      tip: '资源番号是唯一的',
       copyable: true,
       formItemProps: {
         rules: [
@@ -79,15 +76,15 @@ const TableList: React.FC<{}> = () => {
 
     },
 
-    {
-      title: 'PID',
-      dataIndex: 'pid',
-      valueType: 'textarea',
-      hideInForm: true,
-      hideInSearch: true,
-      copyable: true,
-      ellipsis: true,
-    },
+    // {
+    //   title: 'PID',
+    //   dataIndex: 'pid',
+    //   valueType: 'textarea',
+    //   hideInForm: true,
+    //   hideInSearch: true,
+    //   copyable: true,
+    //   ellipsis: true,
+    // },
 
     {
       title: 'RID',

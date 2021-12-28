@@ -7,7 +7,7 @@ export async function queryAdminInstructList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/admininstructlist', {
+  const response = await request('/api/v0/admin/instructlist', {
     method:"GET", params
 
   });
@@ -25,8 +25,27 @@ export async function queryAdminInstructList(params?: TableListParams) {
       obj.type = response.data[i].type
       obj.action = response.data[i].action
       obj.updated_unix = response.data[i].updated_unix
-      obj.title = response.data[i].edges.information_info.title
-      obj.video_no = response.data[i].edges.information_info.video_no
+
+      if(response.data[i].edges.information_info !== "" && response.data[i].edges.information_info !== undefined && JSON.stringify(response.data[i].edges.information_info) !== "{}"){
+        obj.title = response.data[i].edges.information_info.title
+        obj.video_no = response.data[i].edges.information_info.video_no
+      }
+
+      if(response.data[i].edges.update_info !== "" && response.data[i].edges.update_info !== undefined && JSON.stringify(response.data[i].edges.update_info) !== "{}"){
+        obj.title = response.data[i].edges.update_info.title
+        obj.video_no = response.data[i].edges.update_info.filename
+      }
+
+      let newAdminNodes = [];
+      obj.nodes = []
+      if(response.data[i].edges.nodes !== "" && response.data[i].edges.nodes !== undefined && JSON.stringify(response.data[i].edges.nodes) !== "{}"){
+          response.data[i].edges.nodes.forEach(e => {
+            newAdminNodes.push(e.id)
+          })
+          obj.nodes = newAdminNodes
+      }
+
+
 
     }else{
       obj.id = response.data[i].id
@@ -38,13 +57,13 @@ export async function queryAdminInstructList(params?: TableListParams) {
       obj.updated_unix = response.data[i].updated_unix
       obj.title = ""
       obj.video_no = ""
-
+      obj.nodes = []
     }
     newData.push(obj)
   }
   response.data = newData
-  // console.log(response)
-  return response;
+  console.log(response)
+  return response;s
 
 
 }
@@ -70,10 +89,20 @@ export async function addRule(params: TableListParams) {
 }
 
 export async function updateAdminInstruct(params: TableListParams) {
-  return request(`/api/v0/admininstruct/${params.id}`, {
-    method: 'PUT',
+  return request(`/api/v0/admin/instruct`, {
+    method: 'POST',
     data: {
       ...params,
     },
   });
+}
+
+export async function queryAdminNoteList() {
+
+  const response = await request('/api/v0/node?per_page=100', {
+    // const response = await request('/api/v0/node?is_current=1&per_page=100', {
+    method:"GET",
+  });
+
+  return response.data;
 }
