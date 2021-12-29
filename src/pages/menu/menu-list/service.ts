@@ -9,7 +9,7 @@ export async function queryMenuList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminmenu', {
+  const response = await request('/api/v0/admin/menu', {
     method:"GET", params
 
   });
@@ -49,7 +49,7 @@ export async function queryMenuList(params?: TableListParams) {
 
 export async function querySelectMenuList(parentID) {
 
-  const response = await request(`/api/v0/adminmenu?parent_id=${parentID}`, {
+  const response = await request(`/api/v0/admin/menu?parent_id=${parentID}`, {
     method:"GET",
   });
 
@@ -60,7 +60,7 @@ export async function querySelectMenuList(parentID) {
 
 export async function queryPermissionList() {
 
-  const response = await request('/api/v0/adminpermission?per_page=100', {
+  const response = await request('/api/v0/admin/permission?per_page=100', {
     method:"GET",
   });
 
@@ -68,7 +68,7 @@ export async function queryPermissionList() {
 }
 
 export async function removeMenu(params: { ids: string[] }) {
-  return request('/api/v0/adminmenu', {
+  return request('/api/v0/admin/menu', {
     method: 'DELETE',
     data: {
       ...params,
@@ -79,7 +79,7 @@ export async function removeMenu(params: { ids: string[] }) {
 
 export async function addMenu(params: TableListParams) {
 
-  return request('/api/v0/adminmenu', {
+  return request('/api/v0/admin/menu', {
     method: 'POST',
     data: {
       ...params,
@@ -90,7 +90,7 @@ export async function addMenu(params: TableListParams) {
 
 export async function updateMenu(params: TableListParams) {
 
-  return request('/api/v0/adminmenu', {
+  return request('/api/v0/admin/menu', {
     method: 'POST',
     data: {
       ...params,
@@ -99,7 +99,7 @@ export async function updateMenu(params: TableListParams) {
 }
 
 export async function bindPermission(params: TableListParams) {
-  return request('/api/v0/adminrole/bindpermission', {
+  return request('/api/v0/admin/role/bindpermission', {
     method: 'POST',
     data: {
       ...params,
