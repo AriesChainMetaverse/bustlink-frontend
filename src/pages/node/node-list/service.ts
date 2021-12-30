@@ -50,7 +50,7 @@ export async function queryNodeList(params?: TableListParams) {
 }
 
 export async function removeAnnounce(params: { ids: number[] }) {
-  return request('/api/v0/adminannounce', {
+  return request('/api/v0/admin/announce', {
     method: 'DELETE',
     data: {
       ...params,
@@ -60,7 +60,7 @@ export async function removeAnnounce(params: { ids: number[] }) {
 }
 
 export async function addAnnounce(params: TableListParams) {
-  return request('/api/v0/adminannounce', {
+  return request('/api/v0/admin/announce', {
     method: 'POST',
     data: {
       ...params,
