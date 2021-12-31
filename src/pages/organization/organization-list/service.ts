@@ -9,7 +9,7 @@ export async function querySysOrganizationList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminorganization', {
+  const response = await request('/api/v0/admin/organization', {
     method:"GET", params
 
   });
@@ -55,7 +55,7 @@ export async function querySysOrganizationList(params?: TableListParams) {
 
 
 export async function removeSysOrganization(params: { ids: string[] }) {
-  return request('/api/v0/adminorganization', {
+  return request('/api/v0/admin/organization', {
     method: 'DELETE',
     data: {
       ...params,
@@ -80,7 +80,7 @@ export async function addSysOrganization(params: TableListParams) {
   // formData.append("corporate_id_card_facade",params.corporate_id_card_facade[0].originFileObj)
   // formData.append("corporate_id_card_obverse",params.corporate_id_card_obverse[0].originFileObj)
 
-  return request('/api/v0/adminorganization', {
+  return request('/api/v0/admin/organization', {
     method: 'POST',
     // data: {
     //   // ...params,
@@ -116,7 +116,7 @@ export async function updateSysOrganization(params: { corporate_id_card_obverse:
   formData.append("corporate_id_card_obverse",params.corporate_id_card_obverse[0].originFileObj)
 
 
-  return request('/api/v0/adminorganization', {
+  return request('/api/v0/admin/organization', {
     method: 'POST',
     // data: {
     //   ...params,
