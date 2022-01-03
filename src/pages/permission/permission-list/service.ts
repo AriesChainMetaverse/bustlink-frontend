@@ -12,7 +12,7 @@ export async function queryPermissionList(params?: TableListParams) {
   // @ts-ignore
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminpermission', {
+  const response = await request('/api/v0/admin/permission', {
     method:"GET", params
 
   });
@@ -63,7 +63,7 @@ export async function queryPermissionList(params?: TableListParams) {
 
 export async function queryMenuList() {
 
-  const response = await request('/api/v0/adminmenu?per_page=100', {
+  const response = await request('/api/v0/admin/menu?per_page=100', {
     method:"GET",
   });
 
@@ -72,7 +72,7 @@ export async function queryMenuList() {
 
 export async function queryAPIList() {
 
-  const response = await request('/api/v0/adminapi?per_page=100', {
+  const response = await request('/api/v0/admin/api?per_page=100', {
     method:"GET",
   });
 
@@ -81,7 +81,7 @@ export async function queryAPIList() {
 
 
 export async function removePermission(params: { ids: string[] }) {
-  return request('/api/v0/adminpermission', {
+  return request('/api/v0/admin/permission', {
     method: 'DELETE',
     data: {
       ...params,
@@ -92,7 +92,7 @@ export async function removePermission(params: { ids: string[] }) {
 
 export async function addPermission(params: TableListParams) {
 
-  return request('/api/v0/adminpermission', {
+  return request('/api/v0/admin/permission', {
     method: 'POST',
     data: {
       ...params,
@@ -103,7 +103,7 @@ export async function addPermission(params: TableListParams) {
 
 export async function updatePermission(params: TableListParams) {
 
-  return request('/api/v0/adminpermission', {
+  return request('/api/v0/admin/permission', {
     method: 'POST',
     data: {
       ...params,
@@ -112,7 +112,7 @@ export async function updatePermission(params: TableListParams) {
 }
 
 export async function bindMenu(params: TableListParams) {
-  return request('/api/v0/adminpermission/bindmenu', {
+  return request('/api/v0/admin/permission/bindmenu', {
     method: 'POST',
     data: {
       ...params,
@@ -121,7 +121,7 @@ export async function bindMenu(params: TableListParams) {
 }
 
 export async function bindAPI(params: TableListParams) {
-  return request('/api/v0/adminpermission/bindapi', {
+  return request('/api/v0/admin/permission/bindapi', {
     method: 'POST',
     data: {
       ...params,
