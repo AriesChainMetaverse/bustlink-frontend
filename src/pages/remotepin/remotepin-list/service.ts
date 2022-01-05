@@ -8,7 +8,7 @@ export async function queryAdminPinList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminpin', {
+  const response = await request('/api/v0/admin/pin', {
     method:"GET", params
 
   });
@@ -20,6 +20,7 @@ export async function queryAdminPinList(params?: TableListParams) {
     if(response.data[i].edges !== "" && response.data[i].edges !== undefined && JSON.stringify(response.data[i].edges) !== "{}"){
       console.log(response.data[i].edges.admin_tops)
       obj.id = response.data[i].id
+      obj.pid = response.data[i].pid
       obj.rid = response.data[i].rid
       obj.status = response.data[i].status
       obj.step = response.data[i].step
@@ -32,6 +33,7 @@ export async function queryAdminPinList(params?: TableListParams) {
 
     }else{
       obj.id = response.data[i].id
+      obj.pid = response.data[i].pid
       obj.rid = response.data[i].rid
       obj.video_no = ""
       obj.title = ""
@@ -69,7 +71,7 @@ export async function addRule(params: TableListParams) {
 }
 
 export async function updateAdminPin(params: TableListParams) {
-  return request(`/api/v0/adminpin/${params.id}`, {
+  return request(`/api/v0/admin/pin/${params.id}`, {
     method: 'PUT',
     data: {
       ...params,
@@ -77,7 +79,7 @@ export async function updateAdminPin(params: TableListParams) {
   });
 }
 export async function syncAdminPin() {
-  return request(`/api/v0/syncadminpin`, {
+  return request(`/api/v0/syncadmin/pin`, {
     method: 'GET',
   });
 }

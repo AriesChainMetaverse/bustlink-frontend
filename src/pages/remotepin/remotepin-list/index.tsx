@@ -42,6 +42,7 @@ const handleUpdate = async (fields: FormValueType) => {
   try {
     await updateAdminPin({
       id: fields.id,
+      pid: fields.pid,
       rid: fields.rid,
       status: fields.status,
       step: fields.step,
@@ -79,35 +80,41 @@ const TableList: React.FC<{}> = () => {
   const [row, setRow] = useState<TableListItem>();
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
   const columns: ProColumns<TableListItem>[] = [
-    {
-      title: '缩略图',
-      valueType: 'image',
-      dataIndex: 'thumb_path',
-      hideInDescriptions: true,
-      search: false,
-      render: (dom, entity) => {
-        return (
-          <Image
-            width="250px"
-            src={localStorage.getItem("InformationImgUrl") + entity.rid + '/' + entity.poster_path + "?ts=1"}
-            fallback="/admin/failed/147x200.svg"
-            crossOrigin="anonymous"
-          />
-        );
-      },
-    },
+    // {
+    //   title: '缩略图',
+    //   valueType: 'image',
+    //   dataIndex: 'thumb_path',
+    //   hideInDescriptions: true,
+    //   search: false,
+    //   render: (dom, entity) => {
+    //     return (
+    //       <Image
+    //         width="250px"
+    //         src={localStorage.getItem("InformationImgUrl") + entity.rid + '/' + entity.poster_path + "?ts=1"}
+    //         fallback="/admin/failed/147x200.svg"
+    //         crossOrigin="anonymous"
+    //       />
+    //     );
+    //   },
+    // },
     {
       title: '视频番号',
       dataIndex: 'video_no',
       tip: '视频番号是唯一的',
     },
     {
-      title: 'rid',
-      dataIndex: 'rid',
+      title: 'pid',
+      dataIndex: 'pid',
       hideInForm: true,
       hideInSearch: true,
-      hideInTable: true,
     },
+    // {
+    //   title: 'rid',
+    //   dataIndex: 'rid',
+    //   hideInForm: true,
+    //   hideInSearch: true,
+    //   hideInTable: true,
+    // },
     {
       title: 'poster_path',
       dataIndex: 'poster_path',
@@ -115,13 +122,13 @@ const TableList: React.FC<{}> = () => {
       hideInSearch: true,
       hideInTable: true,
     },
-    {
-      title: '标题',
-      dataIndex: 'title',
-      valueType: 'textarea',
-      hideInForm: true,
-      hideInSearch: true,
-    },
+    // {
+    //   title: '标题',
+    //   dataIndex: 'title',
+    //   valueType: 'textarea',
+    //   hideInForm: true,
+    //   hideInSearch: true,
+    // },
 
     {
       title: '状态',
@@ -137,18 +144,18 @@ const TableList: React.FC<{}> = () => {
       },
     },
 
-    {
-      title: 'STEP',
-      dataIndex: 'step',
-      sorter: true,
-      hideInForm: true,
-      valueEnum: {
-        "add": { text: 'add', status: "add" },
-        "remove": { text: 'remove', status: "remove" },
-        "none": { text: 'none', status: "none" },
-
-      },
-    },
+    // {
+    //   title: 'STEP',
+    //   dataIndex: 'step',
+    //   sorter: true,
+    //   hideInForm: true,
+    //   valueEnum: {
+    //     "add": { text: 'add', status: "add" },
+    //     "remove": { text: 'remove', status: "remove" },
+    //     "none": { text: 'none', status: "none" },
+    //
+    //   },
+    // },
     {
       title: 'ReLate',
       dataIndex: 'relate',
@@ -161,23 +168,23 @@ const TableList: React.FC<{}> = () => {
 
       },
     },
-    {
-      title: '操作',
-      dataIndex: 'option',
-      valueType: 'option',
-      render: (_, record) => (
-        <>
-          <a
-            onClick={() => {
-              handleUpdateModalVisible(true);
-              setStepFormValues(record);
-            }}
-          >
-            配置
-          </a>
-        </>
-      ),
-    },
+    // {
+    //   title: '操作',
+    //   dataIndex: 'option',
+    //   valueType: 'option',
+    //   render: (_, record) => (
+    //     <>
+    //       <a
+    //         onClick={() => {
+    //           handleUpdateModalVisible(true);
+    //           setStepFormValues(record);
+    //         }}
+    //       >
+    //         配置
+    //       </a>
+    //     </>
+    //   ),
+    // },
   ];
 
   return (
@@ -190,9 +197,9 @@ const TableList: React.FC<{}> = () => {
           labelWidth: 120,
         }}
         toolBarRender={() => [
-          <Button type="primary" onClick={() => initAdminInfor()}>
-            <PlusOutlined /> 同步最新PIN状态
-          </Button>,
+          // <Button type="primary" onClick={() => initAdminInfor()}>
+          //   <PlusOutlined /> 同步最新PIN状态
+          // </Button>,
         ]}
         request={(params, sorter, filter) => queryAdminPinList({ ...params, sorter, filter })}
         columns={columns}
