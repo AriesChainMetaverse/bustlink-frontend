@@ -9,7 +9,7 @@ export async function queryRoleList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminrole', {
+  const response = await request('/api/v0/admin/role', {
     method:"GET", params
 
   });
@@ -54,7 +54,7 @@ export async function queryRoleList(params?: TableListParams) {
 
 export async function queryPermissionList() {
 
-  const response = await request('/api/v0/adminpermission?per_page=100', {
+  const response = await request('/api/v0/admin/permission?per_page=100', {
     method:"GET",
   });
 
@@ -64,7 +64,7 @@ export async function queryPermissionList() {
 
 
 export async function removeRole(params: { ids: string[] }) {
-  return request('/api/v0/adminrole', {
+  return request('/api/v0/admin/role', {
     method: 'DELETE',
     data: {
       ...params,
@@ -76,7 +76,7 @@ export async function removeRole(params: { ids: string[] }) {
 export async function addRole(params: TableListParams) {
   params.status = Number(params.status)
   params.sort = Number(params.sort)
-  return request('/api/v0/adminrole', {
+  return request('/api/v0/admin/role', {
     method: 'POST',
     data: {
       ...params,
@@ -88,7 +88,7 @@ export async function addRole(params: TableListParams) {
 export async function updateRole(params: TableListParams) {
   params.status = Number(params.status)
   params.sort = Number(params.sort)
-  return request('/api/v0/adminrole', {
+  return request('/api/v0/admin/role', {
     method: 'POST',
     data: {
       ...params,
@@ -97,7 +97,7 @@ export async function updateRole(params: TableListParams) {
 }
 
 export async function bindPermission(params: TableListParams) {
-  return request('/api/v0/adminrole/bindpermission', {
+  return request('/api/v0/admin/role/bindpermission', {
     method: 'POST',
     data: {
       ...params,
