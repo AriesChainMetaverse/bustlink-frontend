@@ -9,7 +9,7 @@ export async function querySysUserList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminuser', {
+  const response = await request('/api/v0/admin/sysuser', {
     method:"GET", params
 
   });
@@ -67,7 +67,7 @@ export async function querySysUserList(params?: TableListParams) {
 
 export async function queryRoleList() {
 
-  const response = await request('/api/v0/adminrole', {
+  const response = await request('/api/v0/admin/role', {
     method:"GET",
   });
 
@@ -77,7 +77,7 @@ export async function queryRoleList() {
 
 
 export async function removeSysUser(params: { ids: string[] }) {
-  return request('/api/v0/adminuser', {
+  return request('/api/v0/admin/sysuser', {
     method: 'DELETE',
     data: {
       ...params,
@@ -89,7 +89,7 @@ export async function removeSysUser(params: { ids: string[] }) {
 export async function addSysUser(params: TableListParams) {
   params.status = Number(params.status)
   params.sex = Number(params.sex)
-  return request('/api/v0/adminuser', {
+  return request('/api/v0/admin/sysuser', {
     method: 'POST',
     data: {
       ...params,
@@ -101,7 +101,7 @@ export async function addSysUser(params: TableListParams) {
 export async function updateSysUser(params: TableListParams) {
   params.status = Number(params.status)
   params.sex = Number(params.sex)
-  return request('/api/v0/adminuser', {
+  return request('/api/v0/admin/sysuser', {
     method: 'POST',
     data: {
       ...params,
@@ -110,7 +110,7 @@ export async function updateSysUser(params: TableListParams) {
 }
 
 export async function bindRole(params: TableListParams) {
-  return request('/api/v0/adminuser/bindrole', {
+  return request('/api/v0/admin/sysuser/bindrole', {
     method: 'POST',
     data: {
       ...params,
@@ -120,7 +120,7 @@ export async function bindRole(params: TableListParams) {
 
 export async function queryOrganizationList() {
 
-  const response = await request('/api/v0/adminorganization?per_page=100', {
+  const response = await request('/api/v0/admin/organization?per_page=100', {
     method:"GET",
   });
 
@@ -129,7 +129,7 @@ export async function queryOrganizationList() {
 
 
 export async function bindOrganization(params: TableListParams) {
-  return request('/api/v0/adminuser/bindorganization', {
+  return request('/api/v0/admin/sysuser/bindorganization', {
     method: 'POST',
     data: {
       ...params,

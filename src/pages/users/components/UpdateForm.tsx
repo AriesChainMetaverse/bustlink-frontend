@@ -1,28 +1,31 @@
-import {useState} from 'react';
-import {Button, DatePicker, Form, Input, Modal, Radio, Select, Steps} from 'antd';
+import React, { useState } from 'react';
+import { Form, Button,  Input, Modal,  Select, } from 'antd';
 
-import {UserItem} from '../data.d';
+import Editor from 'for-editor';
 
-export interface FormValueType extends Partial<UserItem> {
-  target?: string;
-  template?: string;
-  type?: string;
-  time?: string;
-  frequency?: string;
+import { TableListItem } from '../data.d';
+import {useIntl,FormattedMessage} from "umi";
+
+export interface FormValueType extends Partial<TableListItem> {
+  id?: string;
+  announce_no?: string;
+  title?: string;
+  content?: string;
+  kind?: string;
+  link?: string;
 }
 
 export interface UpdateFormProps {
   onCancel: (flag?: boolean, formVals?: FormValueType) => void;
   onSubmit: (values: FormValueType) => void;
   updateModalVisible: boolean;
-  values: Partial<UserItem>;
+  values: Partial<TableListItem>;
 }
-
 const FormItem = Form.Item;
-const {Step} = Steps;
-const {TextArea} = Input;
-const {Option} = Select;
-const RadioGroup = Radio.Group;
+
+const { TextArea } = Input;
+const { Option } = Select;
+
 
 export interface UpdateFormState {
   formVals: FormValueType;
@@ -30,23 +33,34 @@ export interface UpdateFormState {
 }
 
 const formLayout = {
-  labelCol: {span: 7},
-  wrapperCol: {span: 13},
+  labelCol: { span: 7 },
+  wrapperCol: { span: 13 },
 };
 
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
-  const [formVals, setFormVals] = useState<FormValueType>({
-    name: props.values.name,
-    desc: props.values.desc,
-    key: props.values.key,
-    target: '0',
-    template: '0',
-    type: '1',
-    time: '',
-    frequency: 'month',
+
+  /**
+   * 国际化配置
+   */
+  const intl = useIntl();
+
+  const [formVals] = useState<FormValueType>({
+
+    id: props.values.id,
+    username: props.values.username,
+    nickname: props.values.nickname,
+    serial: props.values.serial,
+    level: props.values.level,
+    username_state: props.values.username_state,
+    telephone: props.values.telephone,
+    email: props.values.email,
+    telephone_state: props.values.telephone_state,
+    email_state: props.values.email_state,
+    state: props.values.state,
+
   });
 
-  const [currentStep, setCurrentStep] = useState<number>(0);
+  // const [currentStep, setCurrentStep] = useState<number>(0);
 
   const [form] = Form.useForm();
 
@@ -57,153 +71,212 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     values,
   } = props;
 
-  const forward = () => setCurrentStep(currentStep + 1);
-
-  const backward = () => setCurrentStep(currentStep - 1);
+  // const forward = () => setCurrentStep(currentStep + 1);
+  //
+  // const backward = () => setCurrentStep(currentStep - 1);
 
   const handleNext = async () => {
     const fieldsValue = await form.validateFields();
 
-    setFormVals({...formVals, ...fieldsValue});
-
-    if (currentStep < 2) {
-      forward();
-    } else {
-      handleUpdate({...formVals, ...fieldsValue});
-    }
+    // setFormVals({ ...formVals, ...fieldsValue });
+    //
+    // if (currentStep < 1) {
+    //   forward();
+    // } else {
+    handleUpdate({ ...formVals, ...fieldsValue });
+    // }
   };
 
+
+
+
   const renderContent = () => {
-    if (currentStep === 1) {
-      return (
-        <>
-          <FormItem name="target" label="监控对象">
-            <Select style={{width: '100%'}}>
-              <Option value="0">表一</Option>
-              <Option value="1">表二</Option>
-            </Select>
-          </FormItem>
-          <FormItem name="template" label="规则模板">
-            <Select style={{width: '100%'}}>
-              <Option value="0">规则模板一</Option>
-              <Option value="1">规则模板二</Option>
-            </Select>
-          </FormItem>
-          <FormItem name="type" label="规则类型">
-            <RadioGroup>
-              <Radio value="0">强</Radio>
-              <Radio value="1">弱</Radio>
-            </RadioGroup>
-          </FormItem>
-        </>
-      );
-    }
-    if (currentStep === 2) {
-      return (
-        <>
-          <FormItem
-            name="time"
-            label="开始时间"
-            rules={[{required: true, message: '请选择开始时间！'}]}
-          >
-            <DatePicker
-              style={{width: '100%'}}
-              showTime
-              format="YYYY-MM-DD HH:mm:ss"
-              placeholder="选择开始时间"
-            />
-          </FormItem>
-          <FormItem name="frequency" label="调度周期">
-            <Select style={{width: '100%'}}>
-              <Option value="month">月</Option>
-              <Option value="week">周</Option>
-            </Select>
-          </FormItem>
-        </>
-      );
-    }
     return (
       <>
         <FormItem
-          name="name"
-          label="规则名称"
-          rules={[{required: true, message: '请输入规则名称！'}]}
+          name="id"
+          label="ID"
         >
-          <Input placeholder="请输入"/>
+          <Input placeholder="" disabled={true}/>
         </FormItem>
         <FormItem
-          name="desc"
-          label="规则描述"
-          rules={[{required: true, message: '请输入至少五个字符的规则描述！', min: 5}]}
+          name="username"
+          label= {intl.formatMessage({
+            id: 'pages.user.indexForm.username',
+            defaultMessage: '用户名',
+          })}
         >
-          <TextArea rows={4} placeholder="请输入至少五个字符"/>
+          <Input placeholder="" disabled={true}/>
         </FormItem>
+        <FormItem
+          name="nickname"
+          label= {intl.formatMessage({
+            id: 'pages.user.indexForm.nickname',
+            defaultMessage: '昵称',
+          })}
+        >
+          <Input placeholder="" disabled={true}/>
+        </FormItem>
+        <FormItem
+          name="level"
+          label= {intl.formatMessage({
+            id: 'pages.user.indexForm.level',
+            defaultMessage: '会员等级',
+          })}
+        >
+          <Input placeholder="" type="number"/>
+        </FormItem>
+
+        <FormItem name="state"
+                  label= {intl.formatMessage({
+                    id: 'pages.user.indexForm.state',
+                    defaultMessage: '状态',
+                  })}
+        >
+          <Select style={{ width: '100%' }}>
+
+            <Option value="formal">
+              formal
+            </Option>
+            <Option value="unauthorized">
+              unauthorized
+            </Option>
+            <Option value="authorized">
+              authorized
+            </Option>
+            <Option value="unregistered">
+              unregistered
+            </Option>
+            <Option value="registered">
+              registered
+            </Option>
+            <Option value="register_failed">
+              register_failed
+            </Option>
+          </Select>
+        </FormItem>
+        <FormItem
+          name="username_state"
+          label= {intl.formatMessage({
+            id: 'pages.user.indexForm.username_state',
+            defaultMessage: '用户名状态',
+          })}
+        >
+          <Input placeholder="" disabled={true}/>
+        </FormItem>
+        <FormItem
+          name="telephone"
+          label= {intl.formatMessage({
+            id: 'pages.user.indexForm.telephone',
+            defaultMessage: '手机',
+          })}
+        >
+          <Input placeholder="" disabled={true}/>
+        </FormItem>
+        <FormItem
+          name="email"
+          label= {intl.formatMessage({
+            id: 'pages.user.indexForm.email',
+            defaultMessage: '邮箱',
+          })}
+        >
+          <Input placeholder="" disabled={true}/>
+        </FormItem>
+
+        <FormItem
+          name="telephone_state"
+          label= {intl.formatMessage({
+            id: 'pages.user.indexForm.telephone_state',
+            defaultMessage: '手机状态',
+          })}
+        >
+          <Input placeholder="" disabled={true}/>
+        </FormItem>
+        <FormItem
+          name="email_state"
+          label= {intl.formatMessage({
+            id: 'pages.user.indexForm.email_state',
+            defaultMessage: '邮箱状态',
+          })}
+        >
+          <Input placeholder="" disabled={true}/>
+        </FormItem>
+
       </>
     );
   };
 
   const renderFooter = () => {
-    if (currentStep === 1) {
-      return (
-        <>
-          <Button style={{float: 'left'}} onClick={backward}>
-            上一步
-          </Button>
-          <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
-          <Button type="primary" onClick={() => handleNext()}>
-            下一步
-          </Button>
-        </>
-      );
-    }
-    if (currentStep === 2) {
-      return (
-        <>
-          <Button style={{float: 'left'}} onClick={backward}>
-            上一步
-          </Button>
-          <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
-          <Button type="primary" onClick={() => handleNext()}>
-            完成
-          </Button>
-        </>
-      );
-    }
+    // if (currentStep === 1) {
     return (
       <>
-        <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
+        <Button onClick={() => handleUpdateModalVisible(false, values)}>            {intl.formatMessage({
+          id: 'pages.cancel',
+          defaultMessage: '取消',
+        })}</Button>
         <Button type="primary" onClick={() => handleNext()}>
-          下一步
+          {intl.formatMessage({
+            id: 'pages.submit',
+            defaultMessage: '完成',
+          })}
         </Button>
       </>
     );
+    // }
+    // if (currentStep === 2) {
+    //   return (
+    //     <>
+    //       <Button style={{ float: 'left' }} onClick={backward}>
+    //         上一步
+    //       </Button>
+    //       <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
+    //       <Button type="primary" onClick={() => handleNext()}>
+    //         完成
+    //       </Button>
+    //     </>
+    //   );
+    // }
+    // return (
+    //   <>
+    //     <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
+    //     <Button type="primary" onClick={() => handleNext()}>
+    //       下一步
+    //     </Button>
+    //   </>
+    // );
   };
 
   return (
     <Modal
-      width={640}
-      bodyStyle={{padding: '32px 40px 48px'}}
+      width={1000}
+      bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
-      title="规则配置"
+      title={intl.formatMessage({
+        id: 'pages.user.updateForm.update',
+        defaultMessage: '通知内容配置',
+      })}
       visible={updateModalVisible}
       footer={renderFooter()}
       onCancel={() => handleUpdateModalVisible()}
     >
-      <Steps style={{marginBottom: 28}} size="small" current={currentStep}>
-        <Step title="基本信息"/>
-        <Step title="配置规则属性"/>
-        <Step title="设定调度周期"/>
-      </Steps>
+
       <Form
         {...formLayout}
         form={form}
         initialValues={{
-          target: formVals.target,
-          template: formVals.template,
-          type: formVals.type,
-          frequency: formVals.frequency,
-          name: formVals.name,
-          desc: formVals.desc,
+          id: formVals.id,
+          username: formVals.username,
+          nickname: formVals.nickname,
+          serial: formVals.serial,
+          level: formVals.level,
+          username_state: formVals.username_state,
+          telephone: formVals.telephone,
+          email: formVals.email,
+          telephone_state: formVals.telephone_state,
+          email_state: formVals.email_state,
+          state: formVals.state,
+
+
         }}
       >
         {renderContent()}
