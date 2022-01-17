@@ -8,7 +8,7 @@ export async function queryUpdateList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/adminupdate', {
+  const response = await request('/api/v0/admin/update', {
     method:"GET", params
 
   });
@@ -17,7 +17,7 @@ export async function queryUpdateList(params?: TableListParams) {
 }
 
 export async function removeUpdate(params: { ids: string[] }) {
-  return request('/api/v0/adminupdate', {
+  return request('/api/v0/admin/update', {
     method: 'DELETE',
     data: {
       ...params,
@@ -28,7 +28,7 @@ export async function removeUpdate(params: { ids: string[] }) {
 
 export async function addUpdate(params: TableListParams) {
 
-  return request('/api/v0/adminupdate', {
+  return request('/api/v0/admin/update', {
     method: 'POST',
     // headers: {
     //   "Content-Type": "multipart/form-data",
@@ -43,7 +43,7 @@ export async function addUpdate(params: TableListParams) {
 }
 
 export async function updateUpdate(params: TableListParams) {
-  return request(`/api/v0/adminupdate/${params.id}`, {
+  return request(`/api/v0/admin/update/${params.id}`, {
     method: 'PUT',
     data: {
       ...params,
