@@ -7,7 +7,8 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import CreateForm from './components/CreateForm';
 import UpdateForm, {FormValueType} from './components/UpdateForm';
 import {UserItem} from './data.d';
-import {addUser, queryUser, removeUser, updateRule} from './service';
+import {addUser, queryUser, removeUser, updateUser} from './service';
+import {useIntl} from "umi";
 
 /**
  * 添加节点
@@ -34,10 +35,17 @@ const handleAdd = async (fields: UserItem) => {
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
-    await updateRule({
-      name: fields.name,
-      desc: fields.desc,
-      key: fields.key,
+    await updateUser({
+      id: fields.id,
+      username: fields.username,
+      nickname: fields.nickname,
+      level: fields.level,
+      username_state: fields.username_state,
+      telephone: fields.telephone,
+      email: fields.email,
+      telephone_state: fields.telephone_state,
+      email_state: fields.email_state,
+      state: fields.state,
     });
     hide();
 
@@ -78,11 +86,19 @@ const UserList: React.FC<{}> = () => {
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<UserItem>();
   const [selectedRowsState, setSelectedRows] = useState<UserItem[]>([]);
+  /**
+   * 国际化配置
+   */
+  const intl = useIntl();
   const columns: ProColumns<UserItem>[] = [
     {
-      title: '用户ID',
-      dataIndex: 'name',
-      tip: '客户端生成唯一ID',
+      title: 'ID',
+      dataIndex: 'id',
+    },
+    {
+      title: '用户名',
+      dataIndex: 'username',
+      tip: '客户端生成唯一',
       formItemProps: {
         rules: [
           {
@@ -98,6 +114,7 @@ const UserList: React.FC<{}> = () => {
     {
       title: '用户头像',
       dataIndex: 'avatar',
+      hideInSearch: true,
       render: (dom, entity) => {
         return <Avatar
           src={'http://127.0.0.1:18080/link/bafybeigaywv3husgeyjlmnyyxl7tbvuaeesfzgwzkpfwjbh2h4bzh4csau/image/thumb.jpg' + "?ts=" + Math.round(Date.now() / 1000)}
@@ -105,14 +122,52 @@ const UserList: React.FC<{}> = () => {
       },
     },
     {
+      title: '账号状态',
+      dataIndex: 'username_state',
+      valueType: 'textarea',
+      hideInSearch: true,
+      hideInTable: true,
+    },
+
+    {
+      title: '手机号',
+      dataIndex: 'telephone',
+      valueType: 'textarea',
+      hideInSearch: true,
+    },
+    {
+      title: '手机号状态',
+      dataIndex: 'telephone_state',
+      valueType: 'textarea',
+      hideInSearch: true,
+      hideInTable: true,
+
+    },
+    {
+      title: '邮箱',
+      dataIndex: 'email',
+      valueType: 'textarea',
+      hideInSearch: true,
+    },
+    {
+      title: '邮箱状态',
+      dataIndex: 'email_state',
+      valueType: 'textarea',
+      hideInSearch: true,
+      hideInTable: true,
+
+    },
+    {
       title: '序列号',
       dataIndex: 'serial',
       valueType: 'textarea',
+      hideInSearch: true,
     },
     {
       title: '用户昵称',
       dataIndex: 'nickname',
       valueType: 'textarea',
+      hideInSearch: true,
       // sorter: true,
       // hideInForm: true,
     },
@@ -121,36 +176,41 @@ const UserList: React.FC<{}> = () => {
       dataIndex: 'level',
       sorter: true,
       hideInForm: true,
+      hideInSearch: true,
       renderText: (val: string) => `${val} 级`,
     },
     {
       title: '状态',
-      dataIndex: 'status',
+      dataIndex: 'state',
       hideInForm: true,
+      hideInSearch: true,
       valueEnum: {
-        0: {text: '关闭', status: 'Default'},
-        1: {text: '运行中', status: 'Processing'},
-        2: {text: '已上线', status: 'Success'},
-        3: {text: '异常', status: 'Error'},
+        'formal': {text: 'formal', status: 'formal'},
+        'unauthorized': {text: 'unauthorized', status: 'unauthorized'},
+        'authorized': {text: 'authorized', status: 'authorized'},
+        'unregistered': {text: 'unregistered', status: 'unregistered'},
+        'registered': {text: 'registered', status: 'registered'},
+        'register_failed': {text: 'register_failed', status: 'register_failed'},
+
       },
     },
-    {
-      title: '在线时长',
-      dataIndex: 'updatedAt',
-      sorter: true,
-      valueType: 'dateTime',
-      hideInForm: true,
-      renderFormItem: (item, {defaultRender, ...rest}, form) => {
-        const status = form.getFieldValue('status');
-        if (`${status}` === '0') {
-          return false;
-        }
-        if (`${status}` === '3') {
-          return <Input {...rest} placeholder="请输入异常原因！"/>;
-        }
-        return defaultRender(item);
-      },
-    },
+    // {
+    //   title: '在线时长',
+    //   dataIndex: 'updatedAt',
+    //   sorter: true,
+    //   valueType: 'dateTime',
+    //   hideInForm: true,
+    //   renderFormItem: (item, {defaultRender, ...rest}, form) => {
+    //     const status = form.getFieldValue('state');
+    //     if (`${status}` === '0') {
+    //       return false;
+    //     }
+    //     if (`${status}` === '3') {
+    //       return <Input {...rest} placeholder="请输入异常原因！"/>;
+    //     }
+    //     return defaultRender(item);
+    //   },
+    // },
     {
       title: '操作',
       dataIndex: 'option',
@@ -166,7 +226,6 @@ const UserList: React.FC<{}> = () => {
             配置
           </a>
           <Divider type="vertical"/>
-          <a href="">订阅警报</a>
         </>
       ),
     },
@@ -182,9 +241,9 @@ const UserList: React.FC<{}> = () => {
           labelWidth: 120,
         }}
         toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined/> 新建
-          </Button>,
+          // <Button type="primary" onClick={() => handleModalVisible(true)}>
+          //   <PlusOutlined/> 新建
+          // </Button>,
         ]}
         request={(params, sorter, filter) => queryUser({...params, sorter, filter})}
         columns={columns}
@@ -197,9 +256,9 @@ const UserList: React.FC<{}> = () => {
           extra={
             <div>
               已选择 <a style={{fontWeight: 600}}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
-              <span>
-                服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万
-              </span>
+              {/*<span>*/}
+              {/*  服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万*/}
+              {/*</span>*/}
             </div>
           }
         >
@@ -260,15 +319,15 @@ const UserList: React.FC<{}> = () => {
         }}
         closable={false}
       >
-        {row?.name && (
+        {row?.username && (
           <ProDescriptions<UserItem>
             column={2}
-            title={row?.name}
+            title={row?.username}
             request={async () => ({
               data: row || {},
             })}
             params={{
-              id: row?.name,
+              id: row?.username,
             }}
             columns={columns}
           />
