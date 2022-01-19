@@ -11,6 +11,7 @@ export interface TableListItem {
   name: string;
   poster_path: string;
   root: string;
+  page_id: string;
 
 }
 
