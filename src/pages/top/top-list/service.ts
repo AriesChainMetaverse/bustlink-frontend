@@ -8,7 +8,7 @@ export async function queryTopList(params?: TableListParams) {
   params.page = params.current;
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/admintoplist', {
+  const response = await request('/api/v0/admin/toplist', {
     method:"GET", params
 
   });
@@ -27,6 +27,10 @@ export async function queryTopList(params?: TableListParams) {
       obj.intro = response.data[i].edges.admin_tops[0].intro
       obj.lower_banner = response.data[i].edges.admin_tops[0].lower_banner
       obj.top_right = response.data[i].edges.admin_tops[0].top_right
+      obj.page_id = response.data[i].edges.admin_tops[0].page_id
+      if(response.data[i].edges.admin_tops[0].edges !== "" && response.data[i].edges.admin_tops[0].edges !== undefined && JSON.stringify(response.data[i].edges.admin_tops[0].edges) !== "{}"){
+        obj.page_title = response.data[i].edges.admin_tops[0].edges.admin_page.title
+      }
 
       let newCategory = [];
       response.data[i].edges.admin_tops.forEach(e => {
@@ -44,6 +48,8 @@ export async function queryTopList(params?: TableListParams) {
       obj.lower_banner = "none"
       obj.top_right = "none"
       obj.category = []
+      obj.page_id = "00000000-0000-0000-0000-000000000000"
+      obj.page_title = "none"
     }
     newData.push(obj)
   }
@@ -73,10 +79,19 @@ export async function addRule(params: TableListParams) {
 }
 
 export async function updateTopList(params: TableListParams) {
-  return request(`/api/v0/admintoplist/${params.information_id}`, {
+  return request(`/api/v0/admin/toplist/${params.information_id}`, {
     method: 'PUT',
     data: {
       ...params,
     },
   });
+}
+
+export async function queryPageList() {
+
+  const response = await request('/api/v0/admin/page?per_page=100', {
+    method:"GET",
+  });
+
+  return response.data;
 }

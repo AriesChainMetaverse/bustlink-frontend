@@ -8,7 +8,7 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import { addRule,  queryTopList, updateTopList} from './service';
-
+import { useIntl, FormattedMessage } from 'umi';
 
 /**
  * 添加节点
@@ -42,6 +42,7 @@ const handleUpdate = async (fields: FormValueType) => {
       lower_banner: fields.lower_banner,
       top_right: fields.top_right,
       category: fields.category,
+      page_id:fields.page_id,
     });
     hide();
 
@@ -86,25 +87,22 @@ const TableList: React.FC<{}> = () => {
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<TableListItem>();
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
+  /**
+   * 国际化配置
+   */
+  const intl = useIntl();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '缩略图',
+      title: <FormattedMessage
+        id="pages.toplist.indexForm.Thumbnails"
+        defaultMessage="缩略图"
+      />,
       valueType: 'image',
       dataIndex: 'thumb_path',
       hideInDescriptions: true,
       search: false,
       render: (dom, entity) => {
         return (
-          // <Image
-          //   width="72px"
-          //   src={`/api/v0/resource/${entity.video_no}/image/thumb.jpg?ts=${Math.round(
-          //     Date.now() / 10000,
-          //   )}`}
-          //   fallback="/admin/failed/147x200.svg"
-          //   // preview={{
-          //   //   src: 'http://localhost:9033/api/v0/resource/failed/147x200.svg',
-          //   // }}
-          // />
         <Image
           width="250px"
           src={`${localStorage.getItem("InformationImgUrl") + entity.root  }/${  entity.poster_path  }?ts=1`}
@@ -115,9 +113,15 @@ const TableList: React.FC<{}> = () => {
       },
     },
     {
-      title: '视频番号',
+      title: <FormattedMessage
+        id="pages.toplist.indexForm.video_no"
+        defaultMessage="视频番号"
+      />,
       dataIndex: 'video_no',
-      tip: '视频番号是唯一的',
+      tip: intl.formatMessage({
+        id: 'pages.toplist.indexForm.video_no_tip',
+        defaultMessage: '视频番号是唯一的',
+      }),
       copyable: true,
       formItemProps: {
         rules: [
@@ -148,14 +152,20 @@ const TableList: React.FC<{}> = () => {
       hideInTable: true,
     },
     {
-      title: '标题',
+      title: <FormattedMessage
+        id="pages.toplist.indexForm.title"
+        defaultMessage="标题"
+      />,
       dataIndex: 'title',
       valueType: 'textarea',
       hideInForm: true,
       hideInSearch: true,
     },
     {
-      title: '介绍',
+      title: <FormattedMessage
+        id="pages.toplist.indexForm.intro"
+        defaultMessage="介绍"
+      />,
       dataIndex: 'intro',
       sorter: false,
       hideInForm: true,
@@ -163,7 +173,10 @@ const TableList: React.FC<{}> = () => {
       valueType: 'textarea',
     },
     {
-      title: '分类',
+      title:  <FormattedMessage
+        id="pages.toplist.indexForm.category"
+        defaultMessage="分类"
+      />,
       dataIndex: 'category',
       sorter: false,
       hideInForm: true,
@@ -184,7 +197,10 @@ const TableList: React.FC<{}> = () => {
       },
     },
     {
-      title: '分类',
+      title: <FormattedMessage
+        id="pages.toplist.indexForm.category"
+        defaultMessage="分类"
+      />,
       dataIndex: 'category',
       sorter: false,
       hideInForm: true,
@@ -193,34 +209,105 @@ const TableList: React.FC<{}> = () => {
       render: (text) => cateroryTrans(text),
     },
     {
-      title: '下角标',
+      title: <FormattedMessage
+        id="pages.toplist.indexForm.lower"
+        defaultMessage="下角标"
+      />,
       dataIndex: 'lower_banner',
       hideInForm: true,
       hideInSearch: true,
       valueEnum: {
-        'free': { text: '免费', status: 'free' },
-        'discount': { text: '折扣', status: 'discount' },
-        'event': { text: '限免', status: 'event' },
-        'premium': { text: '精品', status: 'premium' },
-        'collection': { text: '收藏', status: 'collection' },
-        'liked': { text: '喜欢', status: 'liked' },
-        'none': { text: '无', status: 'none' },
+        'free': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_free',
+            defaultMessage: '免费',
+          }), status: 'free' },
+        'discount': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_discount',
+            defaultMessage: '折扣',
+          }), status: 'discount' },
+        'event': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_event',
+            defaultMessage: '限免',
+          }), status: 'event' },
+        'premium': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_premium',
+            defaultMessage: '精品',
+          }), status: 'premium' },
+        'collection': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_collection',
+            defaultMessage: '收藏',
+          }), status: 'collection' },
+        'liked': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_liked',
+            defaultMessage: '喜欢',
+          }), status: 'liked' },
+        'none': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_none',
+            defaultMessage: '无',
+          }), status: 'none' },
       },
     },
     {
-      title: '右上角标',
+      title: <FormattedMessage
+        id="pages.toplist.indexForm.topright"
+        defaultMessage="右上角标"
+      />,
       dataIndex: 'top_right',
       hideInForm: true,
       hideInSearch: true,
       valueEnum: {
-        'free': { text: '免费', status: 'free' },
-        'discount': { text: '折扣', status: 'discount' },
-        'event': { text: '限免', status: 'event' },
-        'premium': { text: '精品', status: 'premium' },
-        'collection': { text: '收藏', status: 'collection' },
-        'liked': { text: '喜欢', status: 'liked' },
-        'none': { text: '无', status: 'none' },
+        'free': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_free',
+            defaultMessage: '免费',
+          }), status: 'free' },
+        'discount': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_discount',
+            defaultMessage: '折扣',
+          }), status: 'discount' },
+        'event': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_event',
+            defaultMessage: '限免',
+          }), status: 'event' },
+        'premium': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_premium',
+            defaultMessage: '精品',
+          }), status: 'premium' },
+        'collection': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_collection',
+            defaultMessage: '收藏',
+          }), status: 'collection' },
+        'liked': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_liked',
+            defaultMessage: '喜欢',
+          }), status: 'liked' },
+        'none': { text: intl.formatMessage({
+            id: 'pages.toplist.indexForm.corner_none',
+            defaultMessage: '无',
+          }), status: 'none' },
       },
+    },
+    {
+      title: <FormattedMessage
+        id="pages.toplist.indexForm.page_title"
+        defaultMessage="页面"
+      />,
+      dataIndex: 'page_title',
+      sorter: false,
+      hideInForm: true,
+      hideInSearch: true,
+      valueType: 'textarea',
+    },
+    {
+      title: <FormattedMessage
+        id="pages.toplist.indexForm.page_id"
+        defaultMessage="页面"
+      />,
+      dataIndex: 'page_id',
+      sorter: false,
+      hideInForm: true,
+      hideInTable: true,
+      hideInSearch: true,
+      valueType: 'textarea',
     },
     // {
     //   title: '上次调度时间',
@@ -240,7 +327,10 @@ const TableList: React.FC<{}> = () => {
     //   },
     // },
     {
-      title: '操作',
+      title: <FormattedMessage
+        id="pages.toplist.indexForm.option"
+        defaultMessage="操作"
+      />,
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
@@ -251,7 +341,10 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            配置
+            {intl.formatMessage({
+              id: 'pages.toplist.indexForm.set',
+              defaultMessage: '配置',
+            })}
           </a>
         </>
       ),
@@ -261,7 +354,10 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="查询视频"
+        headerTitle={intl.formatMessage({
+          id: 'pages.toplist.indexForm.list',
+          defaultMessage: '首页资源列表',
+        })}
         actionRef={actionRef}
         rowKey="id"
         search={{
@@ -282,7 +378,10 @@ const TableList: React.FC<{}> = () => {
         <FooterToolbar
           extra={
             <div>
-              已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
+              {intl.formatMessage({
+                id: 'pages.toplist.indexForm.seleted',
+                defaultMessage: '已选择',
+              })} <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> &nbsp;&nbsp;
 
             </div>
           }
