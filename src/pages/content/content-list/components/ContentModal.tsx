@@ -129,8 +129,10 @@ const ContentModal: FC<ContentModalProps> = (props) => {
         <Form.Item name="intro" label="简介" rules={[{ message: '请输入简介内容' }]}>
           <TextArea rows={4} placeholder="请输入" />
         </Form.Item>
-        <Form.Item name="scrape_id" label="搜刮号">
-          <Input placeholder="请输入" disabled={true} />
+        <Form.Item name="scrape_id" label="搜刮号"
+                   rules={[{ required: true, message: '请输入搜刮号' }]}
+        >
+          <Input placeholder="请输入"  />
         </Form.Item>
       </Form>
     );
@@ -139,7 +141,7 @@ const ContentModal: FC<ContentModalProps> = (props) => {
   return (
     <Modal
       forceRender
-      title={done ? null : `任务${current ? '编辑' : '添加'}`}
+      title={done ? null : `内容${current ? '编辑' : '添加'}`}
       className={styles.standardListForm}
       width={640}
       bodyStyle={done ? { padding: '72px 0' } : { padding: '28px 0 0' }}
