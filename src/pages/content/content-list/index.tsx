@@ -20,7 +20,7 @@ import { connect } from 'umi';
 import type { StateType } from './model';
 import type { ContentItem, ContentItemEdges } from './data.d';
 import styles from './style.less';
-import { removeContent, updateContent } from '@/pages/content/content-list/service';
+import { removeContent, updateContent,createContent } from '@/pages/content/content-list/service';
 import { findDOMNode } from 'react-dom';
 import { PageContainer } from '@ant-design/pro-layout';
 import { DeleteOutlined, EditOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
@@ -131,7 +131,6 @@ export const BasicList: FC<BasicListProps> = (props) => {
     <Space>
       <label
         onClick={async (e: any) => {
-          console.log('clicked', e, text, item.id, action);
           if (action === 'delete') {
             await deleteItem(item);
           } else if (action === 'edit') {
@@ -218,6 +217,28 @@ export const BasicList: FC<BasicListProps> = (props) => {
           content: resp.message,
         });
       }
+    }else{
+      const resp = await createContent(values);
+      if (resp.status === 'success') {
+        Modal.success({
+          content: resp.message,
+          onOk: () => {
+            setContentVisible(false);
+          },
+        });
+        dispatch({
+          type: 'listAndContentList/fetch',
+          payload: {
+            page,
+            per_page: perPage,
+          },
+        });
+      } else {
+        Modal.error({
+          content: resp.message,
+        });
+      }
+
     }
   };
 

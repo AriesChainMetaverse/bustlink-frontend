@@ -9,13 +9,13 @@ interface ContentRequestParamsType extends Partial<any> {
 type ContentItemDataType = Partial<ContentItem>
 
 export async function queryContentList(params: ContentRequestParamsType) {
-  return request('/api/v0/contents', {
+  return request('/api/v0/client/contents', {
     params,
   });
 }
 
 export async function removeContent(params: ContentItemDataType) {
-  return request(`/api/v0/content/${params.id}`, {
+  return request(`/api/v0/client/content/${params.id}`, {
     method: 'DELETE',
     data: {
       ...params,
@@ -51,8 +51,19 @@ export async function updateFakeList(params: ContentRequestParamsType) {
 
 export async function updateContent(params: ContentItemDataType) {
   const { ...restParams } = params;
-  return request(`/api/v0/content/${params.id}`, {
+  return request(`/api/v0/client/content/${params.id}`, {
     method: 'PUT',
+    data: {
+      ...restParams,
+    },
+  });
+}
+
+export async function createContent(params: ContentItemDataType) {
+  params.scrape_id = Number(params.scrape_id);
+  const { ...restParams } = params;
+  return request(`/api/v0/client/content`, {
+    method: 'POST',
     data: {
       ...restParams,
     },
