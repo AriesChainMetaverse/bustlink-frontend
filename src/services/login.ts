@@ -27,7 +27,7 @@ export async function fakeUserBaseInfo(token: string) {
   });
 }
 export async function fakeSystemProperty(key: string) {
-  return request(`/api/v0/admin/property/${key}`, {
+  return request(`/api/v0/property/${key}`, {
     method: 'GET',
     headers:{'Authorization': `Bearer ${localStorage.getItem("token")}`},
   });
