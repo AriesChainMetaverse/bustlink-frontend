@@ -8,6 +8,7 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
 import {updateUpdate, addUpdate, removeUpdate, queryUpdateList} from './service';
+import {FormattedMessage, useIntl} from "umi";
 
 
 /**
@@ -99,10 +100,14 @@ const TableList: React.FC<{}> = () => {
     // Accept: 'application/json',
     Authorization:`Bearer ${localStorage.getItem("token")}`
   };
+  /**
+   * 国际化配置
+   */
+  const intl = useIntl();
   const uploadProps ={
     name: 'exeFile',
     multiple: true,
-    action: `/api/v0/adminupdate/${row?.id}`,
+    action: `/api/v0/admin/update/${row?.id}`,
     showUploadList:false,
     method:"post",
     headers:headers,
@@ -142,7 +147,10 @@ const TableList: React.FC<{}> = () => {
 
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '版本号',
+      title: <FormattedMessage
+        id="pages.update.indexForm.version"
+        defaultMessage="版本号"
+      />,
       dataIndex: 'version',
       sorter: true,
       hideInForm: false,
@@ -170,7 +178,10 @@ const TableList: React.FC<{}> = () => {
     },
 
     {
-      title: '包名',
+      title: <FormattedMessage
+        id="pages.update.indexForm.filename"
+        defaultMessage="包名"
+      />,
       dataIndex: 'filename',
       // tip: '公告编号是唯一的',
       hideInForm: true,
@@ -179,7 +190,10 @@ const TableList: React.FC<{}> = () => {
 
     },
     {
-      title: '标题',
+      title: <FormattedMessage
+        id="pages.update.indexForm.title"
+        defaultMessage="标题"
+      />,
       dataIndex: 'title',
       sorter: false,
       hideInForm: false,
@@ -190,13 +204,19 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: true,
-            message: '标题必填',
+            message: <FormattedMessage
+              id="pages.ruleRequired"
+              defaultMessage="必选"
+            />,
           },
         ],
       },
     },
     {
-      title: '详述',
+      title: <FormattedMessage
+        id="pages.update.indexForm.detail"
+        defaultMessage="详述"
+      />,
       dataIndex: 'detail',
       sorter: false,
       hideInForm: false,
@@ -207,13 +227,19 @@ const TableList: React.FC<{}> = () => {
         rules: [
           {
             required: false,
-            message: '详述必填',
+            message: <FormattedMessage
+              id="pages.ruleRequired"
+              defaultMessage="必选"
+            />,
           },
         ],
       },
     },
     {
-      title: '系统',
+      title: <FormattedMessage
+        id="pages.update.indexForm.os"
+        defaultMessage="系统"
+      />,
       dataIndex: 'os',
       hideInForm: false,
       hideInSearch: true,
@@ -234,7 +260,7 @@ const TableList: React.FC<{}> = () => {
       },
     },
     {
-      title: '系统位数',
+      title: 'arch',
       dataIndex: 'arch',
       hideInForm: false,
       hideInTable: true,
@@ -292,38 +318,50 @@ const TableList: React.FC<{}> = () => {
 
     },
     {
-      title: '已发布',
+      title: <FormattedMessage
+        id="pages.update.indexForm.publish"
+        defaultMessage="已发布"
+      />,
       dataIndex: 'publish',
       hideInForm: true,
       hideInSearch: true,
 
       valueEnum: {
-        false: { text: '否', status: false },
-        true: { text: '是', status: true },
+        false: { text: 'false', status: false },
+        true: { text: 'true', status: true },
       },
     },
     {
-      title: '强制升级',
+      title: <FormattedMessage
+        id="pages.update.indexForm.upgrade"
+        defaultMessage="强制升级"
+      />,
       dataIndex: 'forcibly',
       hideInForm: true,
       hideInSearch: true,
       valueEnum: {
-        false: { text: '否', status: false },
-        true: { text: '是', status: true },
+        false: { text: 'false', status: false },
+        true: { text: 'true', status: true },
       },
     },
     {
-      title: '清库',
+      title: <FormattedMessage
+        id="pages.update.indexForm.clear"
+        defaultMessage="清库"
+      />,
       dataIndex: 'truncate',
       hideInForm: true,
       hideInSearch: true,
       valueEnum: {
-        false: { text: '否', status: false },
-        true: { text: '是', status: true },
+        false: { text: 'false', status: false },
+        true: { text: 'true', status: true },
       },
     },
     {
-      title: '上传包文件',
+      title: <FormattedMessage
+        id="pages.update.indexForm.uploadfile"
+        defaultMessage="上传包文件"
+      />,
       dataIndex: 'exeFile',
       hideInForm: false,
       hideInTable: true,
@@ -343,7 +381,10 @@ const TableList: React.FC<{}> = () => {
 
     },
     {
-      title: '操作',
+      title: <FormattedMessage
+        id="pages.update.indexForm.option"
+        defaultMessage="操作"
+      />,
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
@@ -354,7 +395,10 @@ const TableList: React.FC<{}> = () => {
               setStepFormValues(record);
             }}
           >
-            配置
+            {intl.formatMessage({
+              id: 'pages.update.indexForm.set',
+              defaultMessage: '配置',
+            })}
           </a>
         </>
       ),
@@ -364,7 +408,10 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="包更新列表"
+        headerTitle={intl.formatMessage({
+          id: 'pages.update.indexForm.list',
+          defaultMessage: '包更新列表',
+        })}
         actionRef={actionRef}
         rowKey="id"
         search={{
@@ -372,7 +419,10 @@ const TableList: React.FC<{}> = () => {
         }}
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> 新建
+            <PlusOutlined /> {intl.formatMessage({
+            id: 'pages.newcreate',
+            defaultMessage: '新建',
+          })}
           </Button>,
         ]}
         request={(params, sorter, filter) => queryUpdateList({ ...params, sorter, filter })}
@@ -385,7 +435,10 @@ const TableList: React.FC<{}> = () => {
         <FooterToolbar
           extra={
             <div>
-              已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
+              {intl.formatMessage({
+                id: 'pages.seleted',
+                defaultMessage: '已选择',
+              })}  <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> &nbsp;&nbsp;
               <span>
               </span>
             </div>
@@ -398,7 +451,10 @@ const TableList: React.FC<{}> = () => {
               actionRef.current?.reloadAndRest?.();
             }}
           >
-            批量删除
+            {intl.formatMessage({
+              id: 'pages.batchDelete',
+              defaultMessage: '批量删除',
+            })}
           </Button>
         </FooterToolbar>
       )}
