@@ -42,7 +42,8 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     action:props.values.action,
     information_id:props.values.information_id,
     type:props.values.type,
-    nodes:props.values.nodes,
+    // nodes:props.values.nodes,
+    // pid:props.values.nodes,
     rid:props.values.rid,
   });
 
@@ -96,126 +97,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
 
 
   const renderContent = () => {
-    // if (currentStep === 1) {
-    //   return (
-    //     <>
-    //       <FormItem name="category" label="分类">
-    //         <Checkbox.Group>
-    //           <Row>
-    //             <Col span={8}>
-    //               <Checkbox
-    //                 value="newest"
-    //                 style={{
-    //                   lineHeight: '32px',
-    //                 }}
-    //               >
-    //                 最新上架
-    //               </Checkbox>
-    //             </Col>
-    //             <Col span={8}>
-    //               <Checkbox
-    //                 value="hottest"
-    //                 style={{
-    //                   lineHeight: '32px',
-    //                 }}
-    //
-    //               >
-    //                 人气最高
-    //               </Checkbox>
-    //             </Col>
-    //             <Col span={8}>
-    //               <Checkbox
-    //                 value="star"
-    //                 style={{
-    //                   lineHeight: '32px',
-    //                 }}
-    //               >
-    //                 明星
-    //               </Checkbox>
-    //             </Col>
-    //             <Col span={8}>
-    //               <Checkbox
-    //                 value="producer"
-    //                 style={{
-    //                   lineHeight: '32px',
-    //                 }}
-    //               >
-    //                 制作公司
-    //               </Checkbox>
-    //             </Col>
-    //             <Col span={8}>
-    //               <Checkbox
-    //                 value="exclusive"
-    //                 style={{
-    //                   lineHeight: '32px',
-    //                 }}
-    //               >
-    //                 独家内容
-    //               </Checkbox>
-    //             </Col>
-    //             <Col span={8}>
-    //               <Checkbox
-    //                 value="normal"
-    //                 style={{
-    //                   lineHeight: '32px',
-    //                 }}
-    //               >
-    //                 正常
-    //               </Checkbox>
-    //             </Col>
-    //           </Row>
-    //         </Checkbox.Group>
-    //       </FormItem>
-    //       <FormItem name="lower_banner" label="底标">
-    //         <Select style={{ width: '100%' }}>
-    //           <Option value="free">免费</Option>
-    //           <Option value="discount">折扣</Option>
-    //           <Option value="event">限免</Option>
-    //           <Option value="premium">精品</Option>
-    //           <Option value="collection">收藏</Option>
-    //           <Option value="liked">喜欢</Option>
-    //           <Option value="none">无</Option>
-    //         </Select>
-    //       </FormItem>
-    //       <FormItem name="top_right" label="右上角标">
-    //         <Select style={{ width: '100%' }}>
-    //           <Option value="free">免费</Option>
-    //           <Option value="discount">折扣</Option>
-    //           <Option value="event">限免</Option>
-    //           <Option value="premium">精品</Option>
-    //           <Option value="collection">收藏</Option>
-    //           <Option value="liked">喜欢</Option>
-    //           <Option value="none">无</Option>
-    //         </Select>
-    //       </FormItem>
-    //
-    //     </>
-    //   );
-    // }
-    // if (currentStep === 2) {
-    //   return (
-    //     <>
-    //       <FormItem
-    //         name="time"
-    //         label="开始时间"
-    //         rules={[{ required: true, message: '请选择开始时间！' }]}
-    //       >
-    //         <DatePicker
-    //           style={{ width: '100%' }}
-    //           showTime
-    //           format="YYYY-MM-DD HH:mm:ss"
-    //           placeholder="选择开始时间"
-    //         />
-    //       </FormItem>
-    //       <FormItem name="frequency" label="调度周期">
-    //         <Select style={{ width: '100%' }}>
-    //           <Option value="month">月</Option>
-    //           <Option value="week">周</Option>
-    //         </Select>
-    //       </FormItem>
-    //     </>
-    //   );
-    // }
+
     return (
       <>
         <FormItem
@@ -236,6 +118,13 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         >
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
+        <FormItem name="action" label="PIN状态">
+          <Select style={{ width: '100%' }}>
+            <Option value="none">none</Option>
+            <Option value="pin">pin</Option>
+            <Option value="unpin">unpin</Option>
+          </Select>
+        </FormItem>
         <FormItem name="nodes" label="PID"
                   rules={[{required: true, message: '请设置PID'}]}>
           <Checkbox.Group>
@@ -244,13 +133,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
             </Row>
           </Checkbox.Group>
         </FormItem>
-        <FormItem name="action" label="PIN状态">
-          <Select style={{ width: '100%' }}>
-            <Option value="none">none</Option>
-            <Option value="pin">pin</Option>
-            <Option value="unpin">unpin</Option>
-          </Select>
-        </FormItem>
+
       </>
     );
   };
@@ -264,40 +147,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         </Button>
       </>
     );
-    // if (currentStep === 1) {
-    //   return (
-    //     <>
-    //       <Button style={{ float: 'left' }} onClick={backward}>
-    //         上一步
-    //       </Button>
-    //       <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
-    //       <Button type="primary" onClick={() => handleNext()}>
-    //         完成
-    //       </Button>
-    //     </>
-    //   );
-    // }
-    // if (currentStep === 2) {
-    //   return (
-    //     <>
-    //       <Button style={{ float: 'left' }} onClick={backward}>
-    //         上一步
-    //       </Button>
-    //       <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
-    //       <Button type="primary" onClick={() => handleNext()}>
-    //         完成
-    //       </Button>
-    //     </>
-    //   );
-    // }
-    // return (
-    //   <>
-    //     <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
-    //     <Button type="primary" onClick={() => handleNext()}>
-    //       下一步
-    //     </Button>
-    //   </>
-    // );
+
   };
 
   return (
