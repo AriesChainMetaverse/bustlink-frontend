@@ -1,5 +1,5 @@
 export interface TableListItem {
-  id: number;
+  id: string;
   rid: string;
   nodes: string[];
   type: string;

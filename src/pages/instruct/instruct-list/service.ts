@@ -36,14 +36,14 @@ export async function queryAdminInstructList(params?: TableListParams) {
         obj.video_no = response.data[i].edges.update_info.filename
       }
 
-      let newAdminNodes = [];
-      obj.nodes = []
-      if(response.data[i].edges.nodes !== "" && response.data[i].edges.nodes !== undefined && JSON.stringify(response.data[i].edges.nodes) !== "{}"){
-          response.data[i].edges.nodes.forEach(e => {
-            newAdminNodes.push(e.id)
-          })
-          obj.nodes = newAdminNodes
-      }
+      // let newAdminNodes = [];
+      // obj.nodes = []
+      // if(response.data[i].edges.nodes !== "" && response.data[i].edges.nodes !== undefined && JSON.stringify(response.data[i].edges.nodes) !== "{}"){
+      //     response.data[i].edges.nodes.forEach(e => {
+      //       newAdminNodes.push(e.id)
+      //     })
+      //     obj.nodes = newAdminNodes
+      // }
 
 
 
@@ -57,7 +57,7 @@ export async function queryAdminInstructList(params?: TableListParams) {
       obj.updated_unix = response.data[i].updated_unix
       obj.title = ""
       obj.video_no = ""
-      obj.nodes = []
+      // obj.nodes = []
     }
     newData.push(obj)
   }
@@ -88,7 +88,7 @@ export async function addRule(params: TableListParams) {
   });
 }
 
-export async function updateAdminInstruct(params: TableListParams) {
+export async function updateAdminInstruct(params: { ids: string[],action: string  } ) {
   return request(`/api/v0/admin/instruct`, {
     method: 'POST',
     data: {
@@ -105,4 +105,12 @@ export async function queryAdminNoteList() {
   });
 
   return response.data;
+}
+export async function syncInstruct(params: TableListParams) {
+  return request(`/api/v0/admin/instruct/${params.rid}`, {
+    method: 'PUT',
+    data: {
+      // ...params,
+    },
+  });
 }
