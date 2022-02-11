@@ -44,6 +44,7 @@ const Model: LoginModelType = {
 
         // 登录成功后，将token存储到localStorage中
         localStorage.setItem("token",response.access_token)
+        localStorage.setItem("refresh_token",response.refresh_token)
 
         // 登录成功后通过token获取用户基本信息
         const response1 = yield call(fakeUserBaseInfo, response.access_token);
