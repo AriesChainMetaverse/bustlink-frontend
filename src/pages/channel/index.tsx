@@ -12,8 +12,16 @@ import type { ChannelItem } from './data.d';
 import type { Dispatch } from 'umi';
 import { connect } from 'umi';
 import type { StateType } from './model';
-import { addChannel, addChannelInfos, channelSyncTransferInfo ,channelSyncInstructInfo} from '@/pages/channel/service';
+import {
+  addChannel,
+  addChannelInfos,
+  channelSyncTransferInfo,
+  channelSyncInstructInfo,
+  updateChannel
+} from '@/pages/channel/service';
 import AddChannelForm, { ChannelFormValueType } from '@/pages/channel/components/AddChannelForm';
+import EditChannelForm from '@/pages/channel/components/EditChannelForm';
+import UpdateForm from "@/pages/discovery/discovery-list/components/UpdateForm";
 
 interface ChannelListProps {
   listAndChannelList: StateType;
@@ -89,6 +97,22 @@ const handleChannelAdd = async (value: ChannelFormValueType) => {
   return false;
 };
 
+const handleChannelUpdate = async (value: ChannelFormValueType) => {
+  const hide = message.loading('正在配置');
+
+  const resp = await updateChannel(value);
+  hide();
+  if (resp.status === 'success') {
+    message.success(resp.message);
+    return true;
+  }
+  message.error(resp.message);
+  return false;
+};
+
+
+
+
 const ChannelList: React.FC<ChannelListProps> = (props) => {
   const [page, setPage] = useState<number>(1);
   const [perPage, setPerPage] = useState<number>(15);
@@ -101,6 +125,7 @@ const ChannelList: React.FC<ChannelListProps> = (props) => {
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<ChannelItem>();
   const [selectedRowsState, setSelectedRows] = useState<ChannelItem[]>([]);
+  const [stepFormValues, setStepFormValues] = useState({});
 
   const InfoEditBtn: React.FC<{
     item: ChannelItem;
@@ -131,7 +156,7 @@ const ChannelList: React.FC<ChannelListProps> = (props) => {
       }
     >
       <a>
-        媒体管理 <DownOutlined />
+        {/*媒体管理 <DownOutlined />*/}
       </a>
     </Dropdown>
   );
@@ -179,37 +204,48 @@ const ChannelList: React.FC<ChannelListProps> = (props) => {
       dataIndex: 'label',
       valueType: 'text',
     },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      hideInForm: true,
-      valueEnum: {
-        0: { text: '关闭', status: 'Default' },
-        1: { text: '运行中', status: 'Processing' },
-        2: { text: '已上线', status: 'Success' },
-        3: { text: '异常', status: 'Error' },
-      },
-    },
+    // {
+    //   title: '状态',
+    //   dataIndex: 'status',
+    //   hideInForm: true,
+    //   valueEnum: {
+    //     0: { text: '关闭', status: 'Default' },
+    //     1: { text: '运行中', status: 'Processing' },
+    //     2: { text: '已上线', status: 'Success' },
+    //     3: { text: '异常', status: 'Error' },
+    //   },
+    // },
     {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
         <>
-          <a href=''>编辑</a>
-          <Divider type='vertical' />
-          <InfoEditBtn item={record} />
+
+          <a
+            onClick={() => {
+              handleEditChannelModalVisible(true);
+              setStepFormValues(record);
+            }}
+          >
+            编辑
+          </a>
+
+
+          {/*<a href=''>编辑</a>*/}
+          {/*<Divider type='vertical' />*/}
+          {/*<InfoEditBtn item={record} />*/}
         </>
       ),
     },
-    {
-      title: '番号列表',
-      dataIndex: 'edges.infos',
-    },
-    {
-      title: '用户列表',
-      dataIndex: 'edges.users',
-    },
+    // {
+    //   title: '番号列表',
+    //   dataIndex: 'edges.infos',
+    // },
+    // {
+    //   title: '用户列表',
+    //   dataIndex: 'edges.users',
+    // },
   ];
 
   useEffect(() => {
@@ -256,9 +292,10 @@ const ChannelList: React.FC<ChannelListProps> = (props) => {
           <Button type='primary' onClick={() => handleAddChannelModalVisible(true)}>
             <PlusOutlined /> 新建
           </Button>,
-          <Button type='ghost' onClick={() => syncTransferInfo()}>
-            <SyncOutlined /> 同步
-          </Button>,
+
+          // <Button type='ghost' onClick={() => syncTransferInfo()}>
+          //   <SyncOutlined /> 同步
+          // </Button>,
           // <Button type='ghost' onClick={() => syncInstructInfo()}>
           //   <SyncOutlined /> Instruct同步
           // </Button>,
@@ -288,16 +325,15 @@ const ChannelList: React.FC<ChannelListProps> = (props) => {
             </div>
           }
         >
-          <Button
-            onClick={async () => {
-              await handleInfoRemove(selectedRowsState);
-              setSelectedRows([]);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            批量删除
-          </Button>
-          <Button type='primary'>批量审批</Button>
+          {/*<Button*/}
+          {/*  onClick={async () => {*/}
+          {/*    await handleInfoRemove(selectedRowsState);*/}
+          {/*    setSelectedRows([]);*/}
+          {/*    actionRef.current?.reloadAndRest?.();*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  批量删除*/}
+          {/*</Button>*/}
         </FooterToolbar>
       )}
       <EditInfoForm
@@ -357,6 +393,30 @@ const ChannelList: React.FC<ChannelListProps> = (props) => {
         addModalVisible={addChannelModalVisible}
         values={infoFormValues}
       />
+
+      {stepFormValues && Object.keys(stepFormValues).length ? (
+        <EditChannelForm
+          onSubmit={async (value) => {
+            const success = await handleChannelUpdate(value);
+            if (success) {
+              handleEditChannelModalVisible(false);
+              setStepFormValues({});
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }}
+          onCancel={() => {
+            handleEditChannelModalVisible(false);
+            setStepFormValues({});
+          }}
+          editChannelModalVisible={editChannelModalVisible}
+          values={stepFormValues}
+        />
+      ) : null}
+
+
+
 
       <Drawer
         width={600}
