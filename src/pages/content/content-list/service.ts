@@ -50,6 +50,7 @@ export async function updateFakeList(params: ContentRequestParamsType) {
 }
 
 export async function updateContent(params: ContentItemDataType) {
+  params.scrape_id = Number(params.scrape_id);
   const { ...restParams } = params;
   return request(`/api/v0/client/content/${params.id}`, {
     method: 'PUT',
