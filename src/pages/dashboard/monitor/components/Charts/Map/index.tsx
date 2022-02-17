@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { HeatmapLayer, MapboxScene, PointLayer } from '@antv/l7-react';
+import { HeatmapLayer, MapboxScene, PointLayer,GaodeMap  } from '@antv/l7-react';
 import { PageLoading } from '@ant-design/pro-layout';
+import {getAdminsGeoData} from '../../../service'
 
 const colors = ['#eff3ff', '#c6dbef', '#9ecae1', '#6baed6', '#4292c6', '#2171b5', '#084594'];
 export default class Map extends React.Component {
@@ -11,14 +12,16 @@ export default class Map extends React.Component {
   };
 
   public async componentDidMount() {
-    const [geoData, gridData] = await Promise.all([
-      fetch(
-        'https://gw.alipayobjects.com/os/bmw-prod/c5dba875-b6ea-4e88-b778-66a862906c93.json',
-      ).then((d) => d.json()),
+
+    const [ gridData] = await Promise.all([
+      // fetch(
+      //   'https://gw.alipayobjects.com/os/bmw-prod/c5dba875-b6ea-4e88-b778-66a862906c93.json',
+      // ).then((d) => d.json()),
       fetch(
         'https://gw.alipayobjects.com/os/bmw-prod/8990e8b4-c58e-419b-afb9-8ea3daff2dd1.json',
       ).then((d) => d.json()),
     ]);
+    const geoData = await getAdminsGeoData();
     this.setState({
       data: geoData,
       grid: gridData,
@@ -33,15 +36,16 @@ export default class Map extends React.Component {
     ) : (
       <MapboxScene
         map={{
-          center: [110.19382669582967, 50.258134],
+          center: [112, 20],
           pitch: 0,
           style: 'blank',
-          zoom: 1,
+          zoom: 10,
+          logoVisible: false
         }}
         style={{
           position: 'relative',
           width: '100%',
-          height: '452px',
+          height: '552px',
         }}
       >
         {grid && (
@@ -104,42 +108,41 @@ export default class Map extends React.Component {
               },
             }}
             size={{
-              field: 'cum_conf',
-              values: [0, 30],
+              values: 10,
             }}
             style={{
               opacity: 0.8,
             }}
           />,
-          <PointLayer
-            key="5"
-            source={{
-              data,
-            }}
-            color={{
-              values: '#fff',
-            }}
-            shape={{
-              field: 'Short_Name_ZH',
-              values: 'text',
-            }}
-            filter={{
-              field: 'cum_conf',
-              values: (v) => {
-                return v > 2000;
-              },
-            }}
-            size={{
-              values: 12,
-            }}
-            style={{
-              opacity: 1,
-              strokeOpacity: 1,
-              strokeWidth: 0,
-            }}
-          />,
+          // <PointLayer
+          //   key="5"
+          //   source={{
+          //     data,
+          //   }}
+          //   color={{
+          //     values: '#fff',
+          //   }}
+          //   shape={{
+          //     field: 'ADM0_NAME',
+          //     values: 'text',
+          //   }}
+          //   filter={{
+          //     field: 'cum_conf',
+          //     values: (v) => {
+          //       return v > 0;
+          //     },
+          //   }}
+          //   size={{
+          //     values: 12,
+          //   }}
+          //   style={{
+          //     opacity: 1,
+          //     strokeOpacity: 1,
+          //     strokeWidth: 0,
+          //   }}
+          // />,
         ]}
-      </MapboxScene>
+      </MapboxScene >
     );
   }
 }
