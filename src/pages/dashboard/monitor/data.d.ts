@@ -3,3 +3,10 @@ export interface TagType {
   value: string;
   type: string;
 }
+
+export interface MonitorDataType {
+  NodeCnt: number;
+  OnlineNodeCnt: number;
+  PinCnt: number;
+  LastInformation: string;
+}

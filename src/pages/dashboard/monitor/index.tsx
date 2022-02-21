@@ -22,19 +22,22 @@ interface MonitorProps {
 class Monitor extends Component<MonitorProps> {
   componentDidMount() {
     const { dispatch } = this.props;
+    // dispatch({
+    //   type: 'dashboardAndmonitor/fetchTags',
+    // });
     dispatch({
-      type: 'dashboardAndmonitor/fetchTags',
+      type: 'dashboardAndmonitor/fetchMonitorData',
     });
   }
 
   render() {
     const { dashboardAndmonitor, loading } = this.props;
-    const { tags } = dashboardAndmonitor;
+    const { tags,monitordata } = dashboardAndmonitor;
     return (
       <GridContent>
         <React.Fragment>
           <Row gutter={24}>
-            <Col xl={18} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
+            <Col xl={24} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
               <Card
                 title={
                   <FormattedMessage
@@ -53,8 +56,8 @@ class Monitor extends Component<MonitorProps> {
                           defaultMessage="Total transactions today"
                         />
                       }
-                      suffix="元"
-                      value={numeral(124543233).format('0,0')}
+                      // suffix="元"
+                      value={numeral(monitordata.NodeCnt).format('0,0')}
                     />
                   </Col>
                   <Col md={6} sm={12} xs={24}>
@@ -65,19 +68,19 @@ class Monitor extends Component<MonitorProps> {
                           defaultMessage="Sales target completion rate"
                         />
                       }
-                      value="92%"
+                      value={numeral(monitordata.OnlineNodeCnt).format('0,0')}
                     />
                   </Col>
                   <Col md={6} sm={12} xs={24}>
-                    <Countdown
+                    <Statistic
                       title={
                         <FormattedMessage
                           id="dashboardandmonitor.monitor.remaining-time"
                           defaultMessage="Remaining time of activity"
                         />
                       }
-                      value={deadline}
-                      format="HH:mm:ss:SSS"
+                      value={numeral(monitordata.PinCnt).format('0,0')}
+                      // format="HH:mm:ss:SSS"
                     />
                   </Col>
                   <Col md={6} sm={12} xs={24}>
@@ -88,8 +91,8 @@ class Monitor extends Component<MonitorProps> {
                           defaultMessage="Total transactions per second"
                         />
                       }
-                      suffix="元"
-                      value={numeral(234).format('0,0')}
+                      // suffix="元"
+                      value={monitordata.LastInformation.video_no}
                     />
                   </Col>
                 </Row>
@@ -98,40 +101,40 @@ class Monitor extends Component<MonitorProps> {
                 </div>
               </Card>
             </Col>
-            <Col xl={6} lg={24} md={24} sm={24} xs={24}>
-              <Card
-                title={
-                  <FormattedMessage
-                    id="dashboardandmonitor.monitor.activity-forecast"
-                    defaultMessage="Activity forecast"
-                  />
-                }
-                style={{ marginBottom: 24 }}
-                bordered={false}
-              >
-                <ActiveChart />
-              </Card>
-              <Card
-                title={
-                  <FormattedMessage
-                    id="dashboardandmonitor.monitor.efficiency"
-                    defaultMessage="Efficiency"
-                  />
-                }
-                style={{ marginBottom: 24 }}
-                bodyStyle={{ textAlign: 'center' }}
-                bordered={false}
-              >
-                <Gauge
-                  title={formatMessage({
-                    id: 'dashboardandmonitor.monitor.ratio',
-                    defaultMessage: 'Ratio',
-                  })}
-                  height={180}
-                  percent={87}
-                />
-              </Card>
-            </Col>
+            {/*<Col xl={6} lg={24} md={24} sm={24} xs={24}>*/}
+            {/*  <Card*/}
+            {/*    title={*/}
+            {/*      <FormattedMessage*/}
+            {/*        id="dashboardandmonitor.monitor.activity-forecast"*/}
+            {/*        defaultMessage="Activity forecast"*/}
+            {/*      />*/}
+            {/*    }*/}
+            {/*    style={{ marginBottom: 24 }}*/}
+            {/*    bordered={false}*/}
+            {/*  >*/}
+            {/*    <ActiveChart />*/}
+            {/*  </Card>*/}
+            {/*  <Card*/}
+            {/*    title={*/}
+            {/*      <FormattedMessage*/}
+            {/*        id="dashboardandmonitor.monitor.efficiency"*/}
+            {/*        defaultMessage="Efficiency"*/}
+            {/*      />*/}
+            {/*    }*/}
+            {/*    style={{ marginBottom: 24 }}*/}
+            {/*    bodyStyle={{ textAlign: 'center' }}*/}
+            {/*    bordered={false}*/}
+            {/*  >*/}
+            {/*    <Gauge*/}
+            {/*      title={formatMessage({*/}
+            {/*        id: 'dashboardandmonitor.monitor.ratio',*/}
+            {/*        defaultMessage: 'Ratio',*/}
+            {/*      })}*/}
+            {/*      height={180}*/}
+            {/*      percent={87}*/}
+            {/*    />*/}
+            {/*  </Card>*/}
+            {/*</Col>*/}
           </Row>
           <Row gutter={24}>
             <Col xl={12} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
