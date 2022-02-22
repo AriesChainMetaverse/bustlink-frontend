@@ -98,45 +98,45 @@ const TableList: React.FC<{}> = () => {
    * 国际化配置
    */
   const intl = useIntl();
-  const uploadProps ={
-    name: 'mediaFile',
-    multiple: true,
-    action: `/api/v0/admin/discovery/${row?.id}`,
-    showUploadList:false,
-    method:"post",
-    headers:headers,
-    onChange(info: { file: { response?: any; name?: any; status?: any; }; fileList: any; }) {
-      console.log(info)
-      const { status } = info.file;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-
-        if(info.file.response.status ==="success"){
-          message.success(`${info.file.name} 文件上传成功.`);
-          if (actionRef.current) {
-            actionRef.current.reload();
-          }
-        }else{
-          message.error(`${info.file.name} 文件上传失败.[${info.file.response.message}]`);
-        }
-
-
-      } else if (status === 'error') {
-        message.error(`${info.file.name} 文件上传失败.`);
-      }
-    },
-    // beforeUpload(file: { type: string; }){
-    //   console.log(file.type)
-    //   const isAPK = file.type === 'application/vnd.android.package-archive';
-    //   if (!isAPK) {
-    //     message.error('只能上传 apk 文件哦！');
-    //   }
-    //   return isAPK;
-    //
-    // },
-  };
+  // const uploadProps ={
+  //   name: 'mediaFile',
+  //   multiple: true,
+  //   action: `/api/v0/admin/discovery/${row?.id}`,
+  //   showUploadList:false,
+  //   method:"post",
+  //   headers:headers,
+  //   onChange(info: { file: { response?: any; name?: any; status?: any; }; fileList: any; }) {
+  //     console.log(info)
+  //     const { status } = info.file;
+  //     if (status !== 'uploading') {
+  //       console.log(info.file, info.fileList);
+  //     }
+  //     if (status === 'done') {
+  //
+  //       if(info.file.response.status ==="success"){
+  //         message.success(`${info.file.name} 文件上传成功.`);
+  //         if (actionRef.current) {
+  //           actionRef.current.reload();
+  //         }
+  //       }else{
+  //         message.error(`${info.file.name} 文件上传失败.[${info.file.response.message}]`);
+  //       }
+  //
+  //
+  //     } else if (status === 'error') {
+  //       message.error(`${info.file.name} 文件上传失败.`);
+  //     }
+  //   },
+  //   // beforeUpload(file: { type: string; }){
+  //   //   console.log(file.type)
+  //   //   const isAPK = file.type === 'application/vnd.android.package-archive';
+  //   //   if (!isAPK) {
+  //   //     message.error('只能上传 apk 文件哦！');
+  //   //   }
+  //   //   return isAPK;
+  //   //
+  //   // },
+  // };
 
   // @ts-ignore
   const columns: ProColumns<TableListItem>[] = [
