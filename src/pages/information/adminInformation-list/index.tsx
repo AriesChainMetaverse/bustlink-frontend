@@ -178,6 +178,7 @@ const TableList: React.FC<{}> = () => {
         "down": { text: '已下架', status: "down" },
       },
     },
+
     {
       title: '操作',
       dataIndex: 'option',
