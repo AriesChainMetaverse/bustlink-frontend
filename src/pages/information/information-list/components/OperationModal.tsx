@@ -1,8 +1,9 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import moment from 'moment';
-import {Button,  Form, Input, Modal, Result} from 'antd';
+import {Button, Form, Input, Modal, Result, Select} from 'antd';
 import {InfoItem} from '../data.d';
 import styles from '../style.less';
+import {queryChannelList} from "@/pages/information/information-list/service";
 
 interface OperationModalProps {
   done: boolean;
@@ -22,6 +23,7 @@ const formLayout = {
 const OperationModal: FC<OperationModalProps> = (props) => {
   const [form] = Form.useForm();
   const {done, visible, current, onDone, onCancel, onSubmit} = props;
+  const [CheckBoxItemList, setCheckBoxItemList] = useState<[]>([]);
 
   useEffect(() => {
     if (form && !visible) {
@@ -48,6 +50,45 @@ const OperationModal: FC<OperationModalProps> = (props) => {
       onSubmit(values as InfoItem);
     }
   };
+
+  useEffect(() => {
+    getCheckboxItemList().then(r => setCheckBoxItemList(r));
+  }, []);
+
+  async function getCheckboxItemList() {
+
+    const roleList =  await queryChannelList()
+    const elements: JSX.Element[] =[]
+
+    elements.push(
+      <Select.Option key="00000000-0000-0000-0000-000000000000"
+                     value="00000000-0000-0000-0000-000000000000"
+                     style={{
+                       lineHeight: '32px',
+                     }}
+      >
+        none
+      </Select.Option>
+    );
+
+    roleList.forEach((item)=>{
+      elements.push(
+        <Select.Option key="{item.id}"
+                       value={item.id}
+                       style={{
+                         lineHeight: '32px',
+                       }}
+        >
+          {item.name}|{item.label}
+        </Select.Option>
+      );
+    })
+
+    return elements
+  }
+
+
+
 
   const modalFooter = done
     ? {footer: null, onCancel: onDone}
@@ -117,7 +158,11 @@ const OperationModal: FC<OperationModalProps> = (props) => {
         >
           <Input placeholder="请输入发行方"/>
         </Form.Item>
-
+        <Form.Item name="channel_id" label="频道">
+          <Select>
+            {CheckBoxItemList}
+          </Select>
+        </Form.Item>
       </Form>
     );
   };
