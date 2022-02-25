@@ -39,3 +39,12 @@ export async function updateInformationItem(params: InfoItemDataType) {
     },
   });
 }
+
+export async function queryChannelList() {
+
+  const response = await request('/api/v0/channels?per_page=100', {
+    method:"GET",
+  });
+
+  return response.data;
+}

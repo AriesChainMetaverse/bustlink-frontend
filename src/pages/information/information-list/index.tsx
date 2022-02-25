@@ -302,9 +302,9 @@ class InformationList extends Component<InformationListProps, InformationListSta
                 }
                 return (
                   <List.Item>
-                    <Button type="dashed" className={styles.newButton}>
-                      <PlusOutlined/> 新增产品
-                    </Button>
+                    {/*<Button type="dashed" className={styles.newButton}>*/}
+                    {/*  <PlusOutlined/> 新增产品*/}
+                    {/*</Button>*/}
                   </List.Item>
                 );
               }}
