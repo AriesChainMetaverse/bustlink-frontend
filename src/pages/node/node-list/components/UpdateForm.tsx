@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps ,Checkbox,Row,Col} from 'antd';
 
 import Editor from 'for-editor';
 
 import { TableListItem } from '../data.d';
+import { getlocationByIP,isValidIP} from '../service';
+import {string} from "prop-types";
 
 export interface FormValueType extends Partial<TableListItem> {
   id?: string;
@@ -38,16 +40,13 @@ const formLayout = {
 
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const [formVals, setFormVals] = useState<FormValueType>({
-
-    announce_no: props.values.announce_no,
     id: props.values.id,
-    title: props.values.title,
-    content: props.values.content,
-    kind: props.values.kind,
-    link: props.values.link,
-
+    pid: props.values.pid,
+    addrs: props.values.addrs,
+    locations: getLocationList(props.values.addrs)
   });
 
+  const [location, setLocation] = useState<[]>([]);
   // const [currentStep, setCurrentStep] = useState<number>(0);
 
   const [form] = Form.useForm();
@@ -71,11 +70,31 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     // if (currentStep < 1) {
     //   forward();
     // } else {
-      handleUpdate({ ...formVals, ...fieldsValue });
+    handleUpdate({ ...formVals, ...fieldsValue });
     // }
   };
 
+  useEffect(() => {
+    getLocationList(formVals.addrs).then(r => setLocation(r));
+  }, []);
 
+  async function getLocationList(addrs) {
+    const location = [];
+    for (const item of addrs) {
+
+      let lArr =[]
+      let response2;
+      lArr = item.toString().split("/")
+      // eslint-disable-next-line no-await-in-loop
+      if (isValidIP(lArr[2])) {
+        response2 = await getlocationByIP(lArr[2])
+        if (response2.data[0] !== undefined) {
+          location.push(response2.data[0])
+        }
+      }
+    }
+    return location
+  }
 
 
   const renderContent = () => {
@@ -88,54 +107,39 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
         <FormItem
-          name="announce_no"
-          label="公告编号"
+          name="pid"
+          label="PID"
         >
           <Input placeholder="请输入" disabled={true}/>
         </FormItem>
         <FormItem
-          name="title"
-          label="标题"
-          rules={[{ required: true, message: '请输入至少两个字符的描述！', min: 2 }]}
+          name="addrs"
+          label="address"
         >
-          <TextArea rows={4} placeholder="请输入至少两个字符" />
+          <TextArea rows={10} disabled={false} />
         </FormItem>
-        <FormItem name="kind" label="分类">
-          <Select style={{ width: '100%' }}>
-            <Option value="notice">系统通知</Option>
-            <Option value="event">活动</Option>
-            <Option value="announcement">公告</Option>
 
-          </Select>
-        </FormItem>
         <FormItem
-          name="content"
-          label="公告内容"
-          rules={[{ required: true, message: '请输入至少五个字符的描述！', min: 5 }]}
+          name="Location"
+          label="地理信息"
         >
-          <Editor />
+          {location}
         </FormItem>
-        <FormItem
-          name="link"
-          label="链接"
-          rules={[{ required: false, message: '请输入至少五个字符的描述！', min: 5 }]}
-        >
-          <TextArea rows={4} placeholder="请输入至少五个字符" />
-        </FormItem>
+
       </>
     );
   };
 
   const renderFooter = () => {
     // if (currentStep === 1) {
-      return (
-        <>
-          <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
-          <Button type="primary" onClick={() => handleNext()}>
-            完成
-          </Button>
-        </>
-      );
+    return (
+      <>
+        <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
+        {/*<Button type="primary" onClick={() => handleNext()}>*/}
+        {/*  完成*/}
+        {/*</Button>*/}
+      </>
+    );
     // }
     // if (currentStep === 2) {
     //   return (
@@ -165,7 +169,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       width={1000}
       bodyStyle={{ padding: '32px 40px 48px' }}
       destroyOnClose
-      title="通知内容配置"
+      title="IP地址详情"
       visible={updateModalVisible}
       footer={renderFooter()}
       onCancel={() => handleUpdateModalVisible()}
@@ -175,14 +179,9 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         {...formLayout}
         form={form}
         initialValues={{
-          announce_no: formVals.announce_no,
           id: formVals.id,
-          title: formVals.title,
-          content: formVals.content,
-          kind: formVals.kind,
-          link: formVals.link,
-
-
+          pid: formVals.pid,
+          addrs: formVals.addrs,
         }}
       >
         {renderContent()}
