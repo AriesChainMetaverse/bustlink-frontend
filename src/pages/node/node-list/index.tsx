@@ -1,14 +1,15 @@
 
-import {   message,  Drawer } from 'antd';
+import {message, Drawer, Button} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProDescriptions from '@ant-design/pro-descriptions';
 // import CreateForm from './components/CreateForm';
-// import UpdateForm, { FormValueType } from './components/UpdateForm';
+import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import {  removeAnnounce, queryNodeList} from './service';
+import {  removeNode, queryNodeList} from './service';
 import moment from 'moment';
+import {FormattedMessage} from "umi";
 /**
  * 添加公告
  * @param fields
@@ -62,7 +63,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await removeAnnounce({
+    await removeNode({
       ids: selectedRows.map((row) => row.id),
     });
     hide();
@@ -84,33 +85,33 @@ const TableList: React.FC<{}> = () => {
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '节点ID',
+      title: 'PID',
       dataIndex: 'pid',
       tip: '节点ID是唯一',
       hideInForm: true,
       copyable: true,
-      ellipsis: true,
+      ellipsis: false,
       // render: (dom, entity) => {
       //   return <a onClick={() => setRow(entity)}>{dom}</a>;
       // },
     },
-    {
-      title: 'IP地址',
-      dataIndex: 'addrs',
-      sorter: false,
-      hideInForm: true,
-      hideInSearch: true,
-      valueType: 'textarea',
-      render: (textArray, entity) => {
-        return (<div>
-          {
-            textArray.map(t=>{
-              return (<li>{t}</li>)
-            })
-          }
-        </div>)
-      },
-    },
+    // {
+    //   title: 'IP地址',
+    //   dataIndex: 'addrs',
+    //   sorter: false,
+    //   hideInForm: true,
+    //   hideInSearch: true,
+    //   valueType: 'textarea',
+    //   render: (textArray, entity) => {
+    //     return (<div>
+    //       {
+    //         textArray.map(t=>{
+    //           return (<li>{t}</li>)
+    //         })
+    //       }
+    //     </div>)
+    //   },
+    // },
 
     {
       title: '分类',
@@ -143,23 +144,23 @@ const TableList: React.FC<{}> = () => {
       },
     },
 
-    {
-      title: '地理地址',
-      dataIndex: 'location',
-      sorter: false,
-      hideInForm: true,
-      hideInSearch: true,
-      valueType: 'textarea',
-      render: (textArray) => {
-        return (<div>
-          {
-            textArray.map(t=>{
-              return (<li>{t}</li>)
-            })
-          }
-        </div>)
-      },
-    },
+    // {
+    //   title: '地理地址',
+    //   dataIndex: 'location',
+    //   sorter: false,
+    //   hideInForm: true,
+    //   hideInSearch: true,
+    //   valueType: 'textarea',
+    //   render: (textArray) => {
+    //     return (<div>
+    //       {
+    //         textArray.map(t=>{
+    //           return (<li>{t}</li>)
+    //         })
+    //       }
+    //     </div>)
+    //   },
+    // },
 
     {
       title: '设备序列号',
@@ -176,14 +177,30 @@ const TableList: React.FC<{}> = () => {
       hideInSearch: true,
 
       render: (text, entity) => {
-         if(text === undefined || text ==="-"){
-           return "-";
-         }
-         // @ts-ignore
+        if(text === undefined || text ==="-"){
+          return "-";
+        }
+        // @ts-ignore
         return moment(parseInt(String(text / 1000000), 10)).format('YYYY-MM-DD HH:mm:ss');
       },
     },
-
+    {
+      title: "操作",
+      dataIndex: 'option',
+      valueType: 'option',
+      render: (_, record) => (
+        <>
+          <a
+            onClick={() => {
+              handleUpdateModalVisible(true);
+              setStepFormValues(record);
+            }}
+          >
+            IP详情
+          </a>
+        </>
+      ),
+    },
   ];
 
   return (
@@ -213,8 +230,18 @@ const TableList: React.FC<{}> = () => {
               已选择 <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a> 项&nbsp;&nbsp;
 
             </div>
+
           }
         >
+          <Button
+            onClick={async () => {
+              await handleRemove(selectedRowsState);
+              setSelectedRows([]);
+              actionRef.current?.reloadAndRest?.();
+            }}
+          >
+            批量删除
+          </Button>
         </FooterToolbar>
       )}
       {/*<CreateForm onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>*/}
@@ -233,26 +260,26 @@ const TableList: React.FC<{}> = () => {
       {/*    columns={columns}*/}
       {/*  />*/}
       {/*</CreateForm>*/}
-      {/*{stepFormValues && Object.keys(stepFormValues).length ? (*/}
-      {/*  <UpdateForm*/}
-      {/*    onSubmit={async (value) => {*/}
-      {/*      const success = await handleUpdate(value);*/}
-      {/*      if (success) {*/}
-      {/*        handleUpdateModalVisible(false);*/}
-      {/*        setStepFormValues({});*/}
-      {/*        if (actionRef.current) {*/}
-      {/*          actionRef.current.reload();*/}
-      {/*        }*/}
-      {/*      }*/}
-      {/*    }}*/}
-      {/*    onCancel={() => {*/}
-      {/*      handleUpdateModalVisible(false);*/}
-      {/*      setStepFormValues({});*/}
-      {/*    }}*/}
-      {/*    updateModalVisible={updateModalVisible}*/}
-      {/*    values={stepFormValues}*/}
-      {/*  />*/}
-      {/*) : null}*/}
+      {stepFormValues && Object.keys(stepFormValues).length ? (
+        <UpdateForm
+          // onSubmit={async (value) => {
+          //   const success = await handleUpdate(value);
+          //   if (success) {
+          //     handleUpdateModalVisible(false);
+          //     setStepFormValues({});
+          //     if (actionRef.current) {
+          //       actionRef.current.reload();
+          //     }
+          //   }
+          // }}
+          onCancel={() => {
+            handleUpdateModalVisible(false);
+            setStepFormValues({});
+          }}
+          updateModalVisible={updateModalVisible}
+          values={stepFormValues}
+        />
+      ) : null}
 
       <Drawer
         width={600}
