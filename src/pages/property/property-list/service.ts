@@ -12,7 +12,7 @@ export async function queryPropertyList(params?: TableListParams) {
   // eslint-disable-next-line no-param-reassign
   params.per_page = params.pageSize;
 
-  const response = await request('/api/v0/admin/property', {
+  const response = await request('/api/v0/property', {
     method:"GET", params
 
   });
@@ -31,7 +31,7 @@ export async function removeAnnounce(params: { ids: string[] }) {
 }
 
 export async function addProperty(params: TableListParams) {
-  return request('/api/v0/admin/property', {
+  return request('/api/v0/property', {
     method: 'POST',
     data: {
       ...params,
@@ -41,7 +41,7 @@ export async function addProperty(params: TableListParams) {
 }
 
 export async function updateProperty(params: TableListParams) {
-  return request(`/api/v0/admin/property/`, {
+  return request(`/api/v0/property/`, {
     method: 'POST',
     data: {
       ...params,
