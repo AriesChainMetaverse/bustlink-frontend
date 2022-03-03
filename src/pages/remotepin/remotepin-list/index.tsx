@@ -106,7 +106,7 @@ const TableList: React.FC<{}> = () => {
       title: 'pid',
       dataIndex: 'pid',
       hideInForm: true,
-      hideInSearch: true,
+      hideInSearch: false,
     },
     // {
     //   title: 'rid',
@@ -135,6 +135,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'status',
       sorter: true,
       hideInForm: true,
+      hideInSearch: false,
       valueEnum: {
         "waiting": { text: 'waiting', status: "waiting" },
         "pinning": { text: 'pinning', status: "pinning" },
@@ -161,6 +162,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'relate',
       sorter: true,
       hideInForm: true,
+      hideInSearch: true,
       valueEnum: {
         "informationv1": { text: 'informationv1', status: "informationv1" },
         "update": { text: 'update', status: "update" },
@@ -190,7 +192,7 @@ const TableList: React.FC<{}> = () => {
   return (
     <PageContainer>
       <ProTable<TableListItem>
-        headerTitle="全量节点PIN资源列表"
+        headerTitle="节点PIN资源列表"
         actionRef={actionRef}
         rowKey="id"
         search={{
