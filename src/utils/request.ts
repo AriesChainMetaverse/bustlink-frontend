@@ -4,6 +4,10 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+import {response} from "express";
+import {history} from "@@/core/history";
+import {stringify} from "querystring";
+import jwt_decode from "jwt-decode";
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -32,6 +36,16 @@ const errorHandler = (error: { response: Response }): Response => {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
 
+    if(response.status === 401){
+      localStorage.clear()
+      history.replace({
+        pathname: '/user/login',
+        search: stringify({
+          redirect: window.location.href,
+        }),
+      });
+    }
+
     notification.error({
       message: `请求错误 ${status}: ${url}`,
       description: errorText,
@@ -45,6 +59,7 @@ const errorHandler = (error: { response: Response }): Response => {
   return response;
 };
 
+
 /**
  * 配置request请求时的默认参数
  */
@@ -53,13 +68,70 @@ const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
 });
 
+// /**
+//  * 配置request拦截器 增加头部token
+//  */
+//
+// request.interceptors.request.use(async (url, options) => {
+//
+//   if(url.indexOf("/oauth2/token") === -1){
+//
+//     if(url === '/api/v0/admin/organization' && options.method === 'post'){
+//       return
+//     }
+//
+//     const token=localStorage.getItem("token")
+//     const decodeToken=jwt_decode(token);
+//     const {exp}=decodeToken;
+//     const expTime= exp*1000;
+//     const nowTime= 1641902965000;
+//     console.log( expTime)
+//     console.log( nowTime)
+//     //过期，刷新token
+//     if( nowTime >= expTime){
+//       console.log("reflesh token")
+//
+//       // eslint-disable-next-line @typescript-eslint/no-shadow
+//       const response = await request(`/oauth2/token?client_id=000000&client_secret=999999&scope=all&grant_type=refresh_token&refresh_token=${localStorage.getItem("refresh_token")}`, {
+//         method: 'GET',
+//       });
+//       console.log(response)
+//
+//       if (response.status === 200) {
+//         // 登录成功后，将token存储到localStorage中
+//         localStorage.setItem("token",response.data.access_token)
+//         localStorage.setItem("refresh_token",response.data.refresh_token)
+//         console.log("reflesh token done")
+//       }
+//     }
+//
+//
+//     if (
+//       options.method === 'post' ||
+//       options.method === 'put' ||
+//       options.method === 'delete' ||
+//       options.method === 'get'
+//     ) {
+//       const headers = {
+//         'Content-Type': 'application/json',
+//         Accept: 'application/json',
+//         Authorization:`Bearer ${localStorage.getItem("token")}`
+//       };
+//       return {
+//         url,
+//         options: { ...options, headers },
+//       };
+//   }
+//
+//   }
+// });
+
 /**
  * 配置request拦截器 增加头部token
  */
-
 request.interceptors.request.use(async (url, options) => {
 
-  if(url !== '/oauth2/token?client_id=000000&client_secret=999999&scope=all&grant_type=password'){
+  if(url.indexOf("/oauth2/token") === -1){
 
     if(url === '/api/v0/admin/organization' && options.method === 'post'){
       return
@@ -80,9 +152,7 @@ request.interceptors.request.use(async (url, options) => {
         url,
         options: { ...options, headers },
       };
-  }
-
-
+    }
 
   }
 });
