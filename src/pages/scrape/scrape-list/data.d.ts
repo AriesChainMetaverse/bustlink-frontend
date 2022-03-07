@@ -22,6 +22,7 @@ export interface ScrapeItem {
   updated_unix: number;
   edges: ScrapeItemEdges;
   poster_path: string;
+  set_remote_pin: boolean;
 }
 
 export interface ScrapeListItemDataType {

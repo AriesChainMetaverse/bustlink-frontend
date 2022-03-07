@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import {
   CloudUploadOutlined,
-  ExclamationCircleOutlined,
+  ExclamationCircleOutlined, FallOutlined,
   LoadingOutlined,
   PlusOutlined,
   ReloadOutlined,
@@ -30,12 +30,13 @@ import {
   addScrape,
   updateScrape,
   uploadScrape,
-  uploadScrapes,startScrape,stopScrape,
+  uploadScrapes,startScrape,stopScrape,pushScrape,syncRemotePin
 } from '@/pages/scrape/scrape-list/service';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import moment from 'moment';
+import {syncAdminPin} from "@/pages/remotepin/remotepin-list/service";
 
 interface BasicListProps {
   listAndScrapeList: StateType;
@@ -72,6 +73,21 @@ const handleUpload = async (selectedRows: ScrapeItem[]) => {
   return false;
 };
 
+/**
+ *  获取remotepin状态
+  */
+async function initAdminInfor() {
+  const hide = message.loading('正在同步最新remote pin状态数据');
+  const resp = await syncRemotePin();
+  if (resp.status === 'success') {
+    hide();
+    message.success(resp.message);
+  } else {
+    hide();
+    message.error(resp.message);
+  }
+}
+
 export const ScrapeList: FC<BasicListProps> = (props) => {
   const addBtn = useRef(null);
   const {
@@ -102,13 +118,18 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
     return await uploadScrape(values);
   };
 
-  // const startScrapeCall = async () => {
-  //   return  startScrape();
-  // };
-  //
-  // const stopScrapeCall = async () => {
-  //   return  stopScrape();
-  // };
+  const pushScrapeCall = async (values: ScrapeItem) => {
+    return await pushScrape(values);
+  };
+
+  const startScrapeCall = async () => {
+    return  startScrape();
+  };
+
+  const stopScrapeCall = async () => {
+    return  stopScrape();
+  };
+
 
   const columns: ProColumns<ScrapeItem>[] = [
     {
@@ -131,6 +152,13 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
 
         );
       },
+    },
+    {
+      title: '搜刮号',
+      dataIndex: 'id',
+      hideInTable: true,
+      hideInSearch:true,
+
     },
     {
       title: '番号',
@@ -327,6 +355,32 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
       },
     },
     {
+      title: '推送状态',
+      dataIndex: 'set_remote_pin',
+      hideInTable: true,
+      hideInSearch:true,
+      render: (_, record) => (
+        <Space>
+          <Tag color={record.set_remote_pin ? 'green' : 'red'} key={'set_remote_pin'}>
+            {record.set_remote_pin ? '已推送' : '未推送'}
+          </Tag>
+        </Space>
+      ),
+    },
+    {
+      title: 'RemotePin状态',
+      dataIndex: 'remote_pin_status',
+      hideInForm: true,
+      hideInSearch:true,
+      valueEnum: {
+        pinning: { text: '正在pin', status: 'Default' },
+        waiting: { text: '等待pin', status: 'Processing' },
+        success: { text: 'pin完毕', status: 'Success' },
+        failed: { text: 'pin失败', status: 'Error' },
+        notfound: { text: '文件异常', status: 'Error' },
+      },
+    },
+    {
       title: '上传ID',
       dataIndex: 'upload_id',
       valueType: 'text',
@@ -380,6 +434,47 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
         >
           {' '}
           上传{' '}
+        </Button>
+      ),
+    },
+    {
+      title: '推送至服务器',
+      dataIndex: 'push',
+      hideInTable: true,
+      render: (_, record) => (
+        <Button
+          type="primary"
+          size={'small'}
+          icon={<CloudUploadOutlined />}
+          disabled={!'|success|'.includes(record.upload_state)||'|true|'.includes(record.set_remote_pin)}
+          key="push"
+          onClick={() => {
+            Modal.confirm({
+              title: 'Confirm',
+              icon: <ExclamationCircleOutlined />,
+              content: `是否推送${record.name}`,
+              okText: '确认',
+              cancelText: '取消',
+              onOk: () => {
+                pushScrapeCall(record).then((resp) => {
+                  if (resp.status === 'success') {
+                    Modal.success({
+                      okText: '朕已阅',
+                      content: resp.message,
+                    });
+                  } else {
+                    Modal.error({
+                      okText: '朕已阅',
+                      content: resp.message,
+                    });
+                  }
+                });
+              },
+            });
+          }}
+        >
+          {' '}
+          推送{' '}
         </Button>
       ),
     },
@@ -505,23 +600,23 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
           pagination={false}
           polling={polling || undefined}
           toolBarRender={() => [
-            // <Button
-            //   key="4"
-            //   type="primary"
-            //   onClick={() => {
-            //     if (scraping) {
-            //       setScraping(undefined);
-            //       stopScrapeCall()
-            //       return;
-            //     }
-            //     setScraping(1000);
-            //     startScrapeCall()
-            //
-            //   }}
-            // >
-            //   {scraping ? <LoadingOutlined /> : <ReloadOutlined />}
-            //   {scraping ? '停止爬虫' : '启动爬虫'}
-            // </Button>,
+            <Button
+              key="4"
+              type="primary"
+              onClick={() => {
+                if (scraping) {
+                  setScraping(undefined);
+                  stopScrapeCall()
+                  return;
+                }
+                setScraping(1000);
+                startScrapeCall()
+
+              }}
+            >
+              {scraping ? <LoadingOutlined /> : <ReloadOutlined />}
+              {scraping ? '停止爬虫' : '启动爬虫'}
+            </Button>,
             <Button
               key="3"
               type="primary"
@@ -538,6 +633,9 @@ export const ScrapeList: FC<BasicListProps> = (props) => {
             </Button>,
             <Button type="primary" onClick={() => showModal()}>
               <PlusOutlined /> 新建
+            </Button>,
+            <Button type="primary" onClick={() => initAdminInfor()}>
+              <FallOutlined  /> 刷新RemotePin状态
             </Button>,
           ]}
           request={async () => {

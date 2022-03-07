@@ -7,7 +7,7 @@ interface ParamsType extends Partial<ScrapeListItemDataType> {
 }
 
 export async function queryScrapeList(params: ParamsType) {
-  return request('/api/v0/scrapes', {
+  return request('/api/v0/client/scrapes', {
     params,
   });
 }
@@ -15,14 +15,14 @@ export async function queryScrapeList(params: ParamsType) {
 interface ScrapeItemDataType extends Partial<ScrapeItem> {}
 
 export async function removeScrape(params: ScrapeItemDataType) {
-  return request(`/api/v0/scrape/${params.id}`, {
+  return request(`/api/v0/client/scrape/${params.id}`, {
     method: 'DELETE',
   });
 }
 
 export async function uploadScrapes(params: string[]) {
   const { ...restParams } = params;
-  return request(`/api/v0/scrapes/upload`, {
+  return request(`/api/v0/client/scrapes/upload`, {
     method: 'POST',
     data: {
       ...restParams,
@@ -32,7 +32,7 @@ export async function uploadScrapes(params: string[]) {
 
 export async function uploadScrape(params: ScrapeItemDataType) {
   const { ...restParams } = params;
-  return request(`/api/v0/scrape/${params.id}/upload`, {
+  return request(`/api/v0/client/scrape/${params.id}/upload`, {
     method: 'POST',
     data: {
       ...restParams,
@@ -40,9 +40,20 @@ export async function uploadScrape(params: ScrapeItemDataType) {
   });
 }
 
+export async function pushScrape(params: ScrapeItemDataType) {
+  const { ...restParams } = params;
+  return request(`/api/v0/client/scrape/${params.id}/push`, {
+    method: 'POST',
+    data: {
+      ...restParams,
+    },
+  });
+}
+
+
 export async function updateScrape(params: ScrapeItemDataType) {
   const { ...restParams } = params;
-  return request(`/api/v0/scrape/${params.id}`, {
+  return request(`/api/v0/client/scrape/${params.id}`, {
     method: 'PUT',
     data: {
       ...restParams,
@@ -52,7 +63,7 @@ export async function updateScrape(params: ScrapeItemDataType) {
 
 export async function addScrape(params: ScrapeItemDataType) {
   const { ...restParams } = params;
-  return request('/api/v0/scrape', {
+  return request('/api/v0/client/scrape', {
     method: 'POST',
     data: {
       ...restParams,
@@ -62,14 +73,20 @@ export async function addScrape(params: ScrapeItemDataType) {
 
 export async function startScrape() {
 
-  return request(`/api/v0/startscrape`, {
-    method: 'GET',
+  return request(`/api/v0/client/scrape/start`, {
+    method: 'POST',
   });
 }
 
 export async function stopScrape() {
 
-  return request(`/api/v0/stopscrape`, {
+  return request(`/api/v0/client/scrape/stop`, {
+    method: 'POST',
+  });
+}
+
+export async function syncRemotePin() {
+  return request(`/api/v0/client/remotepin`, {
     method: 'GET',
   });
 }
