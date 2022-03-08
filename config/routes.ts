@@ -51,24 +51,24 @@
 
                 routes: [
 
-                  {
-                    name: 'analysis',
-                    icon: 'smile',
-                    path: './analysis',
-                    component: './dashboard/analysis',
-                  },
+                  // {
+                  //   name: 'analysis',
+                  //   icon: 'smile',
+                  //   path: './analysis',
+                  //   component: './dashboard/analysis',
+                  // },
                   {
                     name: 'monitor',
                     icon: 'smile',
                     path: './monitor',
                     component: './dashboard/monitor',
                   },
-                  {
-                    name: 'workplace',
-                    icon: 'smile',
-                    path: './workplace',
-                    component: './dashboard/workplace',
-                  },
+                  // {
+                  //   name: 'workplace',
+                  //   icon: 'smile',
+                  //   path: './workplace',
+                  //   component: './dashboard/workplace',
+                  // },
                 ],
               },
 
@@ -142,6 +142,12 @@
                         path: './adminInformation-list',
                         component: './information/adminInformation-list',
                       },
+                      {
+                        name: 'clientinformation-list',
+                        icon: 'smile',
+                        path: './clientInformation-list',
+                        component: './information/clientInformation-list',
+                      },
                     ],
                   },
                   {
@@ -195,6 +201,14 @@
                     authority: ['admin', 'user'],//权限控制
                     name: 'tagMapping',
                     component: './tagmapping/edit',
+
+                  },
+                  {
+                    path: './clientTagMapping',
+                    icon: 'table',
+                    authority: ['admin', 'user'],//权限控制
+                    name: 'clientTagMapping',
+                    component: './client-tagmapping/edit',
 
                   },
 
