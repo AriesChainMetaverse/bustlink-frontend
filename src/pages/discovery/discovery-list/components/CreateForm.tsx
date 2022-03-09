@@ -135,9 +135,7 @@ const CreateForm: React.FC<UpdateFormProps> = (props) => {
           })}
           rules={[{ required: true, message: '请设置！' }]}
         >
-          <DatePicker
-            showTime format="yyyy/MM/DD HH:mm:ss" placeholder="请选择时间"
-          />
+          <DatePicker placeholder="请选择时间"/>
         </FormItem>
 
         <FormItem

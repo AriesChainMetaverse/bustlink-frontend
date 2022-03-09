@@ -114,9 +114,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           name="date"
           label="日期"
         >
-          <DatePicker
-            showTime format="yyyy/MM/DD HH:mm:ss" placeholder="请选择时间"
-          />
+          <DatePicker placeholder="请选择时间"/>
         </FormItem>
         <FormItem
           name="title"
