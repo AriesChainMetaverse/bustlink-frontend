@@ -10,7 +10,7 @@ import { TableListItem } from './data.d';
 import {updateDiscovery, addDiscovery, removeDiscovery,  querDiscoveryList} from './service';
 import Editor from "for-editor";
 import {useIntl,FormattedMessage} from "umi";
-
+import moment from 'moment';
 /**
  * 添加公告
  * @param fields
@@ -18,7 +18,14 @@ import {useIntl,FormattedMessage} from "umi";
 const handleAdd = async (fields: TableListItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addDiscovery({ ...fields });
+    await addDiscovery({
+      title: fields.title,
+      detail: fields.detail,
+      mtype: fields.mtype,
+      links:  fields.links,
+      date:moment(fields.date).format("YYYY/MM/DD"),
+      rid: fields.rid,
+    });
     hide();
     message.success('添加成功');
     return true;
@@ -42,7 +49,7 @@ const handleUpdate = async (fields: FormValueType) => {
       detail: fields.detail,
       mtype: fields.mtype,
       links:  fields.links.toString(),
-      date:fields.date,
+      date:moment(fields.date).format("YYYY/MM/DD"),
       rid: fields.rid,
       publish: fields.publish,
     });
@@ -204,25 +211,25 @@ const TableList: React.FC<{}> = () => {
       sorter: false,
       hideInForm: false,
       hideInSearch:true,
-      valueType: 'dateTime',
-      renderFormItem: (dom, entity) => {
-        return (
-          <DatePicker
-            showTime format="yyyy/MM/DD HH:mm:ss" placeholder="请选择时间"
-          />
-        );
-      },
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: <FormattedMessage
-              id="pages.ruleRequired"
-              defaultMessage="必选"
-            />,
-          },
-        ],
-      },
+      valueType: 'date',
+      // renderFormItem: (dom, entity) => {
+      //   return (
+      //     <DatePicker
+      //       showTime format="yyyy/MM/DD" placeholder="请选择时间"
+      //     />
+      //   );
+      // },
+      // formItemProps: {
+      //   rules: [
+      //     {
+      //       required: true,
+      //       message: <FormattedMessage
+      //         id="pages.ruleRequired"
+      //         defaultMessage="必选"
+      //       />,
+      //     },
+      //   ],
+      // },
     },
 
     {
