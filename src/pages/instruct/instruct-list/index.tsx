@@ -171,52 +171,52 @@ const TableList: React.FC<{}> = () => {
       },
     },
 
-    {
-      title: '操作',
-      dataIndex: 'option',
-      valueType: 'option',
-      render: (_, record) => (
-        <>
-          {/*<a*/}
-          {/*  onClick={() => {*/}
-          {/*    handleUpdateModalVisible(true);*/}
-          {/*    setStepFormValues(record);*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  配置*/}
-          {/*</a>*/}
-          {/*<Divider type="vertical" />*/}
-          <a
-            onClick={() => {
-              Modal.confirm({
-                title: 'Confirm',
-                icon: <ExclamationCircleOutlined />,
-                content: `是否刷新${record.video_no}的指令`,
-                okText: '确认',
-                cancelText: '取消',
-                onOk: () => {
-                  initInstruct(record).then((resp) => {
-                    if (resp.status === 'success') {
-                      Modal.success({
-                        okText: '朕已阅',
-                        content: resp.message,
-                      });
-                    } else {
-                      Modal.error({
-                        okText: '朕已阅',
-                        content: resp.message,
-                      });
-                    }
-                  });
-                },
-              });
-            }}
-          >
-            刷新初始指令
-          </a>
-        </>
-      ),
-    },
+    // {
+    //   title: '操作',
+    //   dataIndex: 'option',
+    //   valueType: 'option',
+    //   render: (_, record) => (
+    //     <>
+    //       {/*<a*/}
+    //       {/*  onClick={() => {*/}
+    //       {/*    handleUpdateModalVisible(true);*/}
+    //       {/*    setStepFormValues(record);*/}
+    //       {/*  }}*/}
+    //       {/*>*/}
+    //       {/*  配置*/}
+    //       {/*</a>*/}
+    //       {/*<Divider type="vertical" />*/}
+    //       <a
+    //         onClick={() => {
+    //           Modal.confirm({
+    //             title: 'Confirm',
+    //             icon: <ExclamationCircleOutlined />,
+    //             content: `是否刷新${record.video_no}的指令`,
+    //             okText: '确认',
+    //             cancelText: '取消',
+    //             onOk: () => {
+    //               initInstruct(record).then((resp) => {
+    //                 if (resp.status === 'success') {
+    //                   Modal.success({
+    //                     okText: '朕已阅',
+    //                     content: resp.message,
+    //                   });
+    //                 } else {
+    //                   Modal.error({
+    //                     okText: '朕已阅',
+    //                     content: resp.message,
+    //                   });
+    //                 }
+    //               });
+    //             },
+    //           });
+    //         }}
+    //       >
+    //         刷新初始指令
+    //       </a>
+    //     </>
+    //   ),
+    // },
 
   ];
 
