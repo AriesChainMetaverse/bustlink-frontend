@@ -1,5 +1,5 @@
 
-import {message, Drawer, Button} from 'antd';
+import {message, Drawer, Button, Divider} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -7,9 +7,11 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 // import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
 import { TableListItem } from './data.d';
-import {  removeNode, queryNodeList} from './service';
+import {  removeNode, queryNodeList,updateNode} from './service';
 import moment from 'moment';
 import {FormattedMessage} from "umi";
+import BindForm, { FormValueTypeBind } from './components/BindForm';
+
 /**
  * 添加公告
  * @param fields
@@ -54,7 +56,27 @@ import {FormattedMessage} from "umi";
 //     return false;
 //   }
 // };
+/**
+ * 给节点分组
+ * @param fields
+ */
+const handleBind = async (fields: FormValueType) => {
+  const hide = message.loading('正在配置');
+  try {
+    await updateNode({
+      node_id:fields.id,
+      group_id:fields.admin_node_group_adminnodegroup
+    });
+    hide();
 
+    message.success('配置成功');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('配置失败请重试！');
+    return false;
+  }
+};
 /**
  *  删除节点
  * @param selectedRows
@@ -79,6 +101,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
 const TableList: React.FC<{}> = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
+  const [bindModalVisible, handleBindModalVisible] = useState<boolean>(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef<ActionType>();
   const [row, setRow] = useState<TableListItem>();
@@ -95,23 +118,15 @@ const TableList: React.FC<{}> = () => {
       //   return <a onClick={() => setRow(entity)}>{dom}</a>;
       // },
     },
-    // {
-    //   title: 'IP地址',
-    //   dataIndex: 'addrs',
-    //   sorter: false,
-    //   hideInForm: true,
-    //   hideInSearch: true,
-    //   valueType: 'textarea',
-    //   render: (textArray, entity) => {
-    //     return (<div>
-    //       {
-    //         textArray.map(t=>{
-    //           return (<li>{t}</li>)
-    //         })
-    //       }
-    //     </div>)
-    //   },
-    // },
+    {
+      title: '分组',
+      dataIndex: 'group_name',
+      sorter: false,
+      hideInForm: false,
+      valueType: 'textarea',
+      copyable: true,
+      hideInSearch: false,
+    },
 
     {
       title: '分类',
@@ -169,7 +184,9 @@ const TableList: React.FC<{}> = () => {
       hideInForm: false,
       valueType: 'textarea',
       copyable: true,
+      hideInSearch: true,
     },
+
     {
       title: '最新响应时间',
       dataIndex: 'last_online',
@@ -197,6 +214,15 @@ const TableList: React.FC<{}> = () => {
             }}
           >
             IP详情
+          </a>
+          <Divider type="vertical" />
+          <a
+            onClick={() => {
+              handleBindModalVisible(true);
+              setStepFormValues(record);
+            }}
+          >
+            设置分组
           </a>
         </>
       ),
@@ -280,7 +306,26 @@ const TableList: React.FC<{}> = () => {
           values={stepFormValues}
         />
       ) : null}
-
+      {stepFormValues && Object.keys(stepFormValues).length ? (
+        <BindForm
+          onSubmit={async (value) => {
+            const success = await handleBind(value);
+            if (success) {
+              handleBindModalVisible(false);
+              setStepFormValues({});
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }}
+          onCancel={() => {
+            handleBindModalVisible(false);
+            setStepFormValues({});
+          }}
+          bindModalVisible={bindModalVisible}
+          values={stepFormValues}
+        />
+      ) : null}
       <Drawer
         width={600}
         visible={!!row}

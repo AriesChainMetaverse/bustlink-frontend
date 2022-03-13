@@ -17,40 +17,50 @@ export async function queryNodeList(params?: TableListParams) {
     });
 
     // 整理接口返回值符合Protable格式
-    // var location = [];
-    // var lArr = [];
-    // var response2;
-    // for(let i = 0; i < response.data.length; i++) {
-    //   location = [];
-    //   if(response.data[i].addrs === undefined){
-    //     response.data[i].addrs = []
-    //     response.data[i].location = []
-    //   }else{
-    //
-    //     for(let j = 0; j < response.data[i].addrs.length; j++) {
-    //
-    //       lArr = response.data[i].addrs[j].split("/")
-    //
-    //       // eslint-disable-next-line no-await-in-loop
-    //       if(isValidIP(lArr[2])){
-    //         response2 = await getlocationByIP(lArr[2])
-    //         if(response2.data[0] !== undefined){
-    //           location.push(response2.data[0])
-    //         }
-    //       }
-    //
-    //     }
-    //
-    //     response.data[i].location = location
-    //   }
-    //
-    // }
+    let newData =[];
+    for(let i = 0; i < response.data.length; i++) {
+      let obj = {};
+      if(response.data[i].edges !== "" && response.data[i].edges !== undefined && JSON.stringify(response.data[i].edges) !== "{}"){
+        obj.id = response.data[i].id
+        obj.pid = response.data[i].pid
+        obj.type = response.data[i].type
+        obj.state = response.data[i].state
+        obj.serial = response.data[i].serial
+        obj.last_online = response.data[i].last_online
+        obj.addrs = response.data[i].addrs
+        obj.admin_node_group_adminnodegroup = response.data[i].edges.groupowner.id
+        obj.group_name = response.data[i].edges.groupowner.name
 
+      }else{
+        obj.id = response.data[i].id
+        obj.pid = response.data[i].pid
+        obj.type = response.data[i].type
+        obj.state = response.data[i].state
+        obj.serial = response.data[i].serial
+        obj.last_online = response.data[i].last_online
+        obj.addrs = response.data[i].addrs
+        obj.admin_node_group_adminnodegroup = "00000000-0000-0000-0000-000000000000"
+        obj.group_name = "-"
+
+      }
+      newData.push(obj)
+    }
+    response.data = newData
 
     return response;
   }
   return null;
 }
+
+export async function queryNodeGroupList() {
+
+  const response = await request('/api/v0/admin/node/group?per_page=100', {
+    method:"GET",
+  });
+
+  return response.data;
+}
+
 
 export async function removeNode(params: { ids: string[] }) {
   return request('/api/v0/admin/node', {
@@ -73,13 +83,15 @@ export async function addAnnounce(params: TableListParams) {
 }
 
 export async function updateNode(params: TableListParams) {
-  return request(`/api/v0/node/${params.id}`, {
-    method: 'PUT',
+  return request(`/api/v0/admin/node/`, {
+    method: 'POST',
     data: {
       ...params,
     },
   });
 }
+
+
 
 export async function getlocationByIP(ipaddress: string) {
 
