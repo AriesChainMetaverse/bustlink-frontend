@@ -6,7 +6,9 @@ export interface InfoItem {
   publisher: string;
   role: string;
   tags: string;
-
+  channel_id: string;
+  channel_label: string;
+  channel_name: string;
 }
 
 export interface InfoListItemDataType {

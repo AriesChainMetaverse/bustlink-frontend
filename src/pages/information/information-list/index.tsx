@@ -1,5 +1,5 @@
 import {PlusOutlined} from '@ant-design/icons';
-import {Button, Card, List, Pagination, Modal, Image} from 'antd';
+import {Button, Card, List, Pagination, Modal, Image, Typography, Form, Row, Col, Select} from 'antd';
 import React, {Component} from 'react';
 
 import {PageContainer} from '@ant-design/pro-layout';
@@ -9,9 +9,13 @@ import {InfoItem} from './data.d';
 import styles from './style.less';
 import {removeInformationItem} from '@/pages/information/information-list/service';
 import OperationModal from '@/pages/information/information-list/components/OperationModal';
+import StandardFormRow from "@/pages/list/search/projects/components/StandardFormRow";
+import TagSelect from "@/pages/list/search/projects/components/TagSelect";
+import { FormInstance } from 'antd/es/form';
 
+const {Paragraph} = Typography;
+const FormItem = Form.Item;
 
-// const {Paragraph} = Typography;
 
 interface InformationListProps {
   listInformationList: StateType;
@@ -30,12 +34,18 @@ interface InformationListState {
 
 class InformationList extends Component<InformationListProps, InformationListState> {
   state = {
+    channel_label:"",
+    channel_name:"",
+    video_no:"",
     done: false,
     page: 1,
     per_page: 15,
     visible:false,
     current:{},
   }
+
+  formRef = React.createRef<FormInstance>();
+
 
   componentDidMount() {
     const {dispatch} = this.props;
@@ -55,7 +65,10 @@ class InformationList extends Component<InformationListProps, InformationListSta
     console.log("InformationList|onChange", page, pageSize)
     const state = {
       done :this.state.done,
-      page : page,
+      page,
+      video_no:this.state.video_no,
+      channel_label:this.state.channel_label,
+      channel_name:this.state.channel_name,
       per_page: pageSize === undefined ? 15 : pageSize,
     };
     const {dispatch} = this.props;
@@ -66,6 +79,24 @@ class InformationList extends Component<InformationListProps, InformationListSta
     this.setState(state)
   }
 
+  onSearch = () => {
+
+    console.log("InformationList|onSearch", this.formRef.current!.getFieldValue("channel_label"))
+    const state = {
+      done :this.state.done,
+      video_no:this.formRef.current!.getFieldValue("video_no"),
+      channel_label:this.formRef.current!.getFieldValue("channel_label"),
+      channel_name:this.formRef.current!.getFieldValue("channel_name"),
+      per_page: 15,
+      page:1,
+    };
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'listInformationList/fetch',
+      payload: state,
+    });
+    this.setState(state)
+  }
    handleDone = () => {
     this.setState({
       done:false,
@@ -99,8 +130,6 @@ class InformationList extends Component<InformationListProps, InformationListSta
     // const [done, setDone] = useState<boolean>(false);
     // const [visible, setVisible] = useState<boolean>(false);
     // const [current, setCurrent] = useState<Partial<InfoItem> | undefined>(undefined);
-
-
 
     //
     // const showModal = () => {
@@ -229,10 +258,70 @@ class InformationList extends Component<InformationListProps, InformationListSta
     ];
 
     const nullData: Partial<InfoItem> = {};
+    const formItemLayout = {
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+      },
+    };
 
     return (
-      <div>
+
+      <div className={styles.coverCardList}>
+
         <PageContainer content={content} extraContent={extraContent} footer={footer}>
+          <Card bordered={false}>
+            <Form
+              layout="inline"
+              ref={this.formRef}
+              onValuesChange={() => {
+                // 表单项变化时请求数据
+
+                // 模拟查询表单生效
+                this.onSearch();
+              }}
+            >
+
+              <FormItem  label="视频番号" name="video_no">
+                <input placeholder="请输入"  className="ant-input" type="text" ></input>
+              </FormItem>
+
+              <FormItem  label="频道标签" name="channel_label">
+                <input placeholder="请输入" className="ant-input" type="text" ></input>
+              </FormItem>
+
+                <FormItem {...formItemLayout} label="频道名称" name="channel_name">
+                  <Select placeholder="不限" style={{ maxWidth: 200, width: '100%' }}>
+                    <Option value="default">default</Option>
+                    <Option value="free">free</Option>
+                    <Option value="vip">vip</Option>
+                    <Option value="spread">spread</Option>
+                    <Option value="custom">custom</Option>
+                    <Option value="">none</Option>
+                  </Select>
+                </FormItem>
+
+              {/*<StandardFormRow title="频道" grid last>*/}
+              {/*  <Row gutter={16}>*/}
+              {/*    <Col lg={16} md={10} sm={10} xs={24}>*/}
+              {/*      <FormItem {...formItemLayout} label="频道" name="author">*/}
+              {/*        <Select placeholder="不限" style={{ maxWidth: 300, width: '100%' }}>*/}
+              {/*          <Option value="lisa">王昭君</Option>*/}
+              {/*        </Select>*/}
+              {/*      </FormItem>*/}
+              {/*    </Col>*/}
+                  {/*<Col lg={8} md={10} sm={10} xs={24}>*/}
+                  {/*  <FormItem {...formItemLayout} label="好评度" name="rate">*/}
+                  {/*    <Select placeholder="不限" style={{ maxWidth: 200, width: '100%' }}>*/}
+                  {/*      <Option value="good">优秀</Option>*/}
+                  {/*      <Option value="normal">普通</Option>*/}
+                  {/*    </Select>*/}
+                  {/*  </FormItem>*/}
+                  {/*</Col>*/}
+              {/*  </Row>*/}
+              {/*</StandardFormRow>*/}
+            </Form>
+          </Card>
           <div className={styles.cardList}>
             <List<Partial<InfoItem>>
               rowKey="id"
@@ -287,13 +376,17 @@ class InformationList extends Component<InformationListProps, InformationListSta
                           }
                           title={<a>{item.video_no}</a>}
                           description={
-                            item.title
-                            // <Paragraph className={styles.item} ellipsis={{rows: 4}}>
-                            //   <p className={"information_title"}>Title: {item.title}</p><br/>
-                            //   <p className={"information_intro"}>Intro: {item.intro}</p><br/>
-                            //   <p className={"information_id"}>ID: {item.id}</p><br/>
-                            //   <p className={"information_root"}>HASH: {item.root}</p><br/>
-                            // </Paragraph>
+                            // item.title + <br/> + item.title
+                            <Paragraph >
+                              <Paragraph  ellipsis={{rows: 2}}>
+                                Title: {item.title}<br/>
+                              </Paragraph>
+                              <Paragraph className={styles.item} ellipsis={{rows: 4}}>
+                                频道标签: {item.channel_label}<br/>
+                                频道名称: {item.channel_name}<br/>
+                              </Paragraph>
+                            </Paragraph>
+
                           }
                         />
                       </Card>
