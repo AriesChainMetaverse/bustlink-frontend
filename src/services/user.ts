@@ -41,5 +41,36 @@ export async function queryCurrent(): Promise<any> {
 }
 
 export async function queryNotices(): Promise<any> {
-  return request('/api/notices');
+  const token = localStorage.getItem("token")
+  const response = await request('/api/v0/adminuser/notification', {
+    method: 'GET',
+    headers:{'Authorization': `Bearer ${token}`},
+  });
+
+  // 整理接口返回值符合Protable格式
+  let newData =[];
+  for(let i = 0; i < response.data.length; i++) {
+    let obj = {};
+    obj.id = response.data[i].id
+    obj.title = response.data[i].title
+    obj.type = response.data[i].type
+    if (response.data[i].read_at !== undefined && response.data[i].read_at !== ""){
+      obj.read = true
+    }
+    if (response.data[i].title == "RemotePin Success"){
+      obj.avatar = "https://gw.alipayobjects.com/zos/rmsportal/GvqBnKhFgObvnSGkDsje.png"
+    }else if(response.data[i].title == "Add Information Success"){
+      obj.avatar = "https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png"
+    }else{
+      obj.avatar = "https://gw.alipayobjects.com/zos/rmsportal/kISTdvpyTAhtGxpovNWd.png"
+
+    }
+    obj.description = response.data[i].data
+    obj.datetime = response.data[i].created_unix
+    newData.push(obj)
+  }
+
+  response.data = newData
+  return newData;
+  // return request('/api/notices');
 }
