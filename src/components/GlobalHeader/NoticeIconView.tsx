@@ -64,7 +64,8 @@ class GlobalHeaderRight extends Component<GlobalHeaderRightProps> {
       const newNotice = { ...notice };
 
       if (newNotice.datetime) {
-        newNotice.datetime = moment(notice.datetime as string).fromNow();
+        // newNotice.datetime = moment(notice.datetime as string).fromNow();
+        newNotice.datetime = moment(parseInt(String(notice.datetime / 1000000), 10)).format('YYYY-MM-DD HH:mm:ss')
       }
 
       if (newNotice.id) {
