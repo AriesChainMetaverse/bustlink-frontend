@@ -143,6 +143,7 @@ export default {
   'pages.update.indexForm.version': 'Version NO.',
   'pages.update.indexForm.filename': 'Package Name',
   'pages.update.indexForm.title': 'Title',
+  'pages.update.indexForm.app_name': 'App Name',
   'pages.update.indexForm.detail': 'Detail',
   'pages.update.indexForm.os': 'OS',
   'pages.update.indexForm.publish': 'Published',
@@ -215,4 +216,10 @@ export default {
   'pages.discovery.updateForm.update': 'Set Discovery',
   'pages.discovery.updateForm.ruleInput':'The kind is required ',
 
+
+  'pages.adminlog.indexForm.id': 'id',
+  'pages.adminlog.indexForm.status': 'status',
+  'pages.adminlog.indexForm.from': 'from',
+  'pages.adminlog.indexForm.message': 'message',
+  'pages.adminlog.indexForm.created_unix': 'created_time',
 };
