@@ -74,5 +74,9 @@ export default {
   'pages.announce.indexForm.link': '链接',
   'pages.announce.indexForm.option': '操作',
 
-
+  'pages.adminlog.indexForm.id': '编号',
+  'pages.adminlog.indexForm.status': '状态',
+  'pages.adminlog.indexForm.from': '来源',
+  'pages.adminlog.indexForm.message': '内容',
+  'pages.adminlog.indexForm.created_unix': '时间',
 };

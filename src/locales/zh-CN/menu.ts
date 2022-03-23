@@ -58,6 +58,7 @@ export default {
   'menu.system.sysuser.permission-list': '权限列表',
   'menu.system.sysuser.menu-list': '菜单列表',
   'menu.system.property': '系统配置',
+  'menu.system.adminlog': '系统后台日志',
 
   'menu.adminend': '服务端管理',
   'menu.adminend.channel': '频道',
@@ -69,7 +70,8 @@ export default {
   'menu.adminend.scrape': '爬虫',
   'menu.adminend.tagMapping': '标签映射',
   'menu.adminend.clientTagMapping': '客户端标签映射',
-  'menu.adminend.instruct': '指令',
+  'menu.adminend.instruct': '节点指令',
+  'menu.adminend.groupinstruct': '节点组指令',
   'menu.adminend.update': '更新安装包',
   'menu.adminend.remotepin': '节点PIN日志',
   'menu.adminend.users': '用户',
@@ -82,6 +84,7 @@ export default {
   'menu.client.discovery': '发现页',
 
   'menu.node': '节点管理',
+  'menu.node.nodegroup-list': '节点分组列表',
   'menu.node.node': '节点列表',
   'menu.node.bootstrap': 'bootstrap管理',
 
