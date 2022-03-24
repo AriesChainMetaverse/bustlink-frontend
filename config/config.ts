@@ -2,7 +2,8 @@
 import {defineConfig} from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
-import routes from './routes';
+// import routes from './routes'; 客户端菜单文件
+import routes from './routes_admin';//服务器端菜单文件
 
 const {REACT_APP_ENV} = process.env;
 

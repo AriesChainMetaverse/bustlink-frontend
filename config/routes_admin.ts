@@ -142,28 +142,28 @@
                         path: './adminInformation-list',
                         component: './information/adminInformation-list',
                       },
-                      {
-                        name: 'clientinformation-list',
-                        icon: 'smile',
-                        path: './clientInformation-list',
-                        component: './information/clientInformation-list',
-                      },
+                      // {
+                      //   name: 'clientinformation-list',
+                      //   icon: 'smile',
+                      //   path: './clientInformation-list',
+                      //   component: './information/clientInformation-list',
+                      // },
                     ],
                   },
-                  {
-                    path: './content',
-                    icon: 'table',
-                    name: 'content',
-                    component: './content/content-list',
-
-                  },
-                  {
-                    path: './scrape',
-                    icon: 'table',
-                    name: 'scrape',
-                    component: './scrape/scrape-list',
-
-                  },
+                  // {
+                  //   path: './content',
+                  //   icon: 'table',
+                  //   name: 'content',
+                  //   component: './content/content-list',
+                  //
+                  // },
+                  // {
+                  //   path: './scrape',
+                  //   icon: 'table',
+                  //   name: 'scrape',
+                  //   component: './scrape/scrape-list',
+                  //
+                  // },
                   {
                     path: './instruct',
                     icon: 'table',
@@ -211,14 +211,14 @@
                     component: './tagmapping/edit',
 
                   },
-                  {
-                    path: './clientTagMapping',
-                    icon: 'table',
-                    authority: ['admin', 'user'],//权限控制
-                    name: 'clientTagMapping',
-                    component: './client-tagmapping/edit',
-
-                  },
+                  // {
+                  //   path: './clientTagMapping',
+                  //   icon: 'table',
+                  //   authority: ['admin', 'user'],//权限控制
+                  //   name: 'clientTagMapping',
+                  //   component: './client-tagmapping/edit',
+                  //
+                  // },
 
                 ],
               },
